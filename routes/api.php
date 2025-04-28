@@ -10,6 +10,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::resource("message" , MessageController::class);
-
+Route::get("conversation/{sender}/{receiver}" , [MessageController::class , "conversation"]);
+Route::get("chats/{userId}" , [MessageController::class , "chats"]);
 
 // require __DIR__.'/message.php';
