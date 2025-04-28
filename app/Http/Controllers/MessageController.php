@@ -26,68 +26,22 @@ class MessageController extends Controller
     }
 
 
-
-    public function chats($userId)
-    {
-
-        $messages = Message::where('sender_id', $userId)
-            ->orWhere('receiver_id', $userId)
-            ->get();
-
-        $participantIds = [];
-
-        foreach ($messages as $message) {
-            if ($message->sender_id == $userId) {
-                $participantIds[] = $message->receiver_id;
-            } else {
-                $participantIds[] = $message->sender_id;
-            }
-        }
-
-        $participantIds = array_unique($participantIds);
-
-        $users = Participant::whereIn('id', $participantIds)->get();
-
-        return response()->json([
-            'status' => 200,
-            'conversations' => $users,
-        ]);
-    }
-
-
-
-    public function conversation($sender, $receiver)
-    {
-
-        $messages = Message::where(function ($query) use ($sender, $receiver) {
-            $query->where('sender_id', $sender)->where('receiver_id', $receiver);
-        })->orWhere(function ($query) use ($sender, $receiver) {
-            $query->where('sender_id', $receiver)->where('receiver_id', $sender);
-        })->orderBy('created_at', 'asc')->get();
-
-        $mappedMessages = $messages->map(function ($message) use ($sender) {
-            return [
-                'id' => $message->id,
-                'text' => $message->message,
-                'sender' => $message->sender_id == $sender ? 'me' : 'user',
-            ];
-        });
-
-        return response()->json([
-            'status' => 200,
-            'messages' => $mappedMessages,
-        ]);
-    }
-
-
-
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         //
+        $this->validateToken($request);
+
+        Message::create([
+            "sender_id"=> $request->sender,
+            "receiver_id"=>$request->receiver,
+            "message"=>$request->message,
+        ]);
+
+
+        return response()->json($request->all());
     }
 
     /**
@@ -124,5 +78,60 @@ class MessageController extends Controller
     public function destroy(Message $message)
     {
         //
+    }
+
+
+    //* hna  kanjbed  l messagat  dyal  chi 2 
+    public function conversation($sender, $receiver)
+    {
+
+        $messages = Message::where(function ($query) use ($sender, $receiver) {
+            $query->where('sender_id', $sender)->where('receiver_id', $receiver);
+        })->orWhere(function ($query) use ($sender, $receiver) {
+            $query->where('sender_id', $receiver)->where('receiver_id', $sender);
+        })->orderBy('created_at', 'asc')->get();
+
+        $mappedMessages = $messages->map(function ($message) use ($sender) {
+            return [
+                'id' => $message->id,
+                'text' => $message->message,
+                'sender' => $message->sender_id == $sender ? 'me' : 'user',
+            ];
+        });
+
+        return response()->json([
+            'status' => 200,
+            'messages' => $mappedMessages,
+        ]);
+    }
+
+
+
+    //* hna  kanjbed   l convo li deja dwa m3ahom chi wa7d
+    public function chats($userId)
+    {
+
+        $messages = Message::where('sender_id', $userId)
+            ->orWhere('receiver_id', $userId)
+            ->get();
+
+        $participantIds = [];
+
+        foreach ($messages as $message) {
+            if ($message->sender_id == $userId) {
+                $participantIds[] = $message->receiver_id;
+            } else {
+                $participantIds[] = $message->sender_id;
+            }
+        }
+
+        $participantIds = array_unique($participantIds);
+
+        $users = Participant::whereIn('id', $participantIds)->get();
+
+        return response()->json([
+            'status' => 200,
+            'conversations' => $users,
+        ]);
     }
 }
