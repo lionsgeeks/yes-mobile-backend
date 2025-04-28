@@ -35,13 +35,13 @@ class MessageController extends Controller
         $this->validateToken($request);
 
         Message::create([
-            "sender_id"=> $request->sender,
-            "receiver_id"=>$request->receiver,
-            "message"=>$request->message,
+            "sender_id" => $request->sender,
+            "receiver_id" => $request->receiver,
+            "message" => $request->message,
         ]);
 
 
-        return response()->json($request->all());
+        return $this->conversation($request->sender, $request->receiver);
     }
 
     /**
