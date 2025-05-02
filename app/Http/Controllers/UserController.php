@@ -21,13 +21,19 @@ class UserController extends Controller
 
         $participant = Participant::where('email', $request->email)->first();
         if (! $participant || ! Hash::check($request->password, $participant->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
-            ]);
+            return response()->json([
+                'message' => 'Participant not found or password is incorrect',
+            ], 500);
         }
 
         // create a token based on the user's email
         $token = $participant->tokens->firstWhere('name', $request->email)->token ?? $participant->createToken($request->email)->plainTextToken;
+
+        if (!$token) {
+            return response()->json([
+                'message' => 'Token Could Not Be Created',
+            ], 500);
+        }
 
         // return the user and its token
         return response()->json([
@@ -44,13 +50,19 @@ class UserController extends Controller
             'token' => 'required|string',
         ]);
 
-        // return the $user that has the access token equivalent to the one provided
-        $user = Participant::whereHas('tokens', function ($query) use ($request) {
+        // return the $participant that has the access token equivalent to the one provided
+        $participant = Participant::whereHas('tokens', function ($query) use ($request) {
             $query->where('token', $request->token);
         })->first();
 
+        if (! $participant) {
+            return response()->json([
+                'message' => 'Participant not found',
+            ], 500);
+        }
+
         return response()->json([
-            'user' => $user,
+            'user' => $participant,
         ], 200);
     }
 }
