@@ -16,8 +16,13 @@ return new class extends Migration
             $table->string("name");
             $table->string("email")->unique();
             $table->string("password");
-            $table->string("image");
+            $table->string("image")->default("avatar.png");
             $table->string("role");
+            $table->string("company")->nullable();
+            $table->string("country")->nullable();
+            $table->string("city")->nullable();
+            $table->string("location")->nullable();
+            $table->text("description")->nullable();
             $table->timestamps();
         });
     }

@@ -13,11 +13,18 @@ class Participant extends Model
         'name',
         'email',
         'password',
+        'image',
+        'role',
+        'company',
+        'country',
+        'city',
+        'location',
+        'description',
     ];
 
     protected $hidden = [
         'password',
     ];
 
-    
+
 }
