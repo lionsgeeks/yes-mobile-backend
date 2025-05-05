@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             Participant::create([
                 'name' => 'Participant ' . $i,
-                'email' => 'participant' . $i . '@example.com',
+                'email' => 'pt' . $i . '@yes.com',
                 'password' => Hash::make('lionsgeek'),
                 "image" => "it_doesnt_matter",
                 "role" => "visitor",

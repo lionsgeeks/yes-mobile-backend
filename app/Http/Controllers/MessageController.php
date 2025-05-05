@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Ably\AblyRest;
 use App\Models\Message;
 use App\Models\Participant;
 use Illuminate\Http\Request;
@@ -29,19 +30,30 @@ class MessageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
-        //
         $this->validateToken($request);
 
-        Message::create([
+        $message = Message::create([
             "sender_id" => $request->sender,
             "receiver_id" => $request->receiver,
             "message" => $request->message,
         ]);
 
+        // Broadcast to receiver in private channel
+        $ably = new AblyRest(env('ABLY_KEY'));
+        $channel = $ably->channel("private-chat:{$request->receiver}");
+
+        $channel->publish('new-message', [
+            'id' => $message->id,
+            'text' => $message->message,
+            'sender' => $request->sender,
+            'created_at' => $message->created_at->toDateTimeString(),
+        ]);
 
         return $this->conversation($request->sender, $request->receiver);
+
     }
 
     /**
@@ -108,30 +120,41 @@ class MessageController extends Controller
 
 
     //* hna  kanjbed   l convo li deja dwa m3ahom chi wa7d
+
     public function chats($userId)
     {
-
         $messages = Message::where('sender_id', $userId)
             ->orWhere('receiver_id', $userId)
+            ->orderBy('created_at', 'desc')
             ->get();
-
-        $participantIds = [];
-
+    
+        $participants = [];
+    
         foreach ($messages as $message) {
-            if ($message->sender_id == $userId) {
-                $participantIds[] = $message->receiver_id;
-            } else {
-                $participantIds[] = $message->sender_id;
+            $otherUserId = $message->sender_id == $userId
+                ? $message->receiver_id
+                : $message->sender_id;
+    
+            // Only keep the first (latest) message per participant
+            if (!isset($participants[$otherUserId])) {
+                $participants[$otherUserId] = [
+                    'user' => Participant::find($otherUserId),
+                    'last_message' => $message,
+                ];
             }
         }
-
-        $participantIds = array_unique($participantIds);
-
-        $users = Participant::whereIn('id', $participantIds)->get();
-
+    
+        $conversations = array_values($participants); // reset keys
+    
+        // sort again to ensure order by latest message
+        usort($conversations, function ($a, $b) {
+            return strtotime($b['last_message']->created_at) - strtotime($a['last_message']->created_at);
+        });
+    
         return response()->json([
             'status' => 200,
-            'conversations' => $users,
+            'conversations' => $conversations,
         ]);
     }
+    
 }
