@@ -30,7 +30,6 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Participant ' . $i,
                 'email' => 'pt' . $i . '@yes.com',
                 'password' => Hash::make('lionsgeek'),
-                "image" => "it_doesnt_matter",
                 "role" => "visitor",
             ]);
         }
