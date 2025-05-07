@@ -23,6 +23,8 @@ Route::get("chats/{userId}", [MessageController::class, "chats"]);
 Route::post('/sanctum/token', [ParticipantController::class, 'signin']);
 Route::post('/getuser/token', [ParticipantController::class, 'userinfo']);
 
+Route::put('/participant/password/{participant}', [ParticipantController::class, 'updatePassword']);
+Route::put('/participant/{participant}', [ParticipantController::class, 'update']);
 Route::delete('/participant/{participant}', [ParticipantController::class, 'destroy']);
 
 

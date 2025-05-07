@@ -5,37 +5,59 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Participant;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class ParticipantController extends Controller
 {
+    // TODO SIMPLIFY THE CODE FOR CHECKING THE TOKEN
+
+    public function update(Request $request, string $participant_id)
+    {
+        $participant = $this->validateParticipant($request->header('Token'), $participant_id);
+
+        $token = PersonalAccessToken::where('token', $request->header('Token'))->first();
+        $token->update([
+            'name' => $request->email ?? $participant->email,
+        ]);
+
+        $participant->update([
+            'name' => $request->fullName ?? $participant->name,
+            'email' => $request->email ?? $participant->email,
+            'company' => $request->company,
+            'country' => $request->country,
+            'city' => $request->city,
+            'location' => $request->location,
+            'description' => $request->bio,
+        ]);
+
+        return response()->json(['message', 'Participant Updated Successfully'], 200);
+    }
 
 
+
+    public function updatePassword(Request $request, string $participant_id)
+    {
+        $participant = $this->validateParticipant($request->header('Token'), $participant_id);
+        if (!Hash::check($request->oldPass, $participant->password)) {
+            return response()->json(['message' => 'Wrong password'], 401);
+        }
+
+        $participant->update([
+            'password' => Hash::make($request->newPass),
+        ]);
+
+        return response()->json(['message' => 'Password updated successfully'], 200);
+    }
 
 
 
 
     public function destroy(Request $request, string $participant_id)
     {
-        // TODO: make this useable easily everywhere.
-        // get token from database
+
+        $participant = $this->validateParticipant($request->header('Token'), $participant_id);
         $token = PersonalAccessToken::where('token', $request->header('Token'))->first();
-        if (!$token) {
-            return response()->json(['message' => 'Invalid token.'], 401);
-        }
-
-        // compare the morph id with the participant id
-        if ($token->tokenable_id != $participant_id) {
-            return response()->json(['message' => 'Unauthorized.'], 403);
-        }
-
-        // find the participant
-        $participant = Participant::find($participant_id);
-        if (!$participant) {
-            return response()->json(['message' => 'Participant not found.'], 404);
-        }
 
         $participant->delete();
         $token->delete();
@@ -98,5 +120,28 @@ class ParticipantController extends Controller
         return response()->json([
             'user' => $participant,
         ], 200);
+    }
+
+
+    public function validateParticipant($requestToken, $participant_id)
+    {
+        $token = PersonalAccessToken::where('token', $requestToken)->first();
+        if (!$token) {
+            return response()->json(['message' => 'Invalid token.'], 401);
+        }
+
+        // compare the morph id with the participant id
+        if ($token->tokenable_id != $participant_id) {
+            return response()->json(['message' => 'Unauthorized.'], 403);
+        }
+
+        // find the participant
+        $participant = Participant::find($participant_id);
+        if (!$participant) {
+            return response()->json(['message' => 'Participant not found.'], 404);
+        }
+
+
+        return $participant;
     }
 }
