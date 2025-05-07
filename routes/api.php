@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Ably\AblyRest;
+use App\Http\Controllers\Api\ParticipantController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -18,8 +19,11 @@ Route::get("conversation/{sender}/{receiver}", [MessageController::class, "conve
 Route::get("chats/{userId}", [MessageController::class, "chats"]);
 
 
-Route::post('/sanctum/token', [UserController::class, 'signin']);
-Route::post('/getuser/token', [UserController::class, 'userinfo']);
+// TODO middleware ?
+Route::post('/sanctum/token', [ParticipantController::class, 'signin']);
+Route::post('/getuser/token', [ParticipantController::class, 'userinfo']);
+
+Route::delete('/participant/{participant}', [ParticipantController::class, 'destroy']);
 
 
 
