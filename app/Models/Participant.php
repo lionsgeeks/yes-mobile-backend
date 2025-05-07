@@ -27,4 +27,9 @@ class Participant extends Model
     ];
 
 
+    public function qrCodes()
+    {
+        return $this->hasMany(QrCode::class);
+    }
+
 }

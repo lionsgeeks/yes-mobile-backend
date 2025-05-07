@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Participant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
 
 class ParticipantController extends Controller
 {
@@ -12,7 +14,9 @@ class ParticipantController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('participants/index', [
+            'participants' => Participant::all(),
+        ]);
     }
 
     /**
@@ -28,7 +32,32 @@ class ParticipantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email',
+        ]);
+
+        $file = $request->file('image');
+        if ($file) {
+            $fileName = $file->store('images/participants', 'public');
+        }
+
+        // TODO: generate a random password and sent it to the participant's email
+        Participant::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make('lionsgeek'),
+            'role' => $request->role ?? 'visitor',
+            'company' => $request->company,
+            'country' => $request->country,
+            'city' => $request->city,
+            'location' => $request->location,
+            'description' => $request->description,
+            'image' => $file ? $fileName : 'avatar.png'
+        ]);
+
+
+
     }
 
     /**

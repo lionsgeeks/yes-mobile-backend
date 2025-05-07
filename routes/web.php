@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProgrameController;
+use App\Http\Controllers\QrCodeController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -27,5 +29,18 @@ Route::get('/test', function () {
 });
 
 
+
+// routes/web.php
+
+
+// Manually include the routes as API routes
+Route::prefix('api')->group(function () {
+    Route::get('/qrcodes', [QrCodeController::class, 'index'])->name('qrcodes.index');
+    Route::get('/qrcodes/create', [QrCodeController::class, 'create'])->name('qrcodes.create');
+    Route::post('/qrcodes', [QrCodeController::class, 'store'])->name('qrcodes.store');
+});
+
+Route::resource('programe', ProgrameController::class);
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
+require __DIR__.'/participants.php';
