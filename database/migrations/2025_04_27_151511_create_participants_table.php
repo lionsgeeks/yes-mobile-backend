@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("name");
             $table->string("email")->unique();
             $table->string("password");
-            $table->string("image")->default("avatar.png");
+            $table->string("image")->default("images/participants/avatar.png");
             $table->string("role")->default("visitor");
             $table->string("company")->nullable();
             $table->string("country")->nullable();
