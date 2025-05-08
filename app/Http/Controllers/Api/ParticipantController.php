@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Participant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class ParticipantController extends Controller
@@ -15,8 +16,8 @@ class ParticipantController extends Controller
     public function update(Request $request, string $participant_id)
     {
         $participant = $this->validateParticipant($request->header('Token'), $participant_id);
-
         $token = PersonalAccessToken::where('token', $request->header('Token'))->first();
+
         $token->update([
             'name' => $request->email ?? $participant->email,
         ]);
@@ -32,6 +33,37 @@ class ParticipantController extends Controller
         ]);
 
         return response()->json(['message', 'Participant Updated Successfully'], 200);
+    }
+
+    public function updateImage(Request $request, string $participant_id)
+    {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif',
+        ]);
+
+        $profile = Participant::find($participant_id);
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $filePath = $file->store('images/participants', 'public');
+
+            // if it's not the default avatar image
+            if ($profile->image !== 'avatar') {
+                Storage::disk('public')->delete('images/participants/' . $profile->image);
+            }
+
+            $profile->update([
+                'image' => basename($filePath),
+            ]);
+
+
+
+            return response()->json([
+                'message' => 'Photo uploaded successfully!',
+            ], 200);
+        }
+
+        return response()->json(['message' => "Error with image upload"], 400);
     }
 
 
