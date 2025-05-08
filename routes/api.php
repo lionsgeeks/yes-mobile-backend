@@ -3,10 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessageController;
-use App\Http\Controllers\UserController;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 use Ably\AblyRest;
 use App\Http\Controllers\Api\ParticipantController;
 
@@ -22,6 +18,8 @@ Route::get("chats/{userId}", [MessageController::class, "chats"]);
 // TODO middleware ?
 Route::post('/sanctum/token', [ParticipantController::class, 'signin']);
 Route::post('/getuser/token', [ParticipantController::class, 'userinfo']);
+
+Route::post('/participant/image/{participant}', [ParticipantController::class, 'updateImage']);
 
 Route::put('/participant/password/{participant}', [ParticipantController::class, 'updatePassword']);
 Route::put('/participant/{participant}', [ParticipantController::class, 'update']);
