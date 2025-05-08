@@ -48,12 +48,12 @@ class ParticipantController extends Controller
             $filePath = $file->store('images/participants', 'public');
 
             // if it's not the default avatar image
-            if ($profile->image !== 'avatar') {
-                Storage::disk('public')->delete('images/participants/' . $profile->image);
+            if ($profile->image !== 'images/participants/avatar') {
+                Storage::disk('public')->delete($profile->image);
             }
 
             $profile->update([
-                'image' => basename($filePath),
+                'image' => $filePath,
             ]);
 
 

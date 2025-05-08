@@ -42,7 +42,7 @@ class ParticipantController extends Controller
             $fileName = $file->store('images/participants', 'public');
         }
 
-        // TODO: generate a random password and sent it to the participant's email
+        // TODO: generate a random password and send it to the participant's email
         Participant::create([
             'name' => $request->name,
             'email' => $request->email,
