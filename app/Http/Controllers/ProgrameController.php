@@ -25,6 +25,12 @@ class ProgrameController extends Controller
     public function create()
     {
         //
+        $programes = Programe::all();
+
+        return response()->json([
+            'message' => 'Programe created successfully',
+            'programes' => $programes,
+        ]);
     }
 
     /**
@@ -53,6 +59,7 @@ class ProgrameController extends Controller
             'date' => $request->date,
         ]);
         return back()->with('success', 'Programe created successfully.');
+
     }
 
     /**
@@ -62,7 +69,10 @@ class ProgrameController extends Controller
     {
         //
         // dd($programe->name);
-        return Inertia::render('programshow', [
+        // return Inertia::render('programshow', [
+        //     'programe' => $programe,
+        // ]);
+        return response()->json([
             'programe' => $programe,
         ]);
     }
