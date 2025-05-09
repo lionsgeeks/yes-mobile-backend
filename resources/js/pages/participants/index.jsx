@@ -3,7 +3,7 @@ import { Head, usePage } from '@inertiajs/react';
 import ParticipantStore from './components/participantStore';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import {  UserCircle, Mail, Building2 } from "lucide-react"
+import { UserCircle, Mail, Building2 } from "lucide-react"
 
 
 const breadcrumbs = [
@@ -29,7 +29,6 @@ export default function Participants() {
                         <TableRow>
                             <TableHead
                                 className="w-[300px] cursor-pointer hover:bg-slate-100 transition-colors"
-                                onClick={() => handleSort("name")}
                             >
                                 <div className="flex items-center">
                                     <UserCircle className="mr-2 h-4 w-4 text-slate-500" />
@@ -38,7 +37,6 @@ export default function Participants() {
                             </TableHead>
                             <TableHead
                                 className="cursor-pointer hover:bg-slate-100 transition-colors"
-                                onClick={() => handleSort("email")}
                             >
                                 <div className="flex items-center">
                                     <Mail className="mr-2 h-4 w-4 text-slate-500" />
@@ -47,7 +45,6 @@ export default function Participants() {
                             </TableHead>
                             <TableHead
                                 className="w-[150px] cursor-pointer hover:bg-slate-100 transition-colors"
-                                onClick={() => handleSort("role")}
                             >
                                 <div className="flex items-center">
                                     <Building2 className="mr-2 h-4 w-4 text-slate-500" />

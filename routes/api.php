@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessageController;
 use Ably\AblyRest;
 use App\Http\Controllers\Api\ParticipantController;
+use App\Http\Controllers\Api\SponsorController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -29,7 +30,7 @@ Route::put('/participant/password/{participant}', [ParticipantController::class,
 Route::put('/participant/{participant}', [ParticipantController::class, 'update']);
 Route::delete('/participant/{participant}', [ParticipantController::class, 'destroy']);
 
-
+Route::get('sponsors', [SponsorController::class, 'index']);
 
 
 // Route::get('/ably/auth', function (Request $request) {

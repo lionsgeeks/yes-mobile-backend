@@ -4,8 +4,6 @@ use App\Http\Controllers\ParticipantController;
 use Illuminate\Support\Facades\Route;
 
 
-// TODO add middleware
-Route::resource('participants', ParticipantController::class);
-
-
-
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('participants', ParticipantController::class);
+});
