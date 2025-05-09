@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Participant;
+use App\Models\Social;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -30,6 +31,13 @@ class ParticipantController extends Controller
             'city' => $request->city,
             'location' => $request->location,
             'description' => $request->bio,
+        ]);
+
+            Social::where("participant_id", $participant->id)->first()->update([
+            'instagram' => $request->instagram,
+            'linkedin' => $request->linkedin,
+            'website' => $request->website,
+            'youtube' => $request->youtube,
         ]);
 
         return response()->json(['message', 'Participant Updated Successfully'], 200);
@@ -151,6 +159,7 @@ class ParticipantController extends Controller
 
         return response()->json([
             'user' => $participant,
+            'socials' => Social::where("participant_id" ,  $participant->id)->first(),
         ], 200);
     }
 
