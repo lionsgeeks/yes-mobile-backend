@@ -43,7 +43,7 @@ class ParticipantController extends Controller
         }
 
         // TODO: generate a random password and send it to the participant's email
-        Participant::create([
+        $participant = Participant::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make('lionsgeek'),
@@ -56,8 +56,8 @@ class ParticipantController extends Controller
             'image' => $file ? $fileName : 'avatar.png'
         ]);
 
-
-
+        $participant->social()->create();
+        
     }
 
     /**

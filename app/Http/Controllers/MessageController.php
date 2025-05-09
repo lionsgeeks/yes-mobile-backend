@@ -108,6 +108,7 @@ class MessageController extends Controller
                 'id' => $message->id,
                 'text' => $message->message,
                 'sender' => $message->sender_id == $sender ? 'me' : 'user',
+                'created_at' => $message->created_at,
             ];
         });
 

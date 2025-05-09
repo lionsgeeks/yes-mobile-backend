@@ -32,4 +32,8 @@ class Participant extends Model
         return $this->hasMany(QrCode::class);
     }
 
+    public function social()
+    {
+        return $this->hasOne(Social::class);
+    }
 }
