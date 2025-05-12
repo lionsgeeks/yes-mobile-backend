@@ -13,10 +13,13 @@ class SponsorController extends Controller
      */
     public function index()
     {
+        // $currentYear = date('Y');
+        // $sponsors = Sponsor::where('edition', $currentYear)->get();
+
         $sponsors = Sponsor::all();
+
         return response()->json([
             'sponsors' => $sponsors
         ]);
     }
-
 }

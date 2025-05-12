@@ -9,7 +9,8 @@ import {
 } from "@/components/ui/dialog"
 import { Trash2 } from "lucide-react"
 
-export default function ConfirmDelete({type, func}) {
+export default function ConfirmDelete({ type, func }) {
+
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -32,12 +33,14 @@ export default function ConfirmDelete({type, func}) {
 
                     </DialogClose>
 
-                    <button
-                        onClick={() => { func() }}
-                        className='cursor-pointer bg-red-500 px-4 py-2 rounded text-white'
-                    >
-                        Delete <span className="capitalize">{type}</span> from Database
-                    </button>
+                    <DialogClose asChild>
+                        <button
+                            onClick={func}
+                            className='cursor-pointer bg-red-500 px-4 py-2 rounded text-white'
+                        >
+                            Delete <span className="capitalize">{type}</span> from Database
+                        </button>
+                    </DialogClose>
                 </div>
 
 

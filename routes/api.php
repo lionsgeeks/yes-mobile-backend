@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessageController;
 use Ably\AblyRest;
+use App\Http\Controllers\Api\InterestController;
 use App\Http\Controllers\Api\ParticipantController;
 use App\Http\Controllers\Api\SponsorController;
 use App\Http\Controllers\ParticipantController as ControllersParticipantController;
@@ -33,6 +34,9 @@ Route::put('/participant/{participant}', [ParticipantController::class, 'update'
 Route::delete('/participant/{participant}', [ParticipantController::class, 'destroy']);
 
 Route::get('sponsors', [SponsorController::class, 'index']);
+
+Route::get('interests', [InterestController::class, 'index']);
+Route::post('interest/participant/{participant}', [InterestController::class, 'participantInterests']);
 
 Route::get('/participants', [ControllersParticipantController::class, 'sendParticipants']);
 Route::post('/participants/action', [ControllersParticipantController::class, 'storeAction']);

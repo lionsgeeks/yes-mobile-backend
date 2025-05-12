@@ -49,27 +49,11 @@ class SponsorController extends Controller
             'website' => $request->website,
             'type' => $request->type,
             'description' => $request->description,
+            // 'edition' => $request->edition ?? date('Y'),
             'image' => $fileName ?? 'images/sponsors/default.png',
         ]);
-
-
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Sponsor $sponsor)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Sponsor $sponsor)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -94,9 +78,9 @@ class SponsorController extends Controller
             'website' => $request->website,
             'type' => $request->type,
             'description' => $request->description,
+            // 'edition' => $request->edition ?? $sponsor->edition,
             'image' => $fileName ?? $sponsor->image,
         ]);
-
     }
 
     /**
