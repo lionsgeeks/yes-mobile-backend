@@ -8,6 +8,7 @@ use App\Http\Controllers\MessageController;
 use Ably\AblyRest;
 use App\Http\Controllers\Api\ParticipantController;
 use App\Http\Controllers\Api\SponsorController;
+use App\Http\Controllers\ParticipantController as ControllersParticipantController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -18,6 +19,7 @@ Route::get("conversation/{sender}/{receiver}", [MessageController::class, "conve
 Route::get("chats/{userId}", [MessageController::class, "chats"]);
 Route::get('/invitation/image',[InvitationController::class, 'shareInvitationImage']);
 Route::post('/register/participant', [RegisterNgoController::class, 'register']);
+
 
 
 // TODO middleware ?
@@ -31,6 +33,15 @@ Route::put('/participant/{participant}', [ParticipantController::class, 'update'
 Route::delete('/participant/{participant}', [ParticipantController::class, 'destroy']);
 
 Route::get('sponsors', [SponsorController::class, 'index']);
+
+Route::get('/participants', [ControllersParticipantController::class, 'sendParticipants']);
+Route::post('/participants/action', [ControllersParticipantController::class, 'storeAction']);
+// Route::post('/participant/logged', [ControllersParticipantController::class, 'currentParticipant']);
+Route::get('/participants/matches', [ControllersParticipantController::class, 'sendMatches']);
+
+
+
+
 
 
 // Route::get('/ably/auth', function (Request $request) {
