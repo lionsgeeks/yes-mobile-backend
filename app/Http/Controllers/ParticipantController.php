@@ -18,8 +18,9 @@ class ParticipantController extends Controller
      */
     public function index()
     {
+        $participants = Participant::where('role', 'visitor')->get();
         return Inertia::render('participants/index', [
-            'participants' => Participant::all(),
+            'participants' => $participants,
         ]);
     }
 
@@ -34,7 +35,7 @@ class ParticipantController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $role = 'visitor')
     {
         $request->validate([
             'name' => 'required|string',
@@ -51,17 +52,17 @@ class ParticipantController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make('lionsgeek'),
-            'role' => $request->role ?? 'visitor',
+            'role' => $role,
             'company' => $request->company,
             'country' => $request->country,
             'city' => $request->city,
             'location' => $request->location,
             'description' => $request->description,
-            'image' => $file ? $fileName : 'avatar.png'
+            'image' => $file ? $fileName : 'images/participants/avatar.png'
         ]);
 
         $participant->social()->create();
-        
+
     }
 
     /**
@@ -120,7 +121,7 @@ class ParticipantController extends Controller
                 'role' => $participant->role,
                 'image' => $participant->image,
                 'description' => $participant->description,
-                'interests' => $participant->interesets->pluck('name'), 
+                'interests' => $participant->interesets->pluck('name'),
 
             ];
         });
@@ -165,8 +166,8 @@ class ParticipantController extends Controller
         }
 
         $connectedParticipants = $participant->connections()
-            ->withPivot('action') 
-            ->wherePivot('action', 'connect') 
+            ->withPivot('action')
+            ->wherePivot('action', 'connect')
             ->get();
 
 
