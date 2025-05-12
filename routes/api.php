@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessageController;
 use Ably\AblyRest;
 use App\Http\Controllers\Api\ParticipantController;
+use App\Http\Controllers\ParticipantController as ControllersParticipantController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -19,6 +20,7 @@ Route::get('/invitation/image',[InvitationController::class, 'shareInvitationIma
 Route::post('/register/participant', [RegisterNgoController::class, 'register']);
 
 
+
 // TODO middleware ?
 Route::post('/sanctum/token', [ParticipantController::class, 'signin']);
 Route::post('/getuser/token', [ParticipantController::class, 'userinfo']);
@@ -28,6 +30,14 @@ Route::post('/participant/image/{participant}', [ParticipantController::class, '
 Route::put('/participant/password/{participant}', [ParticipantController::class, 'updatePassword']);
 Route::put('/participant/{participant}', [ParticipantController::class, 'update']);
 Route::delete('/participant/{participant}', [ParticipantController::class, 'destroy']);
+
+
+Route::get('/participants', [ControllersParticipantController::class, 'sendParticipants']);
+Route::post('/participants/action', [ControllersParticipantController::class, 'storeAction']);
+// Route::post('/participant/logged', [ControllersParticipantController::class, 'currentParticipant']);
+Route::get('/participants/matches', [ControllersParticipantController::class, 'sendMatches']);
+
+
 
 
 

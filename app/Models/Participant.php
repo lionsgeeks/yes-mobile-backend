@@ -26,6 +26,15 @@ class Participant extends Model
         'password',
     ];
 
+    public function interesets(){
+        return $this->morphToMany(Interest::class, 'profile_interests');
+    }
+
+    public function connections(){
+        return $this->belongsToMany(Participant::class, 'matches', 'participant_id', 'related_participant_id')
+        ->withPivot('action');     }
+    
+
 
     public function qrCodes()
     {

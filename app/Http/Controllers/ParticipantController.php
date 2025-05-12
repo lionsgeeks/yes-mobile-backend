@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CurrentUser;
 use App\Models\Participant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class ParticipantController extends Controller
@@ -55,9 +59,6 @@ class ParticipantController extends Controller
             'description' => $request->description,
             'image' => $file ? $fileName : 'avatar.png'
         ]);
-
-
-
     }
 
     /**
@@ -90,5 +91,97 @@ class ParticipantController extends Controller
     public function destroy(Participant $participant)
     {
         //
+    }
+
+    public function sendParticipants(Request $request)
+    {
+
+        // $loggenInUser = CurrentUser::all()->first();
+        $actedUserIds = DB::table('matches')
+            ->where('participant_id', $request->auth)
+            ->where('action', 'connect')
+            ->pluck('related_participant_id');
+
+        $participants = Participant::where('id', '!=', $request->auth)
+            ->whereNotIn('id', $actedUserIds)
+            ->select('id', 'name', 'role', 'image', 'description')
+            ->get();
+
+        Log::info('Request data:', ['users connected' => $actedUserIds]);
+
+
+        $participants = $participants->map(function ($participant) {
+            return [
+                'id' => $participant->id,
+                'name' => $participant->name,
+                'role' => $participant->role,
+                'image' => $participant->image,
+                'description' => $participant->description,
+                'interests' => $participant->interesets->pluck('name'), 
+
+            ];
+        });
+        Log::info('Request data:', ['participants' => $participants]);
+
+        return response()->json([
+            'participants' => $participants
+        ]);
+    }
+
+    public function storeAction(Request $request)
+    {
+        // Log::info('Request data:', $request->all());
+
+        $validated = $request->validate([
+            'currentParticipant' => 'required|exists:participants,id',
+            'related_participant_id' => 'required|exists:participants,id',
+            'action' => 'required|in:connect,skip',
+        ]);
+        $currentId = $validated['currentParticipant'];
+
+        $participant = Participant::find($currentId);
+
+        if ($participant) {
+            $participant->connections()->attach($validated['related_participant_id'], [
+                'action' => $validated['action'],
+            ]);
+
+            return response()->json(['message' => 'action has been saved successfully']);
+        }
+
+        return response()->json(['error' => 'participant not found'], 404);
+    }
+
+    public function sendMatches(Request $request)
+    {
+        $participant = Participant::find($request->auth);
+
+        Log::info('Participant:', ['participant'=> $participant]);
+        if (!$participant) {
+            return response()->json(['error' => 'Participant not found'], 404);
+        }
+
+        $connectedParticipants = $participant->connections()
+            ->withPivot('action') 
+            ->wherePivot('action', 'connect') 
+            ->get();
+
+
+
+        $matches = $connectedParticipants->map(function ($connectedParticipant) {
+            return [
+                'id' => $connectedParticipant->id,
+                'name' => $connectedParticipant->name,
+                'role' => $connectedParticipant->role,
+                'image' => $connectedParticipant->image,
+                'description' => $connectedParticipant->description,
+                'interests' => $connectedParticipant->interesets->pluck('name'),
+            ];
+        });
+
+
+        return response()->json([
+            'matches' => $matches
+        ]);
     }
 }
