@@ -36,13 +36,9 @@ Route::get('/test', function () {
 
 
 // Manually include the routes as API routes
-Route::prefix('api')->group(function () {
-    Route::get('/qrcodes', [QrCodeController::class, 'index'])->name('qrcodes.index');
     Route::get('/qrcodes/create', [QrCodeController::class, 'create'])->name('qrcodes.create');
     Route::post('/qrcodes', [QrCodeController::class, 'store'])->name('qrcodes.store');
-    Route::get('/programe/create', [ProgrameController::class, 'create'])->name('programe.create');
     Route::resource('programe', ProgrameController::class);
-});
 
 Route::resource('programe', ProgrameController::class);
 

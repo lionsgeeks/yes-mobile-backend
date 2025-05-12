@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\InterestController;
 use App\Http\Controllers\Api\ParticipantController;
 use App\Http\Controllers\Api\SponsorController;
 use App\Http\Controllers\ParticipantController as ControllersParticipantController;
+use App\Http\Controllers\ProgrameController;
+use App\Http\Controllers\QrCodeController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -21,6 +23,9 @@ Route::get("chats/{userId}", [MessageController::class, "chats"]);
 Route::get('/invitation/image',[InvitationController::class, 'shareInvitationImage']);
 Route::post('/register/participant', [RegisterNgoController::class, 'register']);
 
+Route::get('/qrcodes', [QrCodeController::class, 'index'])->name('qrcodes.index');
+Route::get('/programe/create', [ProgrameController::class, 'create'])->name('programe.create');
+Route::post('/programe/enrolled', [ProgrameController::class, 'enrolled'])->name('programe.enrolled');
 
 
 // TODO middleware ?

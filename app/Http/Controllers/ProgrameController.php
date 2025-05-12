@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Programe;
+use App\Models\Resarvation;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -48,6 +49,7 @@ class ProgrameController extends Controller
             'capacity' => 'required|integer',
             'location' => 'required|string|max:255',
             'date' => 'required|date',
+            'edition' => 'required',
         ]);
         Programe::create([
             'name' => $request->name,
@@ -57,9 +59,9 @@ class ProgrameController extends Controller
             'capacity' => $request->capacity,
             'location' => $request->location,
             'date' => $request->date,
+            'edition' => $request->edition,
         ]);
         return back()->with('success', 'Programe created successfully.');
-
     }
 
     /**
@@ -92,6 +94,34 @@ class ProgrameController extends Controller
     {
         //
         dd($request->all());
+    }
+
+
+    public function enrolled(Request $request)
+    {
+        $request->validate([
+            "programe_id" => 'required|integer',
+            "participant_id" => 'required|integer',
+        ]);
+
+        $alreadyEnrolled = Resarvation::where('programe_id', $request->programe_id)
+            ->where('participant_id', $request->participant_id)
+            ->exists();
+
+        if ($alreadyEnrolled) {
+            return response()->json([
+                'message' => 'You are already enrolled in this programe.',
+            ], 409); // 409 Conflict
+        }
+
+        Resarvation::create([
+            "programe_id" => $request->programe_id,
+            "participant_id" => $request->participant_id,
+        ]);
+
+        return response()->json([
+            'message' => 'Programe enrolled successfully',
+        ]);
     }
 
     /**
