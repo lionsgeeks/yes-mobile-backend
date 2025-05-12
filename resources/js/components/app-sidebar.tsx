@@ -3,7 +3,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import {  HandCoins, LayoutGrid, Users } from 'lucide-react';
+import {  Coins, HandCoins, LayoutGrid, Users } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -12,17 +12,28 @@ const mainNavItems: NavItem[] = [
         url: '/dashboard',
         icon: LayoutGrid,
     },
+];
+
+const accountNavItems: NavItem[] = [
     {
         title: 'Participants',
         url: '/participants',
         icon: Users,
     },
     {
+        title: 'Funders',
+        url: '/funders',
+        icon: Coins,
+    },
+]
+
+const miscNavItems: NavItem[] = [
+    {
         title: 'Sponsors',
         url: '/sponsors',
         icon: HandCoins,
-    }
-];
+    },
+]
 
 export function AppSidebar() {
     return (
@@ -41,6 +52,8 @@ export function AppSidebar() {
 
             <SidebarContent>
                 <NavMain items={mainNavItems} />
+                <NavMain items={accountNavItems} title='Accounts' />
+                <NavMain items={miscNavItems} title='Others' />
             </SidebarContent>
 
             <SidebarFooter>

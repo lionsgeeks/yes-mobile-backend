@@ -11,9 +11,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@headlessui/react"
 import { useForm } from "@inertiajs/react"
-import { Select, SelectItem, SelectTrigger, SelectValue, SelectContent } from "@/components/ui/select";
 
-export default function ParticipantStore() {
+export default function ParticipantStore({ title = 'Participant', role = 'visitor', endPoint = 'participants.store' }) {
 
     const { data, setData, post } = useForm({
         name: '',
@@ -24,12 +23,13 @@ export default function ParticipantStore() {
         description: '',
         country: '',
         city: '',
-        role: ''
+        role: role
     });
+    console.log('logging', endPoint);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('participants.store'), {
+        post(route(endPoint), {
             onSuccess: () => setData({
                 name: '',
                 email: '',
@@ -39,7 +39,7 @@ export default function ParticipantStore() {
                 description: '',
                 country: '',
                 city: '',
-                role: ''
+                role: role
             }),
         });
     }
@@ -49,18 +49,18 @@ export default function ParticipantStore() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className="cursor-pointer">+ ADD PARTICIPANT</Button>
+                <Button className="cursor-pointer">+ Add {title}</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>Adding a Participant</DialogTitle>
+                    <DialogTitle>Adding a {title}</DialogTitle>
 
                     <DialogDescription>
-                        Create a new participant account for the application.
+                        Create a new {title} account for the application.
                     </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleSubmit}>
-                    <div className="grid grid-cols-2 gap-4 py-4">
+                    <div className={`grid grid-cols-2 gap-4 py-4`}>
                         <div className="flex flex-col items-start gap-2">
                             <Label htmlFor="name" className="text-right">
                                 Name <span className="text-red-600 text-sm">*</span>
@@ -89,70 +89,51 @@ export default function ParticipantStore() {
                                 onChange={(e) => { setData('image', e.target.files[0]) }}
                             />
                         </div>
-                        <div className="flex flex-col items-start gap-2">
-                            <Label htmlFor="role" className="text-right">
-                                Role
-                            </Label>
-                            {/* <select
-                                className="rounded-lg border w-full p-2"
-                                name="role" id="role" onChange={(e) => { setData('role', e.target.value) }}>
-                                <option defaultValue={""} disabled selected>Select a Role</option>
-                                <option value="visitor">Visitor</option>
-                                <option value="speaker">Speaker</option>
-                                <option value="ngo">NGO</option>
-                            </select> */}
 
-                            <Select onValueChange={(value) => setData('role', value)}>
-                                <SelectTrigger className="w-full p-2 rounded-lg border">
-                                    <SelectValue placeholder="Select a Role" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="visitor">Visitor</SelectItem>
-                                    <SelectItem value="speaker">Speaker</SelectItem>
-                                    <SelectItem value="ngo">NGO</SelectItem>
-                                </SelectContent>
-                            </Select>
+                        {
+                            role == 'visitor' && (
+                                <>
+                                    <div className="flex flex-col items-start gap-2">
+                                        <Label htmlFor="company" className="text-right">
+                                            Company
+                                        </Label>
+                                        <Input id="company" name="company" placeholder="Company Name"
+                                            value={data.company}
+                                            onChange={(e) => { setData('company', e.target.value) }}
+                                        />
+                                    </div>
+                                    <div className="flex flex-col items-start gap-2">
+                                        <Label htmlFor="country" className="text-right">
+                                            Country
+                                        </Label>
+                                        <Input id="country" name="country" placeholder="Country"
+                                            value={data.country}
+                                            onChange={(e) => { setData('country', e.target.value) }}
+                                        />
+                                    </div>
+                                    <div className="flex flex-col items-start gap-2">
+                                        <Label htmlFor="city" className="text-right">
+                                            City
+                                        </Label>
+                                        <Input id="city" name="city" placeholder="City"
+                                            value={data.city}
+                                            onChange={(e) => { setData('city', e.target.value) }}
+                                        />
+                                    </div>
+                                    <div className="flex flex-col items-start gap-2 col-span-2">
+                                        <Label htmlFor="location" className="text-right">
+                                            Adress
+                                        </Label>
+                                        <Input id="location" name="location" placeholder="Address"
+                                            value={data.location}
+                                            onChange={(e) => { setData('location', e.target.value) }}
+                                        />
+                                    </div>
+                                </>
+                            )
+                        }
 
-                        </div>
 
-                        <div className="flex flex-col items-start gap-2">
-                            <Label htmlFor="company" className="text-right">
-                                Company
-                            </Label>
-                            <Input id="company" name="company" placeholder="Company Name"
-                                value={data.company}
-                                onChange={(e) => { setData('company', e.target.value) }}
-                            />
-                        </div>
-                        <div className="flex flex-col items-start gap-2">
-                            <Label htmlFor="country" className="text-right">
-                                Country
-                            </Label>
-                            <Input id="country" name="country" placeholder="Country"
-                                value={data.country}
-                                onChange={(e) => { setData('country', e.target.value) }}
-                            />
-                        </div>
-
-
-                        <div className="flex flex-col items-start gap-2">
-                            <Label htmlFor="city" className="text-right">
-                                City
-                            </Label>
-                            <Input id="city" name="city" placeholder="City"
-                                value={data.city}
-                                onChange={(e) => { setData('city', e.target.value) }}
-                            />
-                        </div>
-                        <div className="flex flex-col items-start gap-2">
-                            <Label htmlFor="location" className="text-right">
-                                Adress
-                            </Label>
-                            <Input id="location" name="location" placeholder="Address"
-                                value={data.location}
-                                onChange={(e) => { setData('location', e.target.value) }}
-                            />
-                        </div>
 
                         <div className="flex flex-col items-start gap-2 col-span-2">
                             <Label htmlFor="description" className="text-right">
@@ -161,7 +142,7 @@ export default function ParticipantStore() {
                             <Textarea
                                 onChange={(e) => { setData('description', e.target.value) }}
                                 className="p-2 w-full border"
-                                placeholder="Short description on the participant if available"
+                                placeholder="Short description if available"
                                 value={data.description}
                             />
                         </div>
