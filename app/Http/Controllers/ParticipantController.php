@@ -129,7 +129,7 @@ class ParticipantController extends Controller
             ->select('id', 'name', 'role', 'image', 'description')
             ->get();
 
-        Log::info('Request data:', ['users connected' => $actedUserIds]);
+        // Log::info('Request data:', ['users connected' => $actedUserIds]);
 
 
         $participants = $participants->map(function ($participant) {
@@ -143,7 +143,7 @@ class ParticipantController extends Controller
 
             ];
         });
-        Log::info('Request data:', ['participants' => $participants]);
+        // Log::info('Request data:', ['participants' => $participants]);
 
         return response()->json([
             'participants' => $participants
@@ -178,7 +178,7 @@ class ParticipantController extends Controller
     {
         $participant = Participant::find($request->auth);
 
-        Log::info('Participant:', ['participant'=> $participant]);
+        // Log::info('Participant:', ['participant'=> $participant]);
         if (!$participant) {
             return response()->json(['error' => 'Participant not found'], 404);
         }
