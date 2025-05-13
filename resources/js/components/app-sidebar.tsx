@@ -25,6 +25,11 @@ const accountNavItems: NavItem[] = [
         url: '/funders',
         icon: Coins,
     },
+    {
+        title: 'Speakers',
+        url: '/speakers',
+        icon: MicVocal,
+    },
 ]
 
 const miscNavItems: NavItem[] = [
@@ -32,11 +37,6 @@ const miscNavItems: NavItem[] = [
         title: 'Sponsors',
         url: '/sponsors',
         icon: HandCoins,
-    },
-    {
-        title: 'Speakers',
-        url: '/speakers',
-        icon: MicVocal,
     },
 ];
 

@@ -15,6 +15,16 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 class ParticipantController extends Controller
 {
+
+    public function index()
+    {
+        $participants = Participant::with('social')->with('interesets')->get();
+        return response()->json([
+            'participants' => $participants
+        ]);
+    }
+
+
     // TODO SIMPLIFY THE CODE FOR CHECKING THE TOKEN
 
     public function update(Request $request, string $participant_id)

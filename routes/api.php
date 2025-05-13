@@ -36,14 +36,14 @@ Route::post('/programe/enrolleddelete', [ProgrameController::class, 'cancel'])->
 
 
 // TODO middleware ?
+Route::get('participants/all', [ParticipantController::class, 'index']);
 Route::post('/sanctum/token', [ParticipantController::class, 'signin']);
 Route::post('/getuser/token', [ParticipantController::class, 'userinfo']);
-
 Route::post('/participant/image/{participant}', [ParticipantController::class, 'updateImage']);
-
 Route::put('/participant/password/{participant}', [ParticipantController::class, 'updatePassword']);
 Route::put('/participant/{participant}', [ParticipantController::class, 'update']);
 Route::delete('/participant/{participant}', [ParticipantController::class, 'destroy']);
+
 
 Route::get('sponsors', [SponsorController::class, 'index']);
 Route::get('speakers', [ParticipantController::class, 'speakers']);
