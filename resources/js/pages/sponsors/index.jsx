@@ -24,7 +24,7 @@ export default function Sponsors() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Sponsors" />
 
-            <div className='flex h-full flex-1 flex-col gap-4 rounded-xl p-4"'>
+            <div className='p-6"'>
                 <div className='flex justify-end'>
                     <SponsorModal />
                 </div>

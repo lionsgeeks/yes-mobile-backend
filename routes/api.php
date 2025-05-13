@@ -9,6 +9,7 @@ use Ably\AblyRest;
 use App\Http\Controllers\Api\InterestController;
 use App\Http\Controllers\Api\ParticipantController;
 use App\Http\Controllers\Api\SponsorController;
+use App\Http\Controllers\ParticipantController as ControllersParticipantController;
 use App\Http\Controllers\ProgrameController;
 use App\Http\Controllers\QrCodeController;
 
