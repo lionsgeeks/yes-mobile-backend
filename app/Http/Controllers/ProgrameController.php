@@ -49,7 +49,7 @@ class ProgrameController extends Controller
             'capacity' => 'required|integer',
             'location' => 'required|string|max:255',
             'date' => 'required|date',
-            'edition' => 'required',
+
         ]);
         Programe::create([
             'name' => $request->name,
@@ -59,7 +59,7 @@ class ProgrameController extends Controller
             'capacity' => $request->capacity,
             'location' => $request->location,
             'date' => $request->date,
-            'edition' => $request->edition,
+
         ]);
         return back()->with('success', 'Programe created successfully.');
     }
@@ -104,6 +104,14 @@ class ProgrameController extends Controller
             "participant_id" => 'required|integer',
         ]);
 
+        $programe = Programe::find($request->programe_id);
+
+        if ($programe->capacity <= 0) {
+            return response()->json([
+                'message' => 'Programe is full.',
+            ], 422); // 409 Conflict
+        }
+
         $alreadyEnrolled = Resarvation::where('programe_id', $request->programe_id)
             ->where('participant_id', $request->participant_id)
             ->exists();
@@ -111,7 +119,7 @@ class ProgrameController extends Controller
         if ($alreadyEnrolled) {
             return response()->json([
                 'message' => 'You are already enrolled in this programe.',
-            ], 409); // 409 Conflict
+            ], 409);
         }
 
         Resarvation::create([
@@ -119,10 +127,50 @@ class ProgrameController extends Controller
             "participant_id" => $request->participant_id,
         ]);
 
+        $programe->update([
+            'capacity' => $programe->capacity - 1,
+        ]);
+        $programe->save();
+
         return response()->json([
             'message' => 'Programe enrolled successfully',
         ]);
     }
+
+
+
+    public function cancel(Request $request)
+    {
+        $request->validate([
+            "programe_id" => 'required|integer',
+            "participant_id" => 'required|integer',
+        ]);
+
+        $reservation = Resarvation::where('programe_id', $request->programe_id)
+            ->where('participant_id', $request->participant_id)
+            ->first();
+
+        if (!$reservation) {
+            return response()->json([
+                'message' => 'You are not enrolled in this programe.',
+            ], 409);
+        }
+
+        $reservation->delete();
+
+        $programe = Programe::find($request->programe_id);
+        $programe->update([
+            'capacity' => $programe->capacity + 1,
+        ]);
+        $programe->save();
+
+        return response()->json([
+            'message' => 'Programe cancelled successfully',
+        ]);
+    }
+
+
+
 
     /**
      * Remove the specified resource from storage.

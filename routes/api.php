@@ -28,7 +28,10 @@ Route::post('/programe/enrolled', [ProgrameController::class, 'enrolled'])->name
 
 Route::get('/qrcodes', [QrCodeController::class, 'index'])->name('qrcodes.index');
 Route::get('/programe/create', [ProgrameController::class, 'create'])->name('programe.create');
+Route::get('/programe/{programe}', [ProgrameController::class, 'show'])->name('programe.show');
 Route::post('/programe/enrolled', [ProgrameController::class, 'enrolled'])->name('programe.enrolled');
+Route::post('/programe/enrolleddelete', [ProgrameController::class, 'cancel'])->name('programe.cancel');
+
 
 // TODO middleware ?
 Route::post('/sanctum/token', [ParticipantController::class, 'signin']);
