@@ -16,4 +16,8 @@ class Programe extends Model
         'location',
         'date',
     ];
+    public function participants()
+    {
+        return $this->belongsToMany(Participant::class, 'participant_program');
+    }
 }

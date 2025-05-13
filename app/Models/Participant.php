@@ -45,4 +45,8 @@ class Participant extends Model
     {
         return $this->hasOne(Social::class);
     }
+    public function programs()
+    {
+        return $this->belongsToMany(Programe::class, 'participant_program');
+    }
 }

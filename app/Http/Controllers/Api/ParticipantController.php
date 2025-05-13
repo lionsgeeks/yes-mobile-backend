@@ -33,7 +33,7 @@ class ParticipantController extends Controller
             'description' => $request->bio,
         ]);
 
-            Social::where("participant_id", $participant->id)->first()->update([
+        Social::where("participant_id", $participant->id)->first()->update([
             'instagram' => $request->instagram,
             'linkedin' => $request->linkedin,
             'website' => $request->website,
@@ -159,7 +159,7 @@ class ParticipantController extends Controller
 
         return response()->json([
             'user' => $participant,
-            'socials' => Social::where("participant_id" ,  $participant->id)->first(),
+            'socials' => Social::where("participant_id",  $participant->id)->first(),
         ], 200);
     }
 
@@ -184,5 +184,13 @@ class ParticipantController extends Controller
 
 
         return $participant;
+    }
+
+    public function speakers()
+    {
+        $participants = Participant::where('role', 'speaker')->with(['interesets', 'programs'])->get();
+        return response()->json([
+            'speakers' => $participants
+        ]);
     }
 }

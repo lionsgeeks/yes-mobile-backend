@@ -44,6 +44,7 @@ Route::put('/participant/{participant}', [ParticipantController::class, 'update'
 Route::delete('/participant/{participant}', [ParticipantController::class, 'destroy']);
 
 Route::get('sponsors', [SponsorController::class, 'index']);
+Route::get('speakers', [ParticipantController::class, 'speakers']);
 
 Route::get('interests', [InterestController::class, 'index']);
 Route::post('interest/participant/{participant}', [InterestController::class, 'participantInterests']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CurrentUser;
 use App\Models\Participant;
+use App\Models\Programe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -52,7 +53,7 @@ class ParticipantController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make('lionsgeek'),
-            'role' => $role,
+            'role' => $request->role ?? $role,
             'company' => $request->company,
             'country' => $request->country,
             'city' => $request->city,
@@ -65,6 +66,16 @@ class ParticipantController extends Controller
 
     }
 
+
+    //*show create speaker
+
+    public function showCreateSpeaker()
+    {
+        return Inertia::render('speakers/index', [
+            'speakers' => Participant::where('role', 'speaker')->with('programs')->get(),
+            'programs' => Programe::all(),
+        ]);
+    }
     /**
      * Display the specified resource.
      */
@@ -94,7 +105,14 @@ class ParticipantController extends Controller
      */
     public function destroy(Participant $participant)
     {
-        //
+        $participant->delete();
+        if ($participant->image != 'avatar.png') {
+            $filePath = public_path('storage/' . $participant->image);
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+        }
+        return back()->with('success', 'Participant deleted successfully');
     }
 
     public function sendParticipants(Request $request)
