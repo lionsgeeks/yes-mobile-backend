@@ -19,6 +19,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 use App\Events\MyEvent;
 use Ably\AblyRest;
+use App\Http\Controllers\UserController;
 
 Route::get('/test', function () {
     $ably = new AblyRest('lExbbw.OPqhwQ:cAV6W9IMcdzXejWqZb78-NZhDE2RisM1xKtscw7cd9s'); // Replace with your Ably API key
@@ -41,6 +42,9 @@ Route::get('/test', function () {
     Route::resource('programe', ProgrameController::class);
 
 Route::resource('programe', ProgrameController::class);
+
+
+Route::get('/send-report', [UserController::class, 'sendReport']);
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

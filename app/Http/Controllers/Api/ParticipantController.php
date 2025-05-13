@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Participant;
+use App\Models\QrCode;
 use App\Models\Social;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\PersonalAccessToken;
-
+use SimpleSoftwareIO\QrCode\Facades\QrCode as QrCodeGenerator;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 class ParticipantController extends Controller
 {
     // TODO SIMPLIFY THE CODE FOR CHECKING THE TOKEN
@@ -130,6 +133,41 @@ class ParticipantController extends Controller
                 'message' => 'Token Could Not Be Created',
             ], 500);
         }
+
+
+          // 1. Generate SVG
+        $svg = QrCodeGenerator::format('svg')
+            ->size(200)
+            ->generate($participant->email);
+
+        $fileName = 'qrcode_' . time() . '.svg';
+
+        // 2. Save to public/qrcodes (via storage disk)
+        Storage::disk('public')->put('qrcodes/' . $fileName, $svg);
+
+        // 3. Save to maizzle/images (relative to project root)
+        $maizzlePath = base_path('maizzle/images/qrcodes/' . $fileName);
+
+        if (!File::exists(dirname($maizzlePath))) {
+            File::makeDirectory(dirname($maizzlePath), 0755, true);
+        }
+
+        file_put_contents($maizzlePath, $svg);
+
+        // . Save record to database
+
+        // if(QrCode::where('participant_id', $participant->id)->first()) {
+        //    return response()->json([
+        //         'message' => 'Participant already has a QR code',
+        //     ], 500);
+        // }
+        $badgeId = Str::random(10);
+        QrCode::create([
+            'content' => $participant->email,
+            'file_path' => 'qrcodes/' . $fileName,
+            "participant_id" => $participant->id,
+            "badge_id" => $badgeId,
+        ]);
 
         // return the user and its token
         return response()->json([

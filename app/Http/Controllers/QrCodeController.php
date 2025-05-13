@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode as QrCodeGenerator;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\File;
 class QrCodeController extends Controller
 {
     /**
@@ -17,8 +17,8 @@ class QrCodeController extends Controller
     public function index()
     {
         //
-          // Fetch all QR codes and map them to the desired format
-          $qrCodes = QrCode::all()->map(function ($qrCode) {
+        // Fetch all QR codes and map them to the desired format
+        $qrCodes = QrCode::all()->map(function ($qrCode) {
             return [
                 'id' => $qrCode->id,
                 'content' => $qrCode->content,
@@ -60,12 +60,23 @@ class QrCodeController extends Controller
 
         // 1. Generate SVG
         $svg = QrCodeGenerator::format('svg')
-                ->size(200)
-                ->generate($request->content);
+            ->size(200)
+            ->generate($request->content);
 
-        // 2. Save SVG to storage
         $fileName = 'qrcode_' . time() . '.svg';
+
+        // 2. Save to public/qrcodes (via storage disk)
         Storage::disk('public')->put('qrcodes/' . $fileName, $svg);
+
+        // 3. Save to maizzle/images (relative to project root)
+        $maizzlePath = base_path('maizzle/images/qrcodes/' . $fileName);
+
+        if (!File::exists(dirname($maizzlePath))) {
+            File::makeDirectory(dirname($maizzlePath), 0755, true);
+        }
+
+        file_put_contents($maizzlePath, $svg);
+
         // 3. Save record to database
         $participant = Participant::where('id', "1")->first();
         // dd($participant->id);
@@ -83,10 +94,28 @@ class QrCodeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(QrCode $qrCode)
-    {
-        //
-    }
+public function show(QrCode $qrCode)
+{
+    $qrCodeData = [
+        'id' => $qrCode->id,
+        'content' => $qrCode->content,
+        'file_url' => Storage::disk('public')->url($qrCode->file_path),
+        'participant_id' => $qrCode->participant->id ?? null,
+        'participant_name' => $qrCode->participant->name ?? null,
+        'participant_role' => $qrCode->participant->role ?? null,
+        'participant_company' => $qrCode->participant->company ?? null,
+        'participant_email' => $qrCode->participant->email ?? null,
+        'participant_image' => $qrCode->participant->image ?? null,
+        'badge_id' => $qrCode->badge_id,
+    ];
+
+    return response()->json([
+        'status' => 'success',
+        'badge' => $qrCodeData
+    ], 200);
+}
+
+
 
     /**
      * Show the form for editing the specified resource.

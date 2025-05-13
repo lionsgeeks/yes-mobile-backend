@@ -28,6 +28,7 @@ Route::get('/programe/create', [ProgrameController::class, 'create'])->name('pro
 Route::post('/programe/enrolled', [ProgrameController::class, 'enrolled'])->name('programe.enrolled');
 
 Route::get('/qrcodes', [QrCodeController::class, 'index'])->name('qrcodes.index');
+Route::get('/qrcodes/{qrCode}', [QrCodeController::class, 'show']);
 Route::get('/programe/create', [ProgrameController::class, 'create'])->name('programe.create');
 Route::get('/programe/{programe}', [ProgrameController::class, 'show'])->name('programe.show');
 Route::post('/programe/enrolled', [ProgrameController::class, 'enrolled'])->name('programe.enrolled');
