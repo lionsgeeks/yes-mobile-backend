@@ -36,10 +36,9 @@ export default function Funders() {
                 </div>
 
                 <input type="search" name="search" id="search"
-                    className='rounded border-2 mb-3 w-[20vw] py-2'
+                    className='rounded border-2 mb-3 w-[20vw] p-2'
                     placeholder='Search by name, email or description'
                     onChange={((e) => {setSearchQuery(e.target.value)})}
-
                 />
 
 

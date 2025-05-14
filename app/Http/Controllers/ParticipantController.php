@@ -19,7 +19,7 @@ class ParticipantController extends Controller
      */
     public function index()
     {
-        $participants = Participant::where('role', 'visitor')->get();
+        $participants = Participant::where('role', 'visitor')->with('interesets')->get();
         return Inertia::render('participants/index', [
             'participants' => $participants,
         ]);
@@ -105,6 +105,8 @@ class ParticipantController extends Controller
      */
     public function destroy(Participant $participant)
     {
+        // delete token if it exists
+        $participant->tokens->firstWhere('name', $participant->email)?->delete();
         $participant->delete();
         if ($participant->image != 'avatar.png') {
             $filePath = public_path('storage/' . $participant->image);

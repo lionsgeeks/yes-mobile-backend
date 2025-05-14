@@ -8,11 +8,11 @@ const DeleteSpeaker = ({ id }) => {
     };
     return (
         <Dialog>
-            <DialogTrigger className="bg-red-500 px-4 py-2 rounded cursor-pointer">Delete</DialogTrigger>
+            <DialogTrigger className="bg-red-500 px-4 py-2 rounded cursor-pointer text-white">Delete</DialogTrigger>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Are you absolutely sure?</DialogTitle>
-                    <DialogDescription>This action cannot be undone. This will permanently delete the speaker account.</DialogDescription>
+                    <DialogDescription>This action cannot be undone. This will permanently delete the account.</DialogDescription>
                 </DialogHeader>
                 <Button onClick={handleDelete} className="cursor-pointer rounded bg-red-500 px-3 py-2 text-white">
                     Delete
