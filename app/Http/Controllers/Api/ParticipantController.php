@@ -145,32 +145,21 @@ class ParticipantController extends Controller
         }
 
 
-          // 1. Generate SVG
+      $check = QrCode::where('participant_id', $participant->id)->first();
+
+      if(!$check){
+            // 1. Generate SVG
         $svg = QrCodeGenerator::format('svg')
             ->size(200)
             ->generate($participant->email);
 
         $fileName = 'qrcode_' . time() . '.svg';
-
-        // 2. Save to public/qrcodes (via storage disk)
         Storage::disk('public')->put('qrcodes/' . $fileName, $svg);
-
-        // 3. Save to maizzle/images (relative to project root)
         $maizzlePath = base_path('maizzle/images/qrcodes/' . $fileName);
-
         if (!File::exists(dirname($maizzlePath))) {
             File::makeDirectory(dirname($maizzlePath), 0755, true);
         }
-
         file_put_contents($maizzlePath, $svg);
-
-        // . Save record to database
-
-        // if(QrCode::where('participant_id', $participant->id)->first()) {
-        //    return response()->json([
-        //         'message' => 'Participant already has a QR code',
-        //     ], 500);
-        // }
         $badgeId = Str::random(10);
         QrCode::create([
             'content' => $participant->email,
@@ -178,7 +167,7 @@ class ParticipantController extends Controller
             "participant_id" => $participant->id,
             "badge_id" => $badgeId,
         ]);
-
+      }
         // return the user and its token
         return response()->json([
             'participant' => $participant,

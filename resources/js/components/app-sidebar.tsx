@@ -38,6 +38,11 @@ const miscNavItems: NavItem[] = [
         url: '/sponsors',
         icon: HandCoins,
     },
+    {
+        title: 'Programes',
+        url: '/programe',
+        icon: LayoutGrid,
+    },
 ];
 
 export function AppSidebar() {

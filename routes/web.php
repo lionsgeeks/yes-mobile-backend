@@ -41,7 +41,10 @@ Route::get('/test', function () {
     Route::post('/qrcodes', [QrCodeController::class, 'store'])->name('qrcodes.store');
     Route::resource('programe', ProgrameController::class);
 
-Route::resource('programe', ProgrameController::class);
+    Route::resource('programe', ProgrameController::class);
+    Route::get('/programe/show/{programe}', [ProgrameController::class, 'showw']);
+
+
 
 
 Route::get('/send-report', [UserController::class, 'sendReport']);
