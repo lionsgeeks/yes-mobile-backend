@@ -53,7 +53,6 @@ class MessageController extends Controller
         ]);
 
         return $this->conversation($request->sender, $request->receiver);
-
     }
 
     /**
@@ -90,12 +89,21 @@ class MessageController extends Controller
     public function destroy(Message $message)
     {
         //
+        $message->delete();
+        return response()->json([
+            "status"=>200
+        ]);
     }
 
 
     //* hna  kanjbed  l messagat  dyal  chi 2 
     public function conversation($sender, $receiver)
     {
+
+        Message::where('sender_id', $receiver)
+            ->where('receiver_id', $sender)
+            ->where('seen', false)
+            ->update(['seen' => true]);
 
         $messages = Message::where(function ($query) use ($sender, $receiver) {
             $query->where('sender_id', $sender)->where('receiver_id', $receiver);
@@ -108,6 +116,7 @@ class MessageController extends Controller
                 'id' => $message->id,
                 'text' => $message->message,
                 'sender' => $message->sender_id == $sender ? 'me' : 'user',
+                'seen' => $message->seen,
                 'created_at' => $message->created_at,
             ];
         });
@@ -120,6 +129,7 @@ class MessageController extends Controller
 
 
 
+
     //* hna  kanjbed   l convo li deja dwa m3ahom chi wa7d
 
     public function chats($userId)
@@ -128,15 +138,14 @@ class MessageController extends Controller
             ->orWhere('receiver_id', $userId)
             ->orderBy('created_at', 'desc')
             ->get();
-    
+
         $participants = [];
-    
+
         foreach ($messages as $message) {
             $otherUserId = $message->sender_id == $userId
                 ? $message->receiver_id
                 : $message->sender_id;
-    
-            // Only keep the first (latest) message per participant
+
             if (!isset($participants[$otherUserId])) {
                 $participants[$otherUserId] = [
                     'user' => Participant::find($otherUserId),
@@ -144,18 +153,16 @@ class MessageController extends Controller
                 ];
             }
         }
-    
-        $conversations = array_values($participants); // reset keys
-    
-        // sort again to ensure order by latest message
+
+        $conversations = array_values($participants);
+
         usort($conversations, function ($a, $b) {
             return strtotime($b['last_message']->created_at) - strtotime($a['last_message']->created_at);
         });
-    
+
         return response()->json([
             'status' => 200,
             'conversations' => $conversations,
         ]);
     }
-    
 }
