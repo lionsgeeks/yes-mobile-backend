@@ -59,7 +59,15 @@ class GeneralController extends Controller
      */
     public function update(Request $request, General $general)
     {
-        //
+        General::updateOrCreate(
+            ['id' => 1],
+            [
+                'version' => $request->version,
+                'token' => $request->token,
+                'playstore' => $request->playstore,
+                'appstore' => $request->appstore
+            ]
+        );
     }
 
     /**

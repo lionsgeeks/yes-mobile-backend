@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string("version");
             $table->string("token");
+            $table->string('playstore')->nullable();
+            $table->string('appstore')->nullable();
             $table->timestamps();
         });
     }

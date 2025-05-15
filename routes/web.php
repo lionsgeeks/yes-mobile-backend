@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\ProgrameController;
 use App\Http\Controllers\QrCodeController;
+use App\Models\General;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -15,6 +17,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
+
+    Route::get('/general/info/table', function () {
+        $general = General::find(1);
+        return Inertia::render('general/index', [
+            'general' => $general
+        ]);
+    });
+    Route::post('general', [GeneralController::class, 'update'])->name('general.update');
 });
 
 use App\Events\MyEvent;
