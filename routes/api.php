@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\InvitationController;
 use App\Http\Controllers\Api\RegisterNgoController;
+use App\Http\Controllers\Api\ReportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessageController;
@@ -48,8 +49,9 @@ Route::delete('/participant/{participant}', [ParticipantController::class, 'dest
 
 
 Route::get('sponsors', [SponsorController::class, 'index']);
-Route::get('speakers', [ParticipantController::class, 'speakers']);
-
+// Route::get('speakers', [ParticipantController::class, 'speakers']);
+Route::post('reports', [ReportController::class, 'store']);
+// Route::get('ngos', [ParticipantController::class,'ngos']);
 Route::get('interests', [InterestController::class, 'index']);
 Route::post('interest/participant/{participant}', [InterestController::class, 'participantInterests']);
 

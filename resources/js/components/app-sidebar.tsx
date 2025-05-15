@@ -3,7 +3,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import {  Coins, HandCoins, LayoutGrid, Users, MicVocal, Building2 } from 'lucide-react';
+import {  Coins, HandCoins, LayoutGrid, Users, MicVocal, Building2, Bug } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -47,6 +47,11 @@ const miscNavItems: NavItem[] = [
         title: 'Programes',
         url: '/programe',
         icon: LayoutGrid,
+    },
+    {
+        title: 'Reports',
+        url: '/reporters',
+        icon: Bug,
     },
 ];
 

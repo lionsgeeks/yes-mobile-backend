@@ -6,12 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Report extends Model
 {
-    protected $fillabe = [
+    protected $fillable = [
         'name',
-        'user_id',
-        'device_name',
+        'participant_id',
         'time',
         'operator_system',
         'screen_name',
     ];
+    public function participant()
+    {
+        return $this->belongsTo(Participant::class);
+    }
 }

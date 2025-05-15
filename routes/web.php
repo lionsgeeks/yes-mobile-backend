@@ -47,7 +47,6 @@ use App\Http\Controllers\UserController;
 
 
 
-
 Route::get('/send-report', [UserController::class, 'sendReport']);
 
 require __DIR__.'/settings.php';
@@ -56,3 +55,4 @@ require __DIR__.'/participants.php';
 require __DIR__.'/sponsors.php';
 require __DIR__.'/funders.php';
 require __DIR__.'/ngo.php';
+require __DIR__.'/reporters.php';

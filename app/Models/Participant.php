@@ -49,4 +49,7 @@ class Participant extends Model
     {
         return $this->belongsToMany(Programe::class, 'participant_program');
     }
+    public function reports(){
+        return $this->hasMany(Report::class);
+    }
 }

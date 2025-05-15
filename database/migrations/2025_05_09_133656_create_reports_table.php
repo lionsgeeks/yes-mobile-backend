@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->text('name');
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('device_name');
-            $table->string('time');
+            $table->foreignId('participant_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->date('time');
             $table->string('operator_system');
             $table->string('screen_name');
             $table->timestamps();

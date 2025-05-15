@@ -270,4 +270,11 @@ class ParticipantController extends Controller
             'data' => $qrCodes
         ], 200);
     }
+    // public function ngos()
+    // {
+    //     $ngos = Participant::where('role', 'ngo')->with(['interesets', 'social'])->get();
+    //     return response()->json([
+    //         'ngos' => $ngos
+    //     ]);
+    // }
 }
