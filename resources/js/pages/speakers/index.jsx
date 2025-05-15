@@ -24,7 +24,7 @@ const Speaker = () => {
                 </div>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
                     {speakers.map((speaker) => (
-                        <Card key={speaker.id} className="flex flex-col items-center rounded-lg border p-4">
+                        <Card key={speaker.id} className="flex flex-col items-center gap-2 rounded-lg border p-4">
                             {/* <div className="flex self-end">
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
@@ -45,8 +45,9 @@ const Speaker = () => {
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </div> */}
-                            <img src={`/storage/${speaker.image}`} alt={speaker.name} className="mb-4 h-24 w-24 rounded-full" />
+                            <img src={`/storage/${speaker.image}`} alt={speaker.name} className="mb-4 h-24 w-24 rounded-full object-cover" />
                             <h3 className="text-lg font-semibold">{speaker.name}</h3>
+                            <p className='text-muted-foreground'>{speaker.email}</p>
                             <DeleteSpeaker id={speaker.id} />
                         </Card>
                     ))}

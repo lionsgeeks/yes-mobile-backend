@@ -8,7 +8,7 @@ const DeleteSpeaker = ({ id }) => {
     };
     return (
         <Dialog>
-            <DialogTrigger className="bg-red-500 px-4 py-2 rounded cursor-pointer text-white">Delete</DialogTrigger>
+            <DialogTrigger className="bg-red-500 px-3 py-1 rounded cursor-pointer text-white">Delete Account</DialogTrigger>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Are you absolutely sure?</DialogTitle>

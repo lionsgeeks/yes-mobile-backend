@@ -115,7 +115,7 @@ class ParticipantController extends Controller
         // delete token if it exists
         $participant->tokens->firstWhere('name', $participant->email)?->delete();
         $participant->delete();
-        if ($participant->image != 'avatar.png') {
+        if ($participant->image != 'images/participants/avatar.png') {
             $filePath = public_path('storage/' . $participant->image);
             if (file_exists($filePath)) {
                 unlink($filePath);

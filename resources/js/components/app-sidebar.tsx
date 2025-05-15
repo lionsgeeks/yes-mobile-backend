@@ -3,7 +3,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import {  Coins, HandCoins, LayoutGrid, Users, MicVocal } from 'lucide-react';
+import {  Coins, HandCoins, LayoutGrid, Users, MicVocal, Building2 } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -24,6 +24,11 @@ const accountNavItems: NavItem[] = [
         title: 'Funders',
         url: '/funders',
         icon: Coins,
+    },
+    {
+        title: 'NGOs',
+        url: 'ngos',
+        icon: Building2,
     },
     {
         title: 'Speakers',
