@@ -12,7 +12,14 @@ class GeneralController extends Controller
      */
     public function index()
     {
-        //
+        $general = General::firstOrCreate(
+            ['id' => 1],
+            ['version' => '1.0.0', 'token' => 'token']
+        );
+
+        return response()->json([
+            'general' => $general
+        ]);
     }
 
     /**

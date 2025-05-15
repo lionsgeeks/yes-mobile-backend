@@ -9,6 +9,7 @@ use Ably\AblyRest;
 use App\Http\Controllers\Api\InterestController;
 use App\Http\Controllers\Api\ParticipantController;
 use App\Http\Controllers\Api\SponsorController;
+use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\ParticipantController as ControllersParticipantController;
 use App\Http\Controllers\ProgrameController;
 use App\Http\Controllers\QrCodeController;
@@ -56,6 +57,7 @@ Route::post('/participants/action', [ControllersParticipantController::class, 's
 // Route::post('/participant/logged', [ControllersParticipantController::class, 'currentParticipant']);
 Route::get('/participants/matches', [ControllersParticipantController::class, 'sendMatches']);
 
+Route::get('/general', [GeneralController::class, 'index']);
 
 
 

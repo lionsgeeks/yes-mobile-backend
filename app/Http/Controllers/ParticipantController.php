@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Ably\AblyRest;
 use App\Models\CurrentUser;
 use App\Models\Participant;
 use App\Models\Programe;
@@ -64,6 +65,12 @@ class ParticipantController extends Controller
 
         $participant->social()->create();
 
+        $ably = new AblyRest(env('ABLY_KEY'));
+        $channel = $ably->channel("public_participants");
+
+        $channel->publish('participants', [
+            'participant' => $participant
+        ]);
     }
 
 
