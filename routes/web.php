@@ -21,15 +21,6 @@ use App\Events\MyEvent;
 use Ably\AblyRest;
 use App\Http\Controllers\UserController;
 
-Route::get('/test', function () {
-    $ably = new AblyRest('lExbbw.OPqhwQ:cAV6W9IMcdzXejWqZb78-NZhDE2RisM1xKtscw7cd9s'); // Replace with your Ably API key
-
-    $channel = $ably->channel('my-channel'); // same channel you use in front-end
-
-    $channel->publish('my-event', ['text' => 'Hello from Laravel 👋']);
-
-    return 'Message sent!';
-});
 
 
 
@@ -41,7 +32,10 @@ Route::get('/test', function () {
     Route::post('/qrcodes', [QrCodeController::class, 'store'])->name('qrcodes.store');
     Route::resource('programe', ProgrameController::class);
 
-Route::resource('programe', ProgrameController::class);
+    Route::resource('programe', ProgrameController::class);
+    Route::get('/programe/show/{programe}', [ProgrameController::class, 'showw']);
+
+
 
 
 Route::get('/send-report', [UserController::class, 'sendReport']);

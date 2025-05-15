@@ -15,7 +15,7 @@ class ProgrameController extends Controller
     public function index()
     {
         //
-        return Inertia::render('programe', [
+        return Inertia::render('programes/index', [
             'programes' => Programe::all(),
         ]);
     }
@@ -77,6 +77,17 @@ class ProgrameController extends Controller
         return response()->json([
             'programe' => $programe,
         ]);
+    }
+    public function showw(Programe $programe)
+    {
+        //
+        // dd($programe->name);
+        return Inertia::render('programes/show', [
+            'programe' => $programe,
+        ]);
+        // return response()->json([
+        //     'programe' => $programe,
+        // ]);
     }
 
     /**
@@ -178,5 +189,7 @@ class ProgrameController extends Controller
     public function destroy(Programe $programe)
     {
         //
+        $programe->delete();
+        return back()->with('success', 'Programe deleted successfully.');
     }
 }

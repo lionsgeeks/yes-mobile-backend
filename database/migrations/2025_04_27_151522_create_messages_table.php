@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId("sender_id")->constrained("participants")->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId("receiver_id")->constrained("participants")->cascadeOnDelete()->cascadeOnUpdate();
+            $table->boolean("seen")->default(false);
             $table->string("message");
             $table->timestamps();
         });
