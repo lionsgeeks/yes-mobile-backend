@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Information PDF</title>
 </head>
-
-<body class="bg-gray-100 font-sans"></body>
+<body></body>
 <div class="container mx-auto p-6 max-w-lg bg-white border border-gray-300 shadow-md rounded-lg">
   <div class="header text-center mb-6">
     <h1 class="text-2xl font-bold text-gray-800">User Information</h1>
@@ -20,11 +18,8 @@
   </div>
   <div class="qr-code text-center mt-6">
     <div class="qr-code-placeholder w-36 h-36 border-2 border-dashed border-gray-400 inline-block">
-      <img src="qrcode_1747135738.svg" alt="images/qrcodes/qrcode_1747135738.svg" width="70" alt="Maizzle">
-
+      <img src="qrcode_1747135738.svg" alt="images/qrcodes/qrcode_1747135738.svg" width="70">
     </div>
   </div>
 </div>
-</body>
-
 </html>

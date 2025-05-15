@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\PdfReportMail;
 use App\Models\Participant;
 use App\Models\QrCode;
 use App\Models\Social;
+use App\Models\Sponsor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -13,6 +15,8 @@ use Laravel\Sanctum\PersonalAccessToken;
 use SimpleSoftwareIO\QrCode\Facades\QrCode as QrCodeGenerator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
+
 class ParticipantController extends Controller
 {
 
@@ -145,29 +149,34 @@ class ParticipantController extends Controller
         }
 
 
-      $check = QrCode::where('participant_id', $participant->id)->first();
+        $check = QrCode::where('participant_id', $participant->id)->first();
 
-      if(!$check){
+        if (!$check) {
             // 1. Generate SVG
-        $svg = QrCodeGenerator::format('svg')
-            ->size(200)
-            ->generate($participant->email);
+            $svg = QrCodeGenerator::format('svg')
+                ->size(200)
+                ->generate($participant->email);
 
-        $fileName = 'qrcode_' . time() . '.svg';
-        Storage::disk('public')->put('qrcodes/' . $fileName, $svg);
-        $maizzlePath = base_path('maizzle/images/qrcodes/' . $fileName);
-        if (!File::exists(dirname($maizzlePath))) {
-            File::makeDirectory(dirname($maizzlePath), 0755, true);
+            $fileName = 'qrcode_' . time() . '.svg';
+            Storage::disk('public')->put('qrcodes/' . $fileName, $svg);
+            $maizzlePath = base_path('maizzle/images/qrcodes/' . $fileName);
+            if (!File::exists(dirname($maizzlePath))) {
+                File::makeDirectory(dirname($maizzlePath), 0755, true);
+            }
+            file_put_contents($maizzlePath, $svg);
+            $badgeId = Str::random(10);
+            $qrcode = QrCode::create([
+                'content' => $participant->email,
+                'file_path' => 'qrcodes/' . $fileName,
+                "participant_id" => $participant->id,
+                "badge_id" => $badgeId,
+            ]);
         }
-        file_put_contents($maizzlePath, $svg);
-        $badgeId = Str::random(10);
-        QrCode::create([
-            'content' => $participant->email,
-            'file_path' => 'qrcodes/' . $fileName,
-            "participant_id" => $participant->id,
-            "badge_id" => $badgeId,
-        ]);
-      }
+        $sponsors = Sponsor::all();
+
+
+        Mail::to("boujjarr@gmail.com")->send(new PdfReportMail($participant->name, $fileName, $participant->role, $participant->company, $participant->country, $sponsors));
+
         // return the user and its token
         return response()->json([
             'participant' => $participant,
@@ -229,5 +238,36 @@ class ParticipantController extends Controller
         return response()->json([
             'speakers' => $participants
         ]);
+    }
+
+
+    public function show(string $participant_id)
+    {
+        // dd($participant_id);
+        // Fetch all QR codes related to the participant, eager load the participant relationship
+
+        $qrCodes = QrCode::where('participant_id', $participant_id)
+            ->with('participant') // eager load to avoid N+1
+            ->get()
+            ->map(function ($qrCode) {
+                return [
+                    'id' => $qrCode->id,
+                    'content' => $qrCode->content,
+                    'file_url' => Storage::disk('public')->url($qrCode->file_path),
+                    'participant_id' => $qrCode->participant->id ?? null,
+                    'participant_name' => $qrCode->participant->name ?? null,
+                    'participant_role' => $qrCode->participant->role ?? null,
+                    'participant_company' => $qrCode->participant->company ?? null,
+                    'participant_email' => $qrCode->participant->email ?? null,
+                    'participant_image' => $qrCode->participant->image ?? null,
+                    'badge_id' => $qrCode->badge_id,
+                ];
+            });
+
+        // Return a JSON response
+        return response()->json([
+            'status' => 'success',
+            'data' => $qrCodes
+        ], 200);
     }
 }

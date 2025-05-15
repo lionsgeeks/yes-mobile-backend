@@ -1,30 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-main>
+  <div class="container mx-auto p-8 max-w-lg bg-white border border-gray-200 shadow-lg rounded-xl">
+    <div class="header text-center mb-8">
+      <h1 class="text-3xl font-extrabold text-gray-900">User Information</h1>
+    </div>
+    <div class="user-info space-y-3 mb-8">
+      <p class="text-gray-800"><span class="font-semibold">Name:</span> @{{ $name }}</p>
+      <p class="text-gray-800"><span class="font-semibold">Role:</span> @{{ $role }}</p>
+      <p class="text-gray-800"><span class="font-semibold">Company:</span> @{{ $company }}</p>
+      <p class="text-gray-800"><span class="font-semibold">Country:</span> @{{ $country }}</p>
+    </div>
+    <div class="qr-code flex flex-col items-center mt-8">
+      <div
+        class="qr-code-placeholder w-36 h-36 border-4 border-dashed border-gray-400 rounded-lg flex items-center justify-center bg-gray-50">
+        <img src="/public/storage/qrcodes/@{{$fileName}}" class="w-32 h-32 object-contain" alt="QR Code">
+      </div>
+      <img src="/public/storage/images/lionsgeek.png" width="50" alt="Lionsgeek Logo" class="mt-6" />
+    </div>
+    @if (!empty($sponsors) && count($sponsors))
+    <div class="sponsors mt-10 text-center">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Sponsors</h2>
+      <div class="flex flex-wrap justify-center gap-6">
+        @foreach ($sponsors as $sponsor)
+        <img src="/public/storage/@{{$sponsor->image}}" class="w-16 h-16  object-cover" alt="Sponsor Logo">
+        @endforeach
+      </div>
+    </div>
+    @endif
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Information PDF</title>
-</head>
-
-<body class="bg-gray-100 font-sans"></body>
-<div class="container mx-auto p-6 max-w-lg bg-white border border-gray-300 shadow-md rounded-lg">
-  <div class="header text-center mb-6">
-    <h1 class="text-2xl font-bold text-gray-800">User Information</h1>
-  </div>
-  <div class="user-info mb-6">
-    <p class="text-gray-700"><span class="font-semibold">Name:</span> John Doe</p>
-    <p class="text-gray-700"><span class="font-semibold">Role:</span> Administrator</p>
-    <p class="text-gray-700"><span class="font-semibold">company:</span> Lionsgeek</p>
-    <p class="text-gray-700"><span class="font-semibold">country:</span> Morocco</p>
-  </div>
-  <div class="qr-code text-center mt-6">
-    <div class="qr-code-placeholder w-36 h-36 border-2 border-dashed border-gray-400 inline-block">
-      <img src="qrcode_1747135738.svg" alt="images/qrcodes/qrcode_1747135738.svg" width="70" alt="Maizzle">
+    <div>
 
     </div>
   </div>
-</div>
-</body>
-
-</html>
+</x-main>
