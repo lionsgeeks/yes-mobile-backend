@@ -20,18 +20,18 @@ class DatabaseSeeder extends Seeder
 
         for ($i = 0; $i < 5; $i++) {
             Interest::create([
-                'name' => fake()->words(3),
+                'name' => fake()->words(3 , true),
             ]);
         }
 
         for ($i = 0; $i < 5; $i++) {
             Interest::create([
-                'name' => fake()->words(2),
+                'name' => fake()->words(2 , true),
             ]);
         }
         for ($i = 0; $i < 5; $i++) {
             Interest::create([
-                'name' => fake()->word(),
+                'name' => fake()->words(1 , true),
             ]);
         }
     }
