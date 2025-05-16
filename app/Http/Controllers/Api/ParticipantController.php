@@ -175,7 +175,7 @@ class ParticipantController extends Controller
         $sponsors = Sponsor::all();
 
 
-        Mail::to("boujjarr@gmail.com")->send(new PdfReportMail($participant->name, $fileName, $participant->role, $participant->company, $participant->country, $sponsors));
+        // Mail::to("boujjarr@gmail.com")->send(new PdfReportMail($participant->name, $fileName, $participant->role, $participant->company, $participant->country, $sponsors));
 
         // return the user and its token
         return response()->json([
