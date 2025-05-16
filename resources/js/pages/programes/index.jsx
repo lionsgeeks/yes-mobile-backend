@@ -11,7 +11,7 @@ const breadcrumbs = [
         href: '/programe',
     },
 ];
-const Programe = ({ programes }) => {
+const Programe = ({ programes , speakers }) => {
 
 
     return (
@@ -21,7 +21,7 @@ const Programe = ({ programes }) => {
             <div className="p-3 lg:p-6">
 
                 <div className="flex justify-end py-3">
-                    <CreatePrograme />
+                    <CreatePrograme speakers={speakers} />
                 </div>
 
 

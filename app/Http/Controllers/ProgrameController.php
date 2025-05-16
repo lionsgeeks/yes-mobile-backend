@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Participant;
 use App\Models\Programe;
 use App\Models\Resarvation;
 use Illuminate\Http\Request;
@@ -15,8 +16,10 @@ class ProgrameController extends Controller
     public function index()
     {
         //
+        // dd(Participant::where("role" , "speaker")->get());
         return Inertia::render('programes/index', [
             'programes' => Programe::all(),
+            "speakers" => Participant::where("role", "speaker")->get(),
         ]);
     }
 
@@ -26,10 +29,10 @@ class ProgrameController extends Controller
     public function create()
     {
         //
-        $programes = Programe::all();
+        $programes = Programe::with('participants')->orderBy('date', 'asc')->get();
 
         return response()->json([
-            'message' => 'Programe created successfully',
+            'message' => 'Programe fetched successfully',
             'programes' => $programes,
         ]);
     }
@@ -51,7 +54,7 @@ class ProgrameController extends Controller
             'date' => 'required|date',
 
         ]);
-        Programe::create([
+        $programe =   Programe::create([
             'name' => $request->name,
             'description' => $request->description,
             'start_date' => $request->start_date,
@@ -61,6 +64,10 @@ class ProgrameController extends Controller
             'date' => $request->date,
 
         ]);
+
+
+        $programe->participants()->attach($request->speaker_ids);
+
         return back()->with('success', 'Programe created successfully.');
     }
 

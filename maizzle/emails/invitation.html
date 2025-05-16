@@ -2,41 +2,44 @@
   <div class="w-full max-w-[552px] mx-auto">
     <x-spacer height="24px" />
 
-    <table class="w-full">
-      <tr>
-        <td class="py-6 px-9 sm:p-6 bg-white [border:1px_solid_theme(colors.slate.200)] rounded-lg">
-          <a href="https://maizzle.com">
-            <img src="yeslogo.png" src-production="images/yeslogo.png"width="70" alt="Maizzle">
-          </a>
+    <div class="py-6 px-9 sm:p-6 bg-white [border:1px_solid_theme(colors.slate.200)] rounded-lg">
 
-          <x-spacer height="24px" />
+      <img src="https://youthempowermentsummit.africa/assets/yeslogo-CWn7tdd7.png" width="80" alt="yes Logo"
+        class="mt-6" />
 
-          <h1 class="m-0 mb-6 text-2xl/8 text-slate-900 font-semibold">
-            Hello Bojo welcome to YES AFRICA!
-          </h1>
+      <x-spacer height="24px" />
 
-          <p class="m-0 mb-6 text-base/6 text-slate-600">
-            We're happy to have you on board! This is  your email address and your password in order to activate your account:
-          </p>
+      <h1 class="m-0 mb-6 text-2xl/8 text-slate-900 font-semibold">
+        Hello @{{ $name }} welcome to YES africa!
+      </h1>
 
-          <p class="m-0 mb-6 text-base/6 text-slate-600">
-            <strong>Email:</strong> <span class="text-slate-900">admin@gmail.com</span>
-            <br>
-            <strong>Password:</strong> <span class="text-slate-900">password</span>
-          </p>
 
-          <x-spacer height="24px" />
 
-          <p class="m-0 text-base/6 text-slate-600">
-            Thanks,
-            <br>
-            <span class="font-semibold">YES AFRICA</span>
-          </p>
+      <p class="m-0 mb-6 text-base/6 text-slate-600">
+        We're happy to have you on board! This is your email address and your password in order to activate your
+        account:
+      </p>
 
-          <x-divider />
+      <p class="m-0 mb-6 text-base/6 text-slate-600">
+        <strong>Email:</strong> <span class="text-slate-900"> @{{ $email }}</span>
+        <br>
+        <strong>Password:</strong> <span class="text-slate-900"> @{{ $password }}</span>
+      </p>
 
-          <p class="m-0 text-xs/5 text-slate-600 mso-break-all">
-            If you're having trouble acces to your app   Contact us at youthempowermentsummit@gmail.com
-            <br>
-            </p>
+      <x-spacer height="24px" />
+
+      <p class="m-0 text-base/6 text-slate-600">
+        Thanks,
+        <br>
+        <span class="font-semibold">YES AFRICA</span>
+      </p>
+
+      <x-divider />
+
+      <p class="m-0 text-xs/5 text-slate-600 mso-break-all">
+        If you're having trouble acces to your app Contact us at youthempowermentsummit@gmail.com
+        <br>
+      </p>
+    </div>
+  </div>
 </x-main>

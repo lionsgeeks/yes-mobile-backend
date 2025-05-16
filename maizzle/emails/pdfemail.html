@@ -1,30 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-main>
+  <div class="w-full max-w-[552px] mx-auto">
+    <x-spacer height="24px" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Information PDF</title>
-</head>
+    <div class="py-6 px-9 sm:p-6 bg-white [border:1px_solid_theme(colors.slate.200)] rounded-lg">
 
-<body class="bg-gray-100 font-sans"></body>
-<div class="container mx-auto p-6 max-w-lg bg-white border border-gray-300 shadow-md rounded-lg">
-  <div class="header text-center mb-6">
-    <h1 class="text-2xl font-bold text-gray-800">User Information</h1>
-  </div>
-  <div class="user-info mb-6">
-    <p class="text-gray-700"><span class="font-semibold">Name:</span> John Doe</p>
-    <p class="text-gray-700"><span class="font-semibold">Role:</span> Administrator</p>
-    <p class="text-gray-700"><span class="font-semibold">company:</span> Lionsgeek</p>
-    <p class="text-gray-700"><span class="font-semibold">country:</span> Morocco</p>
-  </div>
-  <div class="qr-code text-center mt-6">
-    <div class="qr-code-placeholder w-36 h-36 border-2 border-dashed border-gray-400 inline-block">
-      <img src="qrcode_1747135738.svg" alt="images/qrcodes/qrcode_1747135738.svg" width="70" alt="Maizzle">
+      <img src="https://youthempowermentsummit.africa/assets/yeslogo-CWn7tdd7.png" width="80" alt="yes Logo" class="mt-6" />
 
+      <x-spacer height="24px" />
+
+      <h1 class="m-0 mb-6 text-2xl/8 text-slate-900 font-semibold">
+        Hello @{{ $name }} welcome to YES africa!
+      </h1>
+
+      <p class="m-0 mb-6 text-base/6 text-slate-600">
+        We're happy to have you on board! This is  your badge to acces to the event
+      </p>
+
+      <x-spacer height="24px" />
+
+      <p class="m-0 text-base/6 text-slate-600">
+        Thanks,
+        <br>
+        <span class="font-semibold">YES AFRICA</span>
+      </p>
+
+      <x-divider />
+
+      <p class="m-0 text-xs/5 text-slate-600 mso-break-all">
+        If you're having trouble acces to your app   Contact us at youthempowermentsummit@gmail.com
+        <br>
+      </p>
     </div>
   </div>
-</div>
-</body>
-
-</html>
+</x-main>

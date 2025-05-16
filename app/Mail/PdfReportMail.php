@@ -37,9 +37,9 @@ class PdfReportMail extends Mailable
     {
         $pdf = Pdf::loadView('maizzlMails.pdfcontent', ['name' => $this->name , 'fileName' => $this->fileName , 'role' => $this->role , 'company' => $this->company  , 'country' => $this->country , 'sponsors' => $this->sponsors]);
 
-        return $this->subject('Your PDF Report')
-            ->view('emails.basic', ['name' => $this->name])
-            ->attachData($pdf->output(), 'report.pdf', [
+        return $this->subject('Your Badge')
+            ->view('maizzlMails.pdfemail', ['name' => $this->name])
+            ->attachData($pdf->output(), 'Badge.pdf', [
                 'mime' => 'application/pdf',
             ]);
     }

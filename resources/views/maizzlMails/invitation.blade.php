@@ -35,38 +35,33 @@
   <div role="article" aria-roledescription="email" aria-label lang="en">
     <div style="margin-left: auto; margin-right: auto; width: 100%; max-width: 552px">
       <div role="separator" style="line-height: 24px">&zwj;</div>
-      <table style="width: 100%" cellpadding="0" cellspacing="0" role="none">
-        <tr>
-          <td class="sm-p-6" style="border-radius: 8px; background-color: #fffffe; padding: 24px 36px; border: 1px solid #e2e8f0">
-            <a href="https://maizzle.com">
-              <img src="images/yeslogo.png" width="70" alt="Maizzle" style="max-width: 100%; vertical-align: middle">
-            </a>
-            <div role="separator" style="line-height: 24px">&zwj;</div>
-            <h1 style="margin: 0 0 24px; font-size: 24px; line-height: 32px; font-weight: 600; color: #0f172a">
-              Hello Bojo welcome to YES AFRICA!
-            </h1>
-            <p style="margin: 0 0 24px; font-size: 16px; line-height: 24px; color: #475569">
-              We're happy to have you on board! This is your email address and your password in order to activate your account:
-            </p>
-            <p style="margin: 0 0 24px; font-size: 16px; line-height: 24px; color: #475569">
-              <strong>Email:</strong> <span style="color: #0f172a">admin@gmail.com</span>
-              <br>
-              <strong>Password:</strong> <span style="color: #0f172a">password</span>
-            </p>
-            <div role="separator" style="line-height: 24px">&zwj;</div>
-            <p style="margin: 0; font-size: 16px; line-height: 24px; color: #475569">
-              Thanks,
-              <br>
-              <span style="font-weight: 600">YES AFRICA</span>
-            </p>
-            <div role="separator" style="height: 1px; line-height: 1px; background-color: #cbd5e1; margin-top: 24px; margin-bottom: 24px">&zwj;</div>
-            <p class="mso-break-all" style="margin: 0; font-size: 12px; line-height: 20px; color: #475569">
-              If you're having trouble acces to your app Contact us at youthempowermentsummit@gmail.com
-              <br>
-            </p>
-          </td>
-        </tr>
-      </table>
+      <div class="sm-p-6" style="border-radius: 8px; background-color: #fffffe; padding: 24px 36px; border: 1px solid #e2e8f0">
+        <img src="https://youthempowermentsummit.africa/assets/yeslogo-CWn7tdd7.png" width="80" alt="yes Logo" style="max-width: 100%; vertical-align: middle; margin-top: 24px">
+        <div role="separator" style="line-height: 24px">&zwj;</div>
+        <h1 style="margin: 0 0 24px; font-size: 24px; line-height: 32px; font-weight: 600; color: #0f172a">
+          Hello {{ $name }} welcome to YES africa!
+        </h1>
+        <p style="margin: 0 0 24px; font-size: 16px; line-height: 24px; color: #475569">
+          We're happy to have you on board! This is your email address and your password in order to activate your
+          account:
+        </p>
+        <p style="margin: 0 0 24px; font-size: 16px; line-height: 24px; color: #475569">
+          <strong>Email:</strong> <span style="color: #0f172a"> {{ $email }}</span>
+          <br>
+          <strong>Password:</strong> <span style="color: #0f172a"> {{ $password }}</span>
+        </p>
+        <div role="separator" style="line-height: 24px">&zwj;</div>
+        <p style="margin: 0; font-size: 16px; line-height: 24px; color: #475569">
+          Thanks,
+          <br>
+          <span style="font-weight: 600">YES AFRICA</span>
+        </p>
+        <div role="separator" style="height: 1px; line-height: 1px; background-color: #cbd5e1; margin-top: 24px; margin-bottom: 24px">&zwj;</div>
+        <p class="mso-break-all" style="margin: 0; font-size: 12px; line-height: 20px; color: #475569">
+          If you're having trouble acces to your app Contact us at youthempowermentsummit@gmail.com
+          <br>
+        </p>
+      </div>
     </div>
   </div>
 </body>
