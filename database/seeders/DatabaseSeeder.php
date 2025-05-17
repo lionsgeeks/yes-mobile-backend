@@ -14,25 +14,26 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-    public function run(): void
-    {
+  public function run(): void
+{
+    $interests = [
+        'Tech & Innovation',
+        'Renewable Energy',
+        'Youth Empowerment',
+        'Agriculture & Food',
+        'Financial Inclusion',
+        'Health & Wellness',
+        'Migration & Security',
+        'Volunteering',
+        'Education & Training',
+        'Disability Inclusion',
+    ];
 
-
-        for ($i = 0; $i < 5; $i++) {
-            Interest::create([
-                'name' => fake()->words(3 , true),
-            ]);
-        }
-
-        for ($i = 0; $i < 5; $i++) {
-            Interest::create([
-                'name' => fake()->words(2 , true),
-            ]);
-        }
-        for ($i = 0; $i < 5; $i++) {
-            Interest::create([
-                'name' => fake()->words(1 , true),
-            ]);
-        }
+    foreach ($interests as $interest) {
+        Interest::create([
+            'name' => $interest,
+        ]);
     }
+}
+
 }
