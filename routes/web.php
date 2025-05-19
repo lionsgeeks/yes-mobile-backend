@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\ProgrameController;
 use App\Http\Controllers\QrCodeController;
@@ -27,9 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('general', [GeneralController::class, 'update'])->name('general.update');
 });
 
-use App\Events\MyEvent;
-use Ably\AblyRest;
-use App\Http\Controllers\UserController;
+
 
 
 
@@ -38,21 +37,22 @@ use App\Http\Controllers\UserController;
 
 
 // Manually include the routes as API routes
-    Route::get('/qrcodes/create', [QrCodeController::class, 'create'])->name('qrcodes.create');
-    Route::post('/qrcodes', [QrCodeController::class, 'store'])->name('qrcodes.store');
-    Route::resource('programe', ProgrameController::class);
+Route::get('/qrcodes/create', [QrCodeController::class, 'create'])->name('qrcodes.create');
+Route::post('/qrcodes', [QrCodeController::class, 'store'])->name('qrcodes.store');
+Route::resource('programe', ProgrameController::class);
 
-    Route::resource('programe', ProgrameController::class);
-    Route::get('/programe/show/{programe}', [ProgrameController::class, 'showw']);
+Route::resource('programe', ProgrameController::class);
+Route::get('/programe/show/{programe}', [ProgrameController::class, 'showw']);
 
 
 
 Route::get('/send-report', [UserController::class, 'sendReport']);
 
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
-require __DIR__.'/participants.php';
-require __DIR__.'/sponsors.php';
-require __DIR__.'/funders.php';
-require __DIR__.'/ngo.php';
-require __DIR__.'/reporters.php';
+require __DIR__ . '/settings.php';
+require __DIR__ . '/auth.php';
+require __DIR__ . '/participants.php';
+require __DIR__ . '/sponsors.php';
+require __DIR__ . '/funders.php';
+require __DIR__ . '/ngo.php';
+require __DIR__ . '/reporters.php';
+require __DIR__ . '/notifications.php';

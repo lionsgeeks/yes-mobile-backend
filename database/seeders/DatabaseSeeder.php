@@ -14,26 +14,32 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-  public function run(): void
-{
-    $interests = [
-        'Tech & Innovation',
-        'Renewable Energy',
-        'Youth Empowerment',
-        'Agriculture & Food',
-        'Financial Inclusion',
-        'Health & Wellness',
-        'Migration & Security',
-        'Volunteering',
-        'Education & Training',
-        'Disability Inclusion',
-    ];
+    public function run(): void
+    {
+        $interests = [
+            'Tech & Innovation',
+            'Renewable Energy',
+            'Youth Empowerment',
+            'Agriculture & Food',
+            'Financial Inclusion',
+            'Health & Wellness',
+            'Migration & Security',
+            'Volunteering',
+            'Education & Training',
+            'Disability Inclusion',
+        ];
 
-    foreach ($interests as $interest) {
-        Interest::create([
-            'name' => $interest,
-        ]);
+        foreach ($interests as $interest) {
+            Interest::create([
+                'name' => $interest,
+            ]);
+
+
+            User::insert([
+                'name' => 'admin',
+                'email' => 'admin@gmail.com',
+                'password' => Hash::make('admin@gmail.com'),
+            ]);
+        }
     }
-}
-
 }
