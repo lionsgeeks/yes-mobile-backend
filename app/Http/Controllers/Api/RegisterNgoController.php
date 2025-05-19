@@ -20,13 +20,14 @@ class RegisterNgoController extends Controller
             ]);
             $password = str()->random(10);
             // dd($password);
-            Participant::create([
+            $participant = Participant::create([
                 'name' => $validatedData['name'],
                 'email' => $validatedData['email'],
                 'password' => Hash::make($password),
                 'role' => $validatedData['role'],
                 'company' => $request->input('company') ?? null,
             ]);
+            $participant->social()->create();
             // TODO: Send email to participant with the password
             return response()->json(['message' => 'Participant registered successfully'], 200);
         } catch (\Throwable $th) {

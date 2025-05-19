@@ -20,8 +20,8 @@ class ReportController extends Controller
                 'operator_system' => 'required',
                 'screen_name' => 'required',
             ]);
-            $report = Report::create($validatedData);
-            return response()->json(['message' => 'Report created successfully', 'report' => $report], 200);
+            Report::create($validatedData);
+            return response()->json(['message' => 'Report created successfully'], 200);
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Error creating report', 'error' => $th->getMessage()], 500);
         }

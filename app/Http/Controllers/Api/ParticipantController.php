@@ -169,7 +169,7 @@ class ParticipantController extends Controller
                 "badge_id" => $badgeId,
             ]);
             $sponsors = Sponsor::all();
-            Mail::to("boujjarr@gmail.com")->send(new PdfReportMail($participant->name, $fileName, $participant->role, $participant->company, $participant->country, $sponsors));
+            // Mail::to("boujjarr@gmail.com")->send(new PdfReportMail($participant->name, $fileName, $participant->role, $participant->company, $participant->country, $sponsors));
         }
 
 
