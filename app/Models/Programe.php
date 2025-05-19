@@ -20,4 +20,8 @@ class Programe extends Model
     {
         return $this->belongsToMany(Participant::class, 'participant_program');
     }
+    public function participantes()
+    {
+        return $this->belongsToMany(Participant::class, 'resarvations');
+    }
 }

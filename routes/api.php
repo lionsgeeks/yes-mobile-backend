@@ -65,7 +65,7 @@ Route::get('/participants', [ControllersParticipantController::class, 'sendParti
 Route::post('/participants/action', [ControllersParticipantController::class, 'storeAction']);
 // Route::post('/participant/logged', [ControllersParticipantController::class, 'currentParticipant']);
 Route::get('/participants/matches', [ControllersParticipantController::class, 'sendMatches']);
-
+Route::post('/participants/enrolled', [ParticipantController::class, 'isRegistredToSession']);
 Route::get('/general', [GeneralController::class, 'index']);
 
 

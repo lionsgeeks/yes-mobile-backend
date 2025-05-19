@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Mail\PdfReportMail;
 use App\Models\Participant;
+use App\Models\Programe;
 use App\Models\QrCode;
 use App\Models\Social;
 use App\Models\Sponsor;
@@ -274,4 +275,24 @@ class ParticipantController extends Controller
     //         'ngos' => $ngos
     //     ]);
     // }
+    public function isRegistredToSession(Request $request)
+    {
+        $request->validate([
+            'programe_id' => 'required',
+            'badge_id' => 'required',
+        ]);
+        $isBadge = QrCode::where('badge_id', $request->badge_id)->exists();
+        if (!$isBadge) {
+            return response()->json(['message' => 'Participant with this badge id not found'], 404);
+        }
+        $participant_id = QrCode::where('badge_id', $request->badge_id)->first()->participant_id;
+        $participant = Participant::find($participant_id);
+        if (!$participant) {
+            return response()->json(['message' => 'Participant not found'], 404);
+        }
+
+        $isRegistered = $participant->programmes()->where('programe_id', $request->programe_id)->exists();
+
+        return response()->json(['isRegistered' => $isRegistered], 200);
+    }
 }
