@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\InterestController;
 use App\Http\Controllers\Api\ParticipantController;
 use App\Http\Controllers\Api\SponsorController;
 use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ParticipantController as ControllersParticipantController;
 use App\Http\Controllers\ProgrameController;
 use App\Http\Controllers\QrCodeController;
@@ -22,7 +23,7 @@ Route::get('/user', function (Request $request) {
 Route::resource("message", MessageController::class);
 Route::get("conversation/{sender}/{receiver}", [MessageController::class, "conversation"]);
 Route::get("chats/{userId}", [MessageController::class, "chats"]);
-Route::get('/invitation/image',[InvitationController::class, 'shareInvitationImage']);
+Route::get('/invitation/image', [InvitationController::class, 'shareInvitationImage']);
 Route::post('/register/participant', [RegisterNgoController::class, 'register']);
 
 Route::get('/qrcodes', [QrCodeController::class, 'index'])->name('qrcodes.index');
@@ -46,6 +47,8 @@ Route::post('/participant/image/{participant}', [ParticipantController::class, '
 Route::put('/participant/password/{participant}', [ParticipantController::class, 'updatePassword']);
 Route::put('/participant/{participant}', [ParticipantController::class, 'update']);
 Route::delete('/participant/{participant}', [ParticipantController::class, 'destroy']);
+Route::post('participant/pushToken/{participant}', [NotificationController::class, 'update']);
+
 
 
 Route::get('sponsors', [SponsorController::class, 'index']);

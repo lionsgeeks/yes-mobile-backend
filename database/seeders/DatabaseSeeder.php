@@ -17,21 +17,26 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
+        User::insert([
+            'name' => 'admin',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('admin@gmail.com'),
+        ]);
 
         for ($i = 0; $i < 5; $i++) {
             Interest::create([
-                'name' => fake()->words(3 , true),
+                'name' => fake()->words(3, true),
             ]);
         }
 
         for ($i = 0; $i < 5; $i++) {
             Interest::create([
-                'name' => fake()->words(2 , true),
+                'name' => fake()->words(2, true),
             ]);
         }
         for ($i = 0; $i < 5; $i++) {
             Interest::create([
-                'name' => fake()->words(1 , true),
+                'name' => fake()->words(1, true),
             ]);
         }
     }

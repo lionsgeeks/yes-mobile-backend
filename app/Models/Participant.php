@@ -20,6 +20,7 @@ class Participant extends Model
         'city',
         'location',
         'description',
+        'expoToken',
     ];
 
     protected $hidden = [
@@ -33,7 +34,7 @@ class Participant extends Model
     public function connections(){
         return $this->belongsToMany(Participant::class, 'matches', 'participant_id', 'related_participant_id')
         ->withPivot('action');     }
-    
+
 
 
     public function qrCodes()

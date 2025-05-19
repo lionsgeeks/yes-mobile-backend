@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string("city")->nullable();
             $table->string("location")->nullable();
             $table->text("description")->nullable();
+            $table->string('expoToken')->nullable();
             $table->timestamps();
         });
     }
