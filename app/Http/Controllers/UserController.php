@@ -9,7 +9,9 @@ use App\Models\Participant;
 use App\Models\Sponsor;
 use Illuminate\Support\Facades\Mail;
 
+use Illuminate\Support\Str;
 class UserController extends Controller
+
 {
 
 
@@ -17,7 +19,7 @@ class UserController extends Controller
     public function sendReport(Request $request)
     {
 
-         $badgeId = Str::uniqid(10);
+         $badgeId = Str::uuid();
         dd($badgeId);
         $participant = Participant::where("name", "bojo")->first();
         $fileName = "qrcode_1747385519.svg";
