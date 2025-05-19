@@ -25,35 +25,73 @@
 </head>
 <body style="margin: 0; width: 100%; padding: 0; -webkit-font-smoothing: antialiased; word-break: break-word">
   <div role="article" aria-roledescription="email" aria-label lang="en">
-    <div style="width: 100%; margin-left: auto; margin-right: auto; max-width: 256px; border-radius: 12px; border-width: 1px; border-color: #e5e7eb; background-color: #fffffe; padding: 32px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)">
-      <div style="margin-bottom: 32px; text-align: center">
-        <h1 style="font-size: 30px; font-weight: 800; color: #111827">User Information</h1>
-      </div>
-      <div style="margin-bottom: 32px">
-        <p style="color: #1f2937"><span style="font-weight: 600">Name:</span> {{ $name }}</p>
-        <p style="color: #1f2937; margin-top: 12px; margin-bottom: 0"><span style="font-weight: 600">Role:</span> {{ $role }}</p>
-        <p style="color: #1f2937; margin-top: 12px; margin-bottom: 0"><span style="font-weight: 600">Company:</span> {{ $company }}</p>
-        <p style="color: #1f2937; margin-top: 12px; margin-bottom: 0"><span style="font-weight: 600">Country:</span> {{ $country }}</p>
-      </div>
-      <div style="margin-top: 32px; display: flex; flex-direction: column; align-items: center">
-        <div style="display: flex; height: 144px; width: 144px; align-items: center; justify-content: center; border-radius: 8px; border: 4px dashed #9ca3af; background-color: #f9fafb">
-          <img src="/public/storage/qrcodes/{{$fileName}}" alt="QR Code" style="max-width: 100%; vertical-align: middle; height: 128px; width: 128px; object-fit: contain" width="128" height="128">
-        </div>
-        <img src="/public/storage/images/lionsgeek.png" width="50" alt="Lionsgeek Logo" style="max-width: 100%; vertical-align: middle; margin-top: 24px">
-      </div>
-      @if (!empty($sponsors) && count($sponsors))
-      <div style="margin-top: 40px; text-align: center">
-        <h2 style="margin-bottom: 16px; font-size: 20px; font-weight: 700; color: #1f2937">Sponsors</h2>
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 24px">
-          @foreach ($sponsors as $sponsor)
-          <img src="/public/storage/{{$sponsor->image}}" alt="Sponsor Logo" style="max-width: 100%; vertical-align: middle; height: 64px; width: 64px; object-fit: cover" width="64" height="64">
-          @endforeach
-        </div>
-      </div>
-      @endif
-      <div>
-      </div>
-    </div>
+    <div style="width: 100%; margin-left: auto; margin-right: auto; max-width: 336px; border-radius: 8px; border-width: 1px; border-color: #d1d5db; background-color: #fffffe; padding: 16px; font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)"></div>
+    <table cellpadding="0" cellspacing="0" role="presentation" style="width: 100%">
+      <tr>
+        <td style="width: 50%; border-width: 1px; padding: 16px; vertical-align: top">
+          <div>
+            <img src="/public/storage/images/lionsgeek.png" alt="GITEX Africa" style="max-width: 100%; vertical-align: middle; margin-bottom: 8px; height: 32px" height="32">
+            <div style="text-transform: uppercase; margin-bottom: 4px; font-size: 18px; font-weight: 700; line-height: 1.25; color: #000001">
+              {{ $name }}
+            </div>
+            <div style="text-transform: uppercase; margin-bottom: 4px; font-size: 16px; font-weight: 700; color: #ea580c">
+              {{ $role }}
+            </div>
+            <div style="text-transform: uppercase; margin-bottom: 4px; font-size: 14px; color: #000001"></div>
+            LIONSGEEK<br>MOROCCO
+          </div>
+          <div style="text-transform: uppercase; margin-top: 16px; font-size: 24px; font-weight: 700; color: #000001"></div>
+          VISITOR <div style="margin-top: 8px">
+            <img src="/public/storage/images/lionsgeek.png" alt="Sponsor" style="max-width: 100%; margin-right: 8px; display: inline-block; height: 24px; vertical-align: middle" height="24">
+            <span style="vertical-align: middle; font-size: 12px; color: #4b5563">Badge Sponsor</span>
+          </div>
+        </td>
+        <td style="width: 50%; border-width: 1px; padding: 16px; vertical-align: top">
+          <div>
+            <img src="/public/storage/images/lionsgeek.png" alt="Venue Map" style="max-width: 100%; vertical-align: middle; margin-bottom: 8px; width: 100%; border-radius: 4px">
+            <div style="margin-bottom: 8px; font-size: 12px; color: #374151">
+              <strong>Event Venue:</strong><br>
+              Place Bab Jdid, Boulevard Al Yarmouk, Marrakech, Morocco
+            </div>
+            <div style="margin-bottom: 8px; font-size: 12px; color: #374151">
+              <strong>Dates:</strong> 14 - 16 April 2025<br>
+              <strong>Hours:</strong> Mon-Tue 10am-6pm, Wed 10am-6pm
+            </div>
+            <div style="font-size: 12px; color: #374151">
+              <strong>Download the GITEX AFRICA Mobile App</strong><br>
+              <img src="/public/storage/images/lionsgeek.png" alt="App Store" style="max-width: 100%; vertical-align: middle; margin-right: 4px; display: inline-block; height: 20px" height="20">
+              <img src="/public/storage/images/lionsgeek.png" alt="Play Store" style="max-width: 100%; vertical-align: middle; display: inline-block; height: 20px" height="20">
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 50%; border-width: 1px; padding: 16px; vertical-align: top">
+          <div style="text-align: center">
+            <img src="/public/storage/qrcodes/{{ $fileName }}" alt="QR Code" style="max-width: 100%; vertical-align: middle; margin-left: auto; margin-right: auto; margin-bottom: 8px; height: 112px; width: 112px; border-width: 1px" width="112" height="112">
+            <div style="font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; letter-spacing: 0.1em; color: #374151">{{ $fileName }}</div>
+            <div style="margin-top: 8px">
+              <img src="/public/storage/images/lionsgeek.png" alt="Scan QR" style="max-width: 100%; margin-right: 4px; display: inline-block; height: 16px; vertical-align: middle" height="16">
+              <span style="vertical-align: middle; font-size: 12px; color: #4b5563">Scan for badge info</span>
+            </div>
+          </div>
+        </td>
+        <td style="width: 50%; border-width: 1px; padding: 16px; vertical-align: top">
+          <div style="margin-bottom: 8px">
+            <span style="font-size: 12px; font-weight: 600; color: #374151">CONNECT WITH US ON</span>
+            <div style="margin-top: 4px">
+              <img src="/public/storage/images/lionsgeek.png" alt="Facebook" style="max-width: 100%; vertical-align: middle; margin-right: 8px; display: inline-block; height: 20px" height="20">
+              <img src="/public/storage/images/lionsgeek.png" alt="Twitter" style="max-width: 100%; vertical-align: middle; margin-right: 8px; display: inline-block; height: 20px" height="20">
+              <img src="/public/storage/images/lionsgeek.png" alt="LinkedIn" style="max-width: 100%; vertical-align: middle; margin-right: 8px; display: inline-block; height: 20px" height="20">
+              <img src="/public/storage/images/lionsgeek.png" alt="YouTube" style="max-width: 100%; vertical-align: middle; display: inline-block; height: 20px" height="20">
+            </div>
+          </div>
+          <div style="margin-top: 16px; text-align: center">
+            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.025em; color: #000001">GITEXAFRICA.COM</span>
+          </div>
+        </td>
+      </tr>
+    </table>
   </div>
 </body>
 </html>

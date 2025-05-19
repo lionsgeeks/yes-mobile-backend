@@ -80,12 +80,10 @@ class QrCodeController extends Controller
         // 3. Save record to database
         $participant = Participant::where('id', "1")->first();
         // dd($participant->id);
-        $badgeId = Str::random(10);
         QrCode::create([
             'content' => $request->content,
             'file_path' => 'qrcodes/' . $fileName,
             "participant_id" => $participant->id,
-            "badge_id" => $badgeId,
         ]);
 
         return redirect()->route('qrcodes.index')->with('success', 'QR Code created!');

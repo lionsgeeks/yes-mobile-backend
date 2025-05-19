@@ -49,6 +49,9 @@ Route::delete('/participant/{participant}', [ParticipantController::class, 'dest
 
 
 Route::get('sponsors', [SponsorController::class, 'index']);
+Route::get('speakers', [ParticipantController::class, 'speakers']);
+
+Route::get('sponsors', [SponsorController::class, 'index']);
 // Route::get('speakers', [ParticipantController::class, 'speakers']);
 Route::post('reports', [ReportController::class, 'store']);
 // Route::get('ngos', [ParticipantController::class,'ngos']);

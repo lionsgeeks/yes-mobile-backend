@@ -153,29 +153,26 @@ class ParticipantController extends Controller
 
         if (!$check) {
             // 1. Generate SVG
+            $badgeId = Str::uuid();
             $svg = QrCodeGenerator::format('svg')
                 ->size(200)
-                ->generate($participant->email);
+                ->generate($badgeId);
 
             $fileName = 'qrcode_' . time() . '.svg';
             Storage::disk('public')->put('qrcodes/' . $fileName, $svg);
-            $maizzlePath = base_path('maizzle/images/qrcodes/' . $fileName);
-            if (!File::exists(dirname($maizzlePath))) {
-                File::makeDirectory(dirname($maizzlePath), 0755, true);
-            }
-            file_put_contents($maizzlePath, $svg);
-            $badgeId = Str::random(10);
+
             $qrcode = QrCode::create([
-                'content' => $participant->email,
+                'content' => $badgeId,
+
                 'file_path' => 'qrcodes/' . $fileName,
                 "participant_id" => $participant->id,
                 "badge_id" => $badgeId,
             ]);
+            $sponsors = Sponsor::all();
+            Mail::to("boujjarr@gmail.com")->send(new PdfReportMail($participant->name, $fileName, $participant->role, $participant->company, $participant->country, $sponsors));
         }
-        $sponsors = Sponsor::all();
 
 
-        // Mail::to("boujjarr@gmail.com")->send(new PdfReportMail($participant->name, $fileName, $participant->role, $participant->company, $participant->country, $sponsors));
 
         // return the user and its token
         return response()->json([
@@ -253,7 +250,7 @@ class ParticipantController extends Controller
                 return [
                     'id' => $qrCode->id,
                     'content' => $qrCode->content,
-                    'file_url' => Storage::disk('public')->url($qrCode->file_path),
+                    'file_url' => $qrCode->file_path,
                     'participant_id' => $qrCode->participant->id ?? null,
                     'participant_name' => $qrCode->participant->name ?? null,
                     'participant_role' => $qrCode->participant->role ?? null,

@@ -14,16 +14,16 @@ class UserController extends Controller
 
 
 
-public function sendReport(Request $request)
-{
+    public function sendReport(Request $request)
+    {
 
-    $participant = Participant::where("name" , "bojo")->first();
-    // $fileName ="qrcode_1747385519.svg";
-//  $sponsors = Sponsor::all();
-        // Mail::to("boujjarr@gmail.com")->send(new PdfReportMail($participant->name, $fileName, $participant->role, $participant->company, $participant->country, $sponsors));
-Mail::to('boujjarr@gmail.com')->send(new InvitationMail($participant->name, $participant->email, $participant->password));
-    return back()->with('success', 'Email sent!');
-}
-
-
+         $badgeId = Str::uniqid(10);
+        dd($badgeId);
+        $participant = Participant::where("name", "bojo")->first();
+        $fileName = "qrcode_1747385519.svg";
+        $sponsors = Sponsor::all();
+        Mail::to("boujjarr@gmail.com")->send(new PdfReportMail($participant->name, $fileName, $participant->role, $participant->company, $participant->country, $sponsors));
+        // Mail::to('boujjarr@gmail.com')->send(new InvitationMail($participant->name, $participant->email, $participant->password));
+        return back()->with('success', 'Email sent!');
+    }
 }
