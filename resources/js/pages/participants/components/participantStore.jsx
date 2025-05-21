@@ -25,7 +25,6 @@ export default function ParticipantStore({ title = 'Participant', role = 'visito
         city: '',
         role: role
     });
-    console.log('logging', endPoint);
 
     const handleSubmit = (e) => {
         e.preventDefault();

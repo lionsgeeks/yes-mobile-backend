@@ -48,7 +48,7 @@ export default function CreateSpeaker() {
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>Adding a Participant</DialogTitle>
+                    <DialogTitle>Adding a Speaker</DialogTitle>
                     <DialogDescription>Create a new participant account for the application.</DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleSubmit}>

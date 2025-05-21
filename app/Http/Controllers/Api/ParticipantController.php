@@ -16,6 +16,7 @@ use Laravel\Sanctum\PersonalAccessToken;
 use SimpleSoftwareIO\QrCode\Facades\QrCode as QrCodeGenerator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class ParticipantController extends Controller
@@ -128,10 +129,14 @@ class ParticipantController extends Controller
 
     public function signin(Request $request)
     {
+        Log::info('Sign In Request:', ['request' => $request]);
+
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
+
+        Log::info('Sign In Validated:');
 
         $participant = Participant::where('email', $request->email)->first();
         if (! $participant || ! Hash::check($request->password, $participant->password)) {
@@ -140,8 +145,12 @@ class ParticipantController extends Controller
             ], 500);
         }
 
+        Log::info('Participant found:', ['participant' => $participant]);
+
         // create a token based on the user's email
         $token = $participant->tokens->firstWhere('name', $request->email)->token ?? $participant->createToken($request->email)->plainTextToken;
+
+        Log::info('Token Created:', ['token' => $token]);
 
         if (!$token) {
             return response()->json([
@@ -149,8 +158,10 @@ class ParticipantController extends Controller
             ], 500);
         }
 
-
         $check = QrCode::where('participant_id', $participant->id)->first();
+
+        Log::info('check qr code:', ['check' => $check]);
+
 
         if (!$check) {
             // 1. Generate SVG
@@ -170,10 +181,13 @@ class ParticipantController extends Controller
                 "badge_id" => $badgeId,
             ]);
             $sponsors = Sponsor::all();
+            Log::info('created a new qr code for the participant:');
+
             // Mail::to("boujjarr@gmail.com")->send(new PdfReportMail($participant->name, $fileName, $participant->role, $participant->company, $participant->country, $sponsors));
         }
 
 
+        Log::info('return response:');
 
         // return the user and its token
         return response()->json([
