@@ -117,6 +117,7 @@ class ProgrameController extends Controller
 
     public function enrolled(Request $request)
     {
+        dd();
         $request->validate([
             "programe_id" => 'required|integer',
             "participant_id" => 'required|integer',
@@ -159,6 +160,7 @@ class ProgrameController extends Controller
 
     public function cancel(Request $request)
     {
+        dd();
         $request->validate([
             "programe_id" => 'required|integer',
             "participant_id" => 'required|integer',

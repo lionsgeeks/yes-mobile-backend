@@ -35,6 +35,7 @@ class PdfReportMail extends Mailable
 
     public function build()
     {
+        
         $pdf = Pdf::loadView('maizzlMails.pdfcontent', ['name' => $this->name , 'fileName' => $this->fileName , 'role' => $this->role , 'company' => $this->company  , 'country' => $this->country , 'sponsors' => $this->sponsors]);
 
         return $this->subject('Your Badge')
