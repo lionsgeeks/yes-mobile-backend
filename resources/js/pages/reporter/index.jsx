@@ -34,9 +34,9 @@ const ReporterPage = () => {
 
     return (
         <AppLayout title="Bug Reports">
-            <div className="p-6">
+            <div className="p-6 ">
                 <h1 className="mb-4 text-2xl font-bold">Bug Reports</h1>
-                <Table>
+                <Table className="w-full overflow-hidden">
                     <TableHeader>
                         <TableRow>
                             <TableHead>Error Name</TableHead>
@@ -50,7 +50,7 @@ const ReporterPage = () => {
                     <TableBody>
                         {reports.map((report, idx) => (
                             <TableRow key={idx}>
-                                <TableCell>{report.name}</TableCell>
+                                <TableCell className='whitespace-pre-line break-words max-w-[500px]'>{report.name}</TableCell>
                                 <TableCell>{report.participant.name}</TableCell>
                                 <TableCell>{new Date(report.time).toLocaleString()}</TableCell>
                                 <TableCell>{report.operator_system}</TableCell>
