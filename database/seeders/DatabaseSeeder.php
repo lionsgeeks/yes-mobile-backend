@@ -34,6 +34,16 @@ class DatabaseSeeder extends Seeder
                 'name' => $interest,
             ]);
 
+            // Create 10 admin organizers organizers
+            for ($i = 1; $i <= 10; $i++) {
+                Participant::create([
+                    'name' => 'Organizer ' . $i,
+                    'email' => 'organizer' . $i . '@yesafrica.com',
+                    'password' => Hash::make('yesafrica'),
+                    'role' => 'admin',
+                ]);
+            }
+
 
             User::insert([
                 'name' => 'admin',
