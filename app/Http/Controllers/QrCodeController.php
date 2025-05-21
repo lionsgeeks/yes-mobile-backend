@@ -113,7 +113,7 @@ public function show(QrCode $qrCode)
     ], 200);
 }
 
-
+ 
 
     /**
      * Show the form for editing the specified resource.
