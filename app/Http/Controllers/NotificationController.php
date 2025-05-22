@@ -26,9 +26,12 @@ class NotificationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function sendNotifications()
     {
-        //
+        $notifs = Notification::select('title', 'body', 'created_at')->latest()->get();
+        return response()->json([
+            'notifications' => $notifs
+        ]);
     }
 
     /**
@@ -99,5 +102,13 @@ class NotificationController extends Controller
     public function destroy(Notification $notification)
     {
         $notification->delete();
+    }
+
+    public function clearSubscribers()
+    {
+        $expo = Expo::driver('file');
+        $subs = $expo->getSubscriptions('default');
+
+        $expo->unsubscribe('default', $subs);
     }
 }
