@@ -48,7 +48,7 @@ Route::put('/participant/password/{participant}', [ParticipantController::class,
 Route::put('/participant/{participant}', [ParticipantController::class, 'update']);
 Route::delete('/participant/{participant}', [ParticipantController::class, 'destroy']);
 Route::post('participant/pushToken/{participant}', [NotificationController::class, 'update']);
-
+Route::get('getNotifications', [NotificationController::class, 'sendNotifications']);
 
 
 Route::get('sponsors', [SponsorController::class, 'index']);
