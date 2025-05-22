@@ -28,8 +28,7 @@ Route::post('/register/participant', [RegisterNgoController::class, 'register'])
 
 Route::post('/enrolled', [ProgrameController::class, 'enrolled'])->name('programe.enrolled');
 Route::post('/enrolleddelete', [ProgrameController::class, 'cancel'])->name('programe.cancel');
-Route::get('/qrcodes', [QrCodeController::class, 'index'])->name('qrcodes.index');
-Route::get('/programe/create', [ProgrameController::class, 'create'])->name('programe.create');
+
 
 Route::get('/qrcodes', [QrCodeController::class, 'index'])->name('qrcodes.index');
 Route::get('/qrcodes/{qrCode}', [QrCodeController::class, 'show']);
