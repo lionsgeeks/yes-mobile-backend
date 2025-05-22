@@ -29,7 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('general', [GeneralController::class, 'update'])->name('general.update');
 });
 
-Route::post('/clearSubscribers', [NotificationController::class, 'clearSubscribers'])->middleware(['auth', 'verified']);
+Route::get('/clearSubscribers', [NotificationController::class, 'clearSubscribers'])->middleware(['auth', 'verified']);
 
 
 

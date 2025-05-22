@@ -29,7 +29,7 @@ class ProgrameController extends Controller
     public function create()
     {
         //
-        $programes = Programe::with('participants')->orderBy('date', 'asc')->get();
+        $programes = Programe::with(['participants','participantes.qrCodes'])->orderBy('date', 'asc')->get();
 
         return response()->json([
             'message' => 'Programe fetched successfully',

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('resarvations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('programe_id')->constrained()->cascadeOnUpdate();
-            $table->foreignId('participant_id')->constrained()->cascadeOnUpdate();
+            $table->foreignId('programe_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('participant_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->timestamps();
         });
