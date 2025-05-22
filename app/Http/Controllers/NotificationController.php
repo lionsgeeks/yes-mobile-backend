@@ -110,5 +110,7 @@ class NotificationController extends Controller
         $subs = $expo->getSubscriptions('default');
 
         $expo->unsubscribe('default', $subs);
+
+        return redirect()->back();
     }
 }
