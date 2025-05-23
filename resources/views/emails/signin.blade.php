@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Password Reset Email</title>
+    <title>Sign In Email</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -58,11 +58,10 @@
 
 <body>
     <div class="email-container">
-        <h1>Password Reset Email</h1>
+        <h1>Account Created Successfully.</h1>
         <p>Hello <span class="bold">{{ $participant->name }}</span>,</p>
-        <p class="big">We've generated a new password for your account.</p>
-        <p>Your new password is: <span class="bold">{{ $newPassword }}</span></p>
-        <p>If you did not request this change, you can safely ignore this message. No further action is needed.</p>
+        <p class="big">Here's the password for your account.</p>
+        <p>Your password is: <span class="bold">{{ $password }}</span></p>
         <p class="small">For your security, consider updating your password after logging in.</p>
         <div class="footer">
             &copy; {{ date('Y') }} Y.E.S Africa. All rights reserved.

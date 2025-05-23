@@ -299,7 +299,7 @@ class ParticipantController extends Controller
         }
 
         // create new password
-        $newPassword = 'yohohoho';
+        $newPassword = Str::random(8);
 
         // update it for participant
         $participant->update([
@@ -307,7 +307,7 @@ class ParticipantController extends Controller
         ]);
 
         // send it to email
-        Mail::to('oussamajebrane98@gmail.com')->send(new ResetPasswordMail($participant, $newPassword));
+        Mail::to($request->email)->send(new ResetPasswordMail($participant, $newPassword));
 
 
         return response()->json([
