@@ -18,7 +18,7 @@ class ProgrameController extends Controller
         //
         // dd(Participant::where("role" , "speaker")->get());
         return Inertia::render('programes/index', [
-            'programes' => Programe::all(),
+            'programes' => Programe::all()->load('participants'),
             "speakers" => Participant::where("role", "speaker")->get(),
         ]);
     }
@@ -111,7 +111,37 @@ class ProgrameController extends Controller
     public function update(Request $request, Programe $programe)
     {
         //
-        dd($request->all());
+          $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'capacity' => 'required|integer',
+            'location' => 'required|string|max:255',
+            'date' => 'required|date',
+
+        ]);
+        $programe->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'capacity' => $request->capacity,
+            'location' => $request->location,
+            'date' => $request->date,
+
+        ]);
+
+
+        if ($request->has('speaker_ids')) {
+            $programe->participants()->detach();
+        }
+
+        $programe->participants()->attach($request->speaker_ids);
+
+
+
+        return back()->with('success', 'Programe updated successfully.');
     }
 
 

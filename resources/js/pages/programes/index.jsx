@@ -4,6 +4,7 @@ import AppLayout from '@/layouts/app-layout';
 import CreatePrograme from './components/createPrograme';
 import { router } from '@inertiajs/react';
 import DeletePrograme from './components/deletePrograme';
+import UpdatePrograme from './components/updatePrograme';
 
 const breadcrumbs = [
     {
@@ -50,7 +51,7 @@ const Programe = ({ programes , speakers }) => {
 
                                 <div className="flex gap-x-2 mt-4">
                                     <DeletePrograme id={program.id} />
-
+                                    <UpdatePrograme programe={program} speakers={speakers} />
                                     <button className='cursor-pointer rounded bg-blue-500 px-3 py-2 text-white' onClick={() => router.visit(`/programe/show/${program.id}`)}>Details</button>
 
                                 </div>

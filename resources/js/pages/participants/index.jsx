@@ -1,13 +1,18 @@
 import AppLayout from '@/layouts/app-layout';
 import { Head, usePage } from '@inertiajs/react';
 import ParticipantStore from './components/participantStore';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { UserCircle, Mail, Building2 } from "lucide-react"
 import { useState } from 'react';
+
 import DeleteSpeaker from '../speakers/components/deleteSpeaker';
-
-
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { MoreVertical } from "lucide-react";
 const breadcrumbs = [
     {
         title: 'Participants',
@@ -18,116 +23,116 @@ const breadcrumbs = [
 export default function Participants() {
     const { participants } = usePage().props;
     const [searchQuery, setSearchQuery] = useState('');
+    const [dialogOpen, setDialogOpen] = useState(false);
 
     const filteredParticipants = participants.filter(
-        (sponsor) =>
-            sponsor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            sponsor.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            sponsor.description.toLowerCase().includes(searchQuery.toLowerCase()),
-    )
+        (p) =>
+            p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            p.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            p.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Participants" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <div className='flex justify-between'>
-                    <input type="search" name="search" id="search" placeholder='Search For Participant'
-                        className='border rounded  px-2 w-[20vw]'
-                        onChange={(e) => { setSearchQuery(e.target.value) }}
+                <div className="flex justify-between items-center">
+                    <input
+                        type="search"
+                        name="search"
+                        id="search"
+                        placeholder="Search For Participant"
+                        className="border rounded px-2 w-[20vw] h-10"
+                        onChange={(e) => setSearchQuery(e.target.value)}
                     />
                     <ParticipantStore />
                 </div>
 
-                <Table>
-                    <TableHeader className="bg-slate-50">
-                        <TableRow>
-                            <TableHead
-                                className="w-[300px] cursor-pointer hover:bg-slate-100 transition-colors"
+                {filteredParticipants.length === 0 ? (
+                    <div className="text-center text-gray-500 py-8">No participants found.</div>
+                ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {filteredParticipants.map((participant) => (
+                            <div
+                                key={participant.id}
+                                className="border rounded-lg p-4 shadow-sm hover:shadow-md transition"
                             >
-                                <div className="flex items-center">
-                                    <UserCircle className="mr-2 h-4 w-4 text-slate-500" />
-                                    <span>Name</span>
+                                <div className="flex items-center gap-4 mb-4">
+                                    <img
+                                        src={'storage/' + participant.image}
+                                        alt={participant.name}
+                                        className="w-16 h-16 rounded-full object-cover"
+                                    />
+                                    <div>
+                                        <h3 className="text-lg font-semibold flex items-center gap-2">
+                                            <UserCircle className="w-4 h-4 text-gray-500" />
+                                            {participant.name}
+                                        </h3>
+                                        <p className="text-sm text-gray-600 flex items-center gap-2">
+                                            <Mail className="w-4 h-4 text-gray-500" />
+                                            {participant.email}
+                                        </p>
+                                    </div>
                                 </div>
-                            </TableHead>
-                            <TableHead
-                                className="cursor-pointer hover:bg-slate-100 transition-colors"
-                            >
-                                <div className="flex items-center">
-                                    <Mail className="mr-2 h-4 w-4 text-slate-500" />
-                                    <span>Email</span>
+                                <div className="mb-3">
+                                    <h4 className="text-sm font-medium text-gray-700 flex items-center gap-2 mb-1">
+                                        <Building2 className="w-4 h-4 text-gray-500" /> Interests
+                                    </h4>
+                                    <div className="flex flex-wrap gap-2">
+                                        {participant.interesets?.length > 0 ? (
+                                            participant.interesets.map((int, idx) => (
+                                                <Badge key={idx} variant="secondary" className="capitalize">
+                                                    {int.name}
+                                                </Badge>
+                                            ))
+                                        ) : (
+                                            <p className="text-sm text-gray-500">No Interests Selected</p>
+                                        )}
+                                    </div>
                                 </div>
-                            </TableHead>
-                            <TableHead
-                                className="cursor-pointer hover:bg-slate-100 transition-colors"
-                            >
-                                <div className="flex items-center">
-                                    <Building2 className="mr-2 h-4 w-4 text-slate-500" />
-                                    <span>Interests</span>
-                                </div>
-                            </TableHead>
-                            <TableHead
-                                className="cursor-pointer hover:bg-slate-100 transition-colors"
-                            >
-                                <div className="flex items-center">
-                                    <Building2 className="mr-2 h-4 w-4 text-slate-500" />
-                                    <span>Role</span>
-                                </div>
-                            </TableHead>
-                            <TableHead
-                                className="cursor-pointer hover:bg-slate-100 transition-colors"
-                            >
-                                Actions
-                            </TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {filteredParticipants.length === 0 ? (
-                            <TableRow>
-                                <TableCell colSpan={3} className="h-24 text-center">
-                                    No participants found.
-                                </TableCell>
-                            </TableRow>
-                        ) : (
-                            filteredParticipants.map((participant) => (
-                                <TableRow key={participant.id} className="hover:bg-slate-50 transition-colors">
-                                    <TableCell className="font-medium">
-                                        <div className='flex items-center gap-2'>
-                                            <img src={'storage/' + participant.image}
-                                                className='w-12 aspect-square rounded-full'
-                                                alt="" />
-                                            <p>{participant.name}</p>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell className="text-slate-600">{participant.email}</TableCell>
-                                    <TableCell>
-                                        <div className='flex flex-wrap gap-2'>
-                                            {
-                                                participant.interesets?.length > 0 ?
+                                <div className="mb-4 flex items-center gap-2">
+                                    <h4 className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                                        <Building2 className="w-4 h-4 text-gray-500" /> Role
+                                    </h4>
+                                    <Badge className="capitalize">{participant.role}</Badge>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger className="ml-auto">
+                                            <MoreVertical className="w-5 h-5 text-gray-600 cursor-pointer" />
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent className="w-48">
+                                            <DropdownMenuItem onClick={() => alert(`Reset password for ${participant.name}`)}>
+                                                Reset Password
+                                            </DropdownMenuItem>
 
-                                                    participant.interesets.map((int, ind) => (
-                                                        <Badge variant="secondary" className="capitalize">
-                                                            {int.name}
-                                                        </Badge>
-                                                    ))
+                                            {/* The DeleteSpeaker trigger */}
+                                            <DropdownMenuItem
+                                                className="text-red-600 cursor-pointer"
+                                                onSelect={e => {
+                                                    e.preventDefault(); // prevent default dropdown close
+                                                    setDialogOpen(true); // open dialog
+                                                }}
+                                            >
+                                                Delete Account
+                                            </DropdownMenuItem>
 
-                                                    :
-                                                    'No Interests Selected'
-                                            }
-                                        </div>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Badge className="capitalize">
-                                            {participant.role}
-                                        </Badge>
-                                    </TableCell>
-                                    <TableCell>
-                                            <DeleteSpeaker id={participant.id} />
-                                    </TableCell>
-                                </TableRow>
-                            ))
-                        )}
-                    </TableBody>
-                </Table>
+                                            {/* Place DeleteSpeaker without trigger - dialog controlled externally */}
+                                            <DeleteSpeaker
+                                                id={participant.id}
+                                                trigger={<></>} // no trigger because we open dialog manually
+                                                open={dialogOpen}
+                                                setOpen={setDialogOpen}
+                                            />
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+
+                                </div>
+
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </AppLayout>
     );
