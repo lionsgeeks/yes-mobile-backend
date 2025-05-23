@@ -250,6 +250,7 @@ class ParticipantController extends Controller
                     'participant_company' => $qrCode->participant->company ?? null,
                     'participant_email' => $qrCode->participant->email ?? null,
                     'participant_image' => $qrCode->participant->image ?? null,
+                    'participant_country' => $qrCode->participant->country ?? null,
                     'badge_id' => $qrCode->badge_id,
                 ];
             });
