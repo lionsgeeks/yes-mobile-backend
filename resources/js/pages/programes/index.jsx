@@ -25,9 +25,8 @@ const Programe = ({ programes , speakers }) => {
                     <CreatePrograme speakers={speakers} />
                 </div>
 
-
+                    <h2 className="text-2xl font-bold text-alpha mb-4 ">All Programs</h2>
                 <div className="mt-8">
-                    <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">Programs</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" >
                         {programes && programes.map((program, index) => (
                             <div key={index} className="bg-white shadow-md rounded-lg p-4" >
