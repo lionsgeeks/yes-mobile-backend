@@ -49,6 +49,7 @@ export default function Funders() {
                             <div onClick={() => router.visit(`/funders/show/${fund.id}`)}
                                 key={index} className='p-4 shadow-lg rounded'>
                                 <div className='flex items-center gap-5'>
+                                {console.log(fund)}
                                     <img src={'storage/' + fund.image}
                                         className='rounded-full w-20 aspect-square object-cover'
                                         alt="" />

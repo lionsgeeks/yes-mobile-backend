@@ -21,7 +21,7 @@ const FunderShow = ({ funder }) => {
             <Head title={`Funder - ${funder.name}`} />
             <div className="w-[90%] mx-auto mt-10 bg-white rounded-lg shadow p-8 flex flex-col items-center space-y-6">
                 <img
-                    src={'storage/' + funder.image}
+                    src={`/storage/${funder.image}`} 
                     className="rounded-full w-32 h-32 object-cover border-4 border-primary-500 shadow"
                     alt={funder.name}
                 />
