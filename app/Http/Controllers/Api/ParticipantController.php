@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Mail\PdfReportMail;
+use App\Mail\ResetPasswordMail;
 use App\Models\Participant;
 use App\Models\Programe;
 use App\Models\QrCode;
@@ -229,14 +230,6 @@ class ParticipantController extends Controller
         return $participant;
     }
 
-    public function speakers()
-    {
-        $participants = Participant::where('role', 'speaker')->with(['interesets', 'programs'])->get();
-        return response()->json([
-            'speakers' => $participants
-        ]);
-    }
-
 
     public function show(string $participant_id)
     {
@@ -267,14 +260,7 @@ class ParticipantController extends Controller
             'data' => $qrCodes
         ], 200);
     }
-    
-    // public function ngos()
-    // {
-    //     $ngos = Participant::where('role', 'ngo')->with(['interesets', 'social'])->get();
-    //     return response()->json([
-    //         'ngos' => $ngos
-    //     ]);
-    // }
+
     public function isRegistredToSession(Request $request)
     {
         $request->validate([
@@ -294,5 +280,38 @@ class ParticipantController extends Controller
         $isRegistered = $participant->programmes()->where('programe_id', $request->programe_id)->exists();
 
         return response()->json(['isRegistered' => $isRegistered], 200);
+    }
+
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+
+        // find if participant exists
+        $participant = Participant::where('email', $request->email)->first();
+        if (!$participant) {
+            return response()->json([
+                'message' => 'No participant found with this email'
+            ]);
+        }
+
+        // create new password
+        $newPassword = 'yohohoho';
+
+        // update it for participant
+        $participant->update([
+            'password' => Hash::make($newPassword),
+        ]);
+
+        // send it to email
+        Mail::to('oussamajebrane98@gmail.com')->send(new ResetPasswordMail($participant, $newPassword));
+
+
+        return response()->json([
+            'message' => 'Password Updated Successfully. Please Check Your Email'
+        ]);
     }
 }
