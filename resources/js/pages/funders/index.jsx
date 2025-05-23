@@ -1,5 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
-import { Head, usePage } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
 import ParticipantStore from '../participants/components/participantStore';
 import { useState } from 'react';
 import DeleteSpeaker from '../speakers/components/deleteSpeaker';
@@ -46,7 +46,8 @@ export default function Funders() {
                 <div className='grid grid-cols-3 gap-2'>
                     {
                         filteredSponsors.map((fund, index) => (
-                            <div key={index} className='p-4 shadow-lg rounded'>
+                            <div onClick={() => router.visit(`/funders/show/${fund.id}`)}
+                                key={index} className='p-4 shadow-lg rounded'>
                                 <div className='flex items-center gap-5'>
                                     <img src={'storage/' + fund.image}
                                         className='rounded-full w-20 aspect-square object-cover'

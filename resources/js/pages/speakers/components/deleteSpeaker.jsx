@@ -15,7 +15,7 @@ const DeleteSpeaker = ({ id, trigger, open, setOpen }) => {
 
   const handleDelete = () => {
     destroy(route('participants.destroy', id));
-    setOpen(false); // close dialog after delete
+    setOpen(false); 
   };
 
   return (
