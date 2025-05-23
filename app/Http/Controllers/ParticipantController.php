@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Ably\AblyRest;
+use App\Mail\SignInMail;
 use App\Models\CurrentUser;
 use App\Models\Participant;
 use App\Models\Programe;
@@ -10,7 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class ParticipantController extends Controller
 {
@@ -23,14 +26,6 @@ class ParticipantController extends Controller
         return Inertia::render('participants/index', [
             'participants' => $participants,
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -48,11 +43,14 @@ class ParticipantController extends Controller
             $fileName = $file->store('images/participants', 'public');
         }
 
-        // TODO: generate a random password and send it to the participant's email
+        // TODO: uncomment code bellow for random password + email
+        // $password = Str::random(8);
+
         $participant = Participant::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make('lionsgeek'),
+            // 'password' => Hash::make($password),
             'role' => $request->role ?? $role,
             'company' => $request->company,
             'country' => $request->country,
@@ -61,6 +59,9 @@ class ParticipantController extends Controller
             'description' => $request->description,
             'image' => $file ? $fileName : 'images/participants/avatar.png'
         ]);
+
+        // Mail::to($request->email)->send(new SignInMail($participant, $password));
+
 
         $participant->social()->create();
 

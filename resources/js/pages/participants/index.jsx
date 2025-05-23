@@ -110,17 +110,16 @@ export default function Participants() {
                                             <DropdownMenuItem
                                                 className="text-red-600 cursor-pointer"
                                                 onSelect={e => {
-                                                    e.preventDefault(); // prevent default dropdown close
-                                                    setDialogOpen(true); // open dialog
+                                                    e.preventDefault();
+                                                    setDialogOpen(true);
                                                 }}
                                             >
                                                 Delete Account
                                             </DropdownMenuItem>
 
-                                            {/* Place DeleteSpeaker without trigger - dialog controlled externally */}
                                             <DeleteSpeaker
                                                 id={participant.id}
-                                                trigger={<></>} // no trigger because we open dialog manually
+                                                trigger={<></>}
                                                 open={dialogOpen}
                                                 setOpen={setDialogOpen}
                                             />

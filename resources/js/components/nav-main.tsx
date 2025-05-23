@@ -6,7 +6,7 @@ export function NavMain({ items = [], title = 'Platform' }: { items: NavItem[], 
     const page = usePage();
     return (
         <SidebarGroup className="px-2 py-0">
-            <SidebarGroupLabel>{title}</SidebarGroupLabel>
+            <SidebarGroupLabel className='text-white font-bold underline '>{title}</SidebarGroupLabel>
             <SidebarMenu>
                 {items.map((item) => (
                     <SidebarMenuItem key={item.title}>

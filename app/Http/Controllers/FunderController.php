@@ -34,6 +34,11 @@ class FunderController extends Controller
     public function show(string $id)
     {
         //
+        $funder = Participant::where('id', $id)->first();
+
+        return Inertia::render('funders/show', [
+            'funder' => $funder,
+        ]);
     }
 
     /**

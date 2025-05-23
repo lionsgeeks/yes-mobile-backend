@@ -3,7 +3,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import {  Coins, HandCoins, LayoutGrid, Users, MicVocal, Building2, Bug, MessageCircle } from 'lucide-react';
+import {  Coins, HandCoins, LayoutGrid, Users, MicVocal, Building2, Bug, MessageCircle, Calendar } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -46,7 +46,7 @@ const miscNavItems: NavItem[] = [
     {
         title: 'Programes',
         url: '/programe',
-        icon: LayoutGrid,
+        icon: Calendar,
     },
     {
         title: 'Send Notifications',
@@ -62,8 +62,8 @@ const miscNavItems: NavItem[] = [
 
 export function AppSidebar() {
     return (
-        <Sidebar collapsible="icon" variant="inset">
-            <SidebarHeader>
+        <Sidebar collapsible="icon" variant="inset" className='p-0'>
+            <SidebarHeader className='bg-alpha'>
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
@@ -75,13 +75,13 @@ export function AppSidebar() {
                 </SidebarMenu>
             </SidebarHeader>
 
-            <SidebarContent>
+            <SidebarContent className='bg-alpha text-white'>
                 <NavMain items={mainNavItems} />
                 <NavMain items={accountNavItems} title='Accounts' />
                 <NavMain items={miscNavItems} title='Others' />
             </SidebarContent>
 
-            <SidebarFooter>
+            <SidebarFooter className='bg-alpha'>
                 <NavUser />
             </SidebarFooter>
         </Sidebar>

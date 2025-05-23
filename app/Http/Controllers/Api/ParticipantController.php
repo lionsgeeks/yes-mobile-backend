@@ -250,6 +250,7 @@ class ParticipantController extends Controller
                     'participant_company' => $qrCode->participant->company ?? null,
                     'participant_email' => $qrCode->participant->email ?? null,
                     'participant_image' => $qrCode->participant->image ?? null,
+                    'participant_country' => $qrCode->participant->country ?? null,
                     'badge_id' => $qrCode->badge_id,
                 ];
             });
@@ -299,7 +300,7 @@ class ParticipantController extends Controller
         }
 
         // create new password
-        $newPassword = 'yohohoho';
+        $newPassword = Str::random(8);
 
         // update it for participant
         $participant->update([
@@ -307,7 +308,7 @@ class ParticipantController extends Controller
         ]);
 
         // send it to email
-        Mail::to('oussamajebrane98@gmail.com')->send(new ResetPasswordMail($participant, $newPassword));
+        Mail::to($request->email)->send(new ResetPasswordMail($participant, $newPassword));
 
 
         return response()->json([
