@@ -28,8 +28,8 @@ class InvitationController extends Controller
                 'image_path' => asset("assets/posts/screenshot_$name.png")
             ]);
         }
-        // dd($name);
-        Browsershot::url("http://192.168.100.136:8000/linkedinpost?name=$name")
+        // dd(file_exists($imagePath));
+        Browsershot::url("https://app.youthempowermentsummit.africa/linkedinpost?name=$name")
             ->setNodeBinary('C:\Program Files\nodejs\node.exe')
             ->setNpmBinary('C:\Program Files\nodejs\npm.cmd')
             ->windowSize(1000, 700)
