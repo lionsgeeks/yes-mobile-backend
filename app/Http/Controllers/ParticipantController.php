@@ -136,6 +136,7 @@ class ParticipantController extends Controller
 
         $participants = Participant::where('id', '!=', $request->auth)
             ->whereNotIn('id', $actedUserIds)
+            ->whereNot('role', "admin")
             ->select('id', 'name', 'role', 'image', 'description')
             ->get();
 
