@@ -1,6 +1,6 @@
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import { Activity, Bell, Building, Building2, Calendar, ChevronRight, Clock, Coins, FileText, HandCoins, MessageSquare, Mic2, MicVocal, TrendingUp, Users } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -14,38 +14,39 @@ const breadcrumbs = [
 
 
 export default function Dashboard() {
+    const { participants, programCount } = usePage().props
     const stats = [
         {
             title: "Total Participants",
-            value: "245",
+            value: participants?.length,
             change: "+18%",
             icon: Users,
             color: "alpha",
         },
         {
             title: "NGOs Registered",
-            value: "32",
+            value: participants?.filter((p) => p.role == "ngo").length,
             change: "+5",
             icon: Building,
             color: "beta",
         },
         {
             title: "Speakers",
-            value: "18",
+            value: participants?.filter((p) => p.role == "speaker").length,
             change: "3 pending",
             icon: Mic2,
             color: "alpha",
         },
         {
-            title: "Sponsors & Funders",
-            value: "12",
+            title: "Funders",
+            value: participants?.filter((p) => p.role == "funder").length,
             change: "",
             icon: HandCoins,
             color: "beta",
         },
         {
             title: "Program Sessions",
-            value: "24",
+            value: programCount,
             change: "2 days",
             icon: Calendar,
             color: "alpha",
@@ -80,13 +81,13 @@ export default function Dashboard() {
                 </div>
 
 
-                <div className="">
-                    <Card className="">
+                <div className="grid grid-cols-3 gap-2">
+                    <Card className="col-span-2">
                         <CardHeader>
                             <CardTitle>Quick Actions</CardTitle>
                             <CardDescription>Access frequently used pages with one click</CardDescription>
                         </CardHeader>
-                        <CardContent className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+                        <CardContent className="grid gap-4 grid-cols-2">
                             <a href="/participants">
                                 <div className="flex items-center gap-3 rounded-lg border p-3 text-sm transition-colors hover:bg-accent">
                                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-alpha/10">
@@ -141,6 +142,29 @@ export default function Dashboard() {
                                     <ChevronRight className="ml-auto h-5 w-5 text-muted-foreground" />
                                 </div>
                             </a>
+                        </CardContent>
+                    </Card>
+
+                    <Card className='pt-3 pb-0'>
+                        <CardHeader>
+                            <CardTitle>Recent Logins</CardTitle>
+                            <CardDescription>Check who is using the application recently</CardDescription>
+                        </CardHeader>
+
+                        <CardContent className='p-0'>
+                            {
+                                participants?.slice(0, 5).map((participant, index) => (
+                                    <div key={index} className={`${index % 2 == 0 ? 'bg-gray-100' : ''} mb-1 px-4 py-1`}>
+                                        <div className='flex items-center gap-3 justify-between'>
+                                            <h1 className='capitalize'>{participant.name}</h1>
+                                            <p
+                                            className={`${participant.role === 'funder' ? 'text-beta/80 bg-beta/20  border-beta' : participant.role === 'speaker' ? 'text-alpha/80 bg-alpha/20  border-alpha' : 'text-muted-foreground bg-gray-200/20'} text-sm border  px-1 rounded-full capitalize`}
+                                            >{participant.role}</p>
+                                        </div>
+                                        <p className='text-sm text-muted-foreground'>{new Date(participant.updated_at).toLocaleString()}</p>
+                                    </div>
+                                ))
+                            }
                         </CardContent>
                     </Card>
                 </div>

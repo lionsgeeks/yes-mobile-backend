@@ -6,6 +6,8 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProgrameController;
 use App\Http\Controllers\QrCodeController;
 use App\Models\General;
+use App\Models\Participant;
+use App\Models\Programe;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -17,7 +19,12 @@ Route::get('/linkedinpost', function () {
 });
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
+        $participants = Participant::select('id', 'name','role', 'updated_at')->orderBy('updated_at', 'desc')->get();
+        $programCount = Programe::count();
+        return Inertia::render('dashboard',  [
+            'participants' => $participants,
+            'programCount' => $programCount,
+        ]);
     })->name('dashboard');
 
     Route::get('/general/info/table', function () {

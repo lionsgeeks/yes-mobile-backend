@@ -1,4 +1,5 @@
-import { Card } from '@/components/ui/card';
+import { Card, CardFooter } from '@/components/ui/card';
+import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -8,23 +9,33 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import AppLayout from '@/layouts/app-layout';
-import { usePage } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import { Edit, MoreHorizontal, Trash2 } from 'lucide-react';
 import CreateSpeaker from './components/createSpeaker';
 import DeleteSpeaker from './components/deleteSpeaker';
 import UpdateSpeaker from './components/updateSpeaker';
+
+const breadcrumbs = [
+    {
+        title: 'Speakers',
+        href: '/speakers',
+    },
+];
+
+
 const Speaker = () => {
     const { speakers } = usePage().props;
-    console.log('speakers', speakers);
+
     return (
-        <AppLayout>
+        <AppLayout breadcrumbs={breadcrumbs}>
+            <Head title='Speakers' />
             <div className="p-3 lg:p-6">
                 <div className="flex justify-end py-3">
                     <CreateSpeaker />
                 </div>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
                     {speakers.map((speaker) => (
-                        <Card key={speaker.id} className="flex flex-col items-center gap-2 rounded-lg border p-4">
+                        <Card key={speaker.id} className="flex flex-col items-center gap-2 rounded-lg border p-4 relative">
                             {/* <div className="flex self-end">
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
@@ -48,7 +59,10 @@ const Speaker = () => {
                             <img src={`/storage/${speaker.image}`} alt={speaker.name} className="mb-4 h-24 w-24 rounded-full object-cover" />
                             <h3 className="text-lg font-semibold">{speaker.name}</h3>
                             <p className='text-muted-foreground'>{speaker.email}</p>
-                            <DeleteSpeaker id={speaker.id} />
+
+                            <div className="absolute top-2 right-2 cursor-pointer">
+                                <DeleteSpeaker speaker={speaker} />
+                            </div>
                         </Card>
                     ))}
                 </div>

@@ -1,5 +1,5 @@
 import { useForm } from "@inertiajs/react";
-import {Input} from  '@/components/ui/Input';
+import {Input} from  '@/components/ui/input';
 import {
     Dialog,
     DialogContent,
