@@ -1,8 +1,17 @@
+import { useEffect } from 'react';
 import mockup from '../../../public/assets/images/app-mockup2.jpg';
 import applestore from '../../../public/assets/images/App_Store_(iOS)-Badge-Logo.wine.png';
 import playstore from '../../../public/assets/images/Google_Play-Badge-Logo.wine.png';
+import { useAppearance } from '@/hooks/use-appearance';
 // import AppMockup from "@/components/app-mockup"
 export default function Welcome() {
+
+
+    const { appearance, updateAppearance } = useAppearance();
+    useEffect(() => {
+
+        updateAppearance('light')
+    }, [])
     return (
         <section className="relative h-[100vh] overflow-hidden bg-gradient-to-br from-[#2e539d] to-[#1a3366] text-white">
             {/* <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-10"></div> */}

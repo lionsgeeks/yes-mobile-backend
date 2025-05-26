@@ -4,6 +4,8 @@ import { Head, usePage } from '@inertiajs/react';
 import { Activity, Bell, Building, Building2, Calendar, ChevronRight, Clock, Coins, FileText, HandCoins, MessageSquare, Mic2, MicVocal, TrendingUp, Users } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { useAppearance } from '@/hooks/use-appearance';
+import { useEffect } from 'react';
 
 const breadcrumbs = [
     {
@@ -14,6 +16,11 @@ const breadcrumbs = [
 
 
 export default function Dashboard() {
+      const { appearance, updateAppearance } = useAppearance();
+        useEffect(() => {
+    
+            updateAppearance('light')
+        }, [])
     const { participants, programCount } = usePage().props
     const stats = [
         {
