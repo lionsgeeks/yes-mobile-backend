@@ -1,5 +1,5 @@
 import { useForm } from "@inertiajs/react";
-import { Button } from '@/components/ui/button';
+import {Input} from  '@/components/ui/Input';
 import {
     Dialog,
     DialogContent,
@@ -9,6 +9,7 @@ import {
     DialogTrigger
 } from '@/components/ui/dialog';
 import { useState, useEffect } from 'react';
+import { Pen } from "lucide-react";
 
 export default function UpdatePrograme({ programe, speakers }) {
     const { data, setData, put, processing, errors, reset } = useForm({
@@ -51,34 +52,34 @@ export default function UpdatePrograme({ programe, speakers }) {
             }
         });
     };
-const handleSpeakerChange = (e) => {
-    const value = parseInt(e.target.value); 
-    if (e.target.checked) {
-        if (!data.speaker_ids.includes(value)) {
-            setData('speaker_ids', [...data.speaker_ids, value]);
+    const handleSpeakerChange = (e) => {
+        const value = parseInt(e.target.value);
+        if (e.target.checked) {
+            if (!data.speaker_ids.includes(value)) {
+                setData('speaker_ids', [...data.speaker_ids, value]);
+            }
+        } else {
+            setData('speaker_ids', data.speaker_ids.filter(id => id !== value));
         }
-    } else {
-        setData('speaker_ids', data.speaker_ids.filter(id => id !== value));
-    }
-};
+    };
 
-console.log(programe.participants[0]);
+    // console.log(programe.participants[0]);
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-                <Button className="cursor-pointer">Edit Program</Button>
+            <DialogTrigger className="cursor-pointer" asChild>
+                <Pen size={20} color="#00ff00" />
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                     <DialogTitle>Update Program</DialogTitle>
                     <DialogDescription>Update the program details.</DialogDescription>
                 </DialogHeader>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* ...other fields remain the same... */}
+                <form onSubmit={handleSubmit} className="space-y-4 grid grid-cols-2 gap-2">
+
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>
-                        <input
+                        <Input
                             type="text"
                             id="name"
                             name="name"
@@ -88,20 +89,23 @@ console.log(programe.participants[0]);
                         />
                         {errors.name && <div className="text-red-500 text-sm">{errors.name}</div>}
                     </div>
+
                     <div>
-                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description:</label>
-                        <textarea
-                            id="description"
-                            name="description"
-                            value={data.description}
-                            onChange={(e) => setData('description', e.target.value)}
+                        <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date:</label>
+                        <Input
+                            type="date"
+                            id="date"
+                            name="date"
+                            value={data.date}
+                            onChange={(e) => setData('date', e.target.value)}
                             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                        ></textarea>
-                        {errors.description && <div className="text-red-500 text-sm">{errors.description}</div>}
+                        />
+                        {errors.date && <div className="text-red-500 text-sm">{errors.date}</div>}
                     </div>
+
                     <div>
                         <label htmlFor="start_date" className="block text-sm font-medium text-gray-700">Start Date:</label>
-                        <input
+                        <Input
                             type="time"
                             id="start_date"
                             name="start_date"
@@ -113,7 +117,7 @@ console.log(programe.participants[0]);
                     </div>
                     <div>
                         <label htmlFor="end_date" className="block text-sm font-medium text-gray-700">End Date:</label>
-                        <input
+                        <Input
                             type="time"
                             id="end_date"
                             name="end_date"
@@ -125,7 +129,7 @@ console.log(programe.participants[0]);
                     </div>
                     <div>
                         <label htmlFor="capacity" className="block text-sm font-medium text-gray-700">Capacity:</label>
-                        <input
+                        <Input
                             type="number"
                             id="capacity"
                             name="capacity"
@@ -137,7 +141,7 @@ console.log(programe.participants[0]);
                     </div>
                     <div>
                         <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location:</label>
-                        <input
+                        <Input
                             type="text"
                             id="location"
                             name="location"
@@ -147,21 +151,22 @@ console.log(programe.participants[0]);
                         />
                         {errors.location && <div className="text-red-500 text-sm">{errors.location}</div>}
                     </div>
-                    <div>
-                        <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date:</label>
-                        <input
-                            type="date"
-                            id="date"
-                            name="date"
-                            value={data.date}
-                            onChange={(e) => setData('date', e.target.value)}
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                        />
-                        {errors.date && <div className="text-red-500 text-sm">{errors.date}</div>}
+
+                    <div className="col-span-2">
+                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description:</label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            value={data.description}
+                            onChange={(e) => setData('description', e.target.value)}
+                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm px-2 py-1"
+                        ></textarea>
+                        {errors.description && <div className="text-red-500 text-sm">{errors.description}</div>}
                     </div>
-                    <div>
+
+                    <div className="col-span-2">
                         <label className="block text-sm font-medium text-gray-700 mb-1">Speakers:</label>
-                        <div className="space-y-2">
+                        <div className="space-y-2 flex items-center gap-2 flex-wrap">
                             {speakers.map((speaker) => (
                                 <div key={speaker.id} className="flex items-center space-x-2">
                                     <input
@@ -170,7 +175,7 @@ console.log(programe.participants[0]);
                                         value={speaker.id}
                                         checked={data.speaker_ids.includes(speaker.id) || data.speaker_ids.includes(String(speaker.id))}
                                         onChange={handleSpeakerChange}
-                                        className="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500"
+                                        className="rounded border-gray-300 accent-alpha "
                                     />
                                     <label htmlFor={`speaker-${speaker.id}`} className="text-sm text-gray-700">
                                         {speaker.name}
@@ -183,7 +188,7 @@ console.log(programe.participants[0]);
                     <button
                         type="submit"
                         disabled={processing}
-                        className="w-full bg-blue-500 text-white py-2 px-4 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        className="col-span-2 bg-alpha text-white py-2 px-4 rounded-md cursor-pointer hover:bg-alpha/80"
                     >
                         {processing ? 'Processing...' : 'Update Program'}
                     </button>

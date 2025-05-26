@@ -41,6 +41,7 @@ class MessageController extends Controller
             "message" => $request->message,
         ]);
 
+
         // Broadcast to receiver in private channel
         $ably = new AblyRest(env('ABLY_KEY'));
         $channel = $ably->channel("private-chat:{$request->receiver}");
@@ -49,6 +50,7 @@ class MessageController extends Controller
             'id' => $message->id,
             'text' => $message->message,
             'sender' => $request->sender,
+            "sender_infos"=> Participant::find($request->sender),
             'created_at' => $message->created_at->toDateTimeString(),
         ]);
 
@@ -96,7 +98,7 @@ class MessageController extends Controller
     }
 
 
-    //* hna  kanjbed  l messagat  dyal  chi 2 
+    //* hna  kanjbed  l messagat  dyal  chi 2
     public function conversation($sender, $receiver)
     {
 

@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useForm } from '@inertiajs/react';
+import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
 const DeletePrograme = ({ id }) => {
     const { delete: destroy } = useForm();
@@ -11,7 +12,9 @@ const DeletePrograme = ({ id }) => {
     };
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger className="bg-red-500 px-4 py-2 rounded cursor-pointer text-white">Delete</DialogTrigger>
+            <DialogTrigger className="cursor-pointer">
+            <Trash2 size={20} color='#ff0000' />
+            </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Are you absolutely sure?</DialogTitle>

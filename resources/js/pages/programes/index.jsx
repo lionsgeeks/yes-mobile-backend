@@ -5,6 +5,8 @@ import CreatePrograme from './components/createPrograme';
 import { router } from '@inertiajs/react';
 import DeletePrograme from './components/deletePrograme';
 import UpdatePrograme from './components/updatePrograme';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Eye } from 'lucide-react';
 
 const breadcrumbs = [
     {
@@ -12,7 +14,7 @@ const breadcrumbs = [
         href: '/programe',
     },
 ];
-const Programe = ({ programes , speakers }) => {
+const Programe = ({ programes, speakers }) => {
 
 
     return (
@@ -25,38 +27,61 @@ const Programe = ({ programes , speakers }) => {
                     <CreatePrograme speakers={speakers} />
                 </div>
 
-                    <h2 className="text-2xl font-bold text-alpha mb-4 ">All Programs</h2>
-                <div className="mt-8">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" >
-                        {programes && programes.map((program, index) => (
-                            <div key={index} className="bg-white shadow-md rounded-lg p-4" >
-                                <h3 className="text-lg font-bold text-gray-800">{program.name}</h3>
-                                <p className="text-sm text-gray-600">{program.description}</p>
-                                <p className="text-sm text-gray-600 mt-2">
-                                    <strong>Start Date:</strong> {program.start_date}
-                                </p>
-                                <p className="text-sm text-gray-600">
-                                    <strong>End Date:</strong> {program.end_date}
-                                </p>
-                                <p className="text-sm text-gray-600">
-                                    <strong>Capacity:</strong> {program.capacity}
-                                </p>
-                                <p className="text-sm text-gray-600">
-                                    <strong>Location:</strong> {program.location}
-                                </p>
-                                <p className="text-sm text-gray-600">
-                                    <strong>Date:</strong> {program.date}
-                                </p>
+                <h2 className="text-2xl font-bold text-alpha mb-4 ">All Programs</h2>
+                <div className="mt-8 p-2 shadow rounded ">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Session Title</TableHead>
+                                <TableHead>Date</TableHead>
+                                <TableHead>Time</TableHead>
+                                <TableHead>Capacity</TableHead>
+                                <TableHead>Location</TableHead>
+                                <TableHead>Speakers</TableHead>
+                                <TableHead>Actions</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {programes && programes.map((program, index) => (
+                                <TableRow key={index}>
+                                    <TableCell>
+                                        <h1>{program.name}</h1>
+                                        <p className='text-sm text-muted-foreground whitespace-pre-line break-words w-[250px]'>{program.description}</p>
+                                    </TableCell>
 
-                                <div className="flex gap-x-2 mt-4">
-                                    <DeletePrograme id={program.id} />
-                                    <UpdatePrograme programe={program} speakers={speakers} />
-                                    <button className='cursor-pointer rounded bg-blue-500 px-3 py-2 text-white' onClick={() => router.visit(`/programe/show/${program.id}`)}>Details</button>
+                                    <TableCell>{new Date(program.date).toDateString()}</TableCell>
+                                    <TableCell>{program.start_date} - {program.end_date}</TableCell>
+                                    <TableCell>{program.capacity}</TableCell>
+                                    <TableCell>{program.location}</TableCell>
+                                    <TableCell>
+                                        <div>
+                                            {program.participants.length > 0 ?
+                                                program.participants.map((speaker, index) => (
+                                                    <div key={index} className="flex items-center gap-2">
+                                                        <div className="text-sm">
+                                                            {speaker.name}
+                                                        </div>
+                                                    </div>
+                                                ))
+                                                :
+                                                <div className='text-xs text-muted-foreground'>No Speaker Assigned</div>
+                                            }
+                                        </div>
+                                    </TableCell>
 
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                                    <TableCell className='flex gap-x-2 items-center '>
+                                        <button className='cursor-pointer' onClick={() => router.visit(`/programe/show/${program.id}`)}>
+                                            <Eye size={20} color='#295da6' />
+                                        </button>
+                                        <UpdatePrograme programe={program} speakers={speakers} />
+                                        <DeletePrograme id={program.id} />
+
+                                    </TableCell>
+
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
                 </div>
 
             </div>

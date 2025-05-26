@@ -1,5 +1,7 @@
 import { useForm } from "@inertiajs/react";
 import { Button } from '@/components/ui/button';
+import { Input } from "@/components/ui/Input";
+
 import {
     Dialog,
     DialogContent,
@@ -9,6 +11,7 @@ import {
     DialogTrigger
 } from '@/components/ui/dialog';
 import { useState } from 'react';
+
 
 export default function CreatePrograme({ speakers }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -55,10 +58,10 @@ export default function CreatePrograme({ speakers }) {
                     <DialogTitle>Adding a Program</DialogTitle>
                     <DialogDescription>Create a new program for the application.</DialogDescription>
                 </DialogHeader>
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4 grid grid-cols-2 gap-2">
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>
-                        <input
+                        <Input
                             type="text"
                             id="name"
                             name="name"
@@ -70,20 +73,23 @@ export default function CreatePrograme({ speakers }) {
                     </div>
 
                     <div>
-                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description:</label>
-                        <textarea
-                            id="description"
-                            name="description"
-                            value={data.description}
-                            onChange={(e) => setData('description', e.target.value)}
+                        <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date:</label>
+                        <Input
+                            type="date"
+                            id="date"
+                            name="date"
+                            value={data.date}
+                            onChange={(e) => setData('date', e.target.value)}
                             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                        ></textarea>
-                        {errors.description && <div className="text-red-500 text-sm">{errors.description}</div>}
+                        />
+                        {errors.date && <div className="text-red-500 text-sm">{errors.date}</div>}
                     </div>
+
+
 
                     <div>
                         <label htmlFor="start_date" className="block text-sm font-medium text-gray-700">Start Time:</label>
-                        <input
+                        <Input
                             type="time"
                             id="start_date"
                             name="start_date"
@@ -96,7 +102,7 @@ export default function CreatePrograme({ speakers }) {
 
                     <div>
                         <label htmlFor="end_date" className="block text-sm font-medium text-gray-700">End Time:</label>
-                        <input
+                        <Input
                             type="time"
                             id="end_date"
                             name="end_date"
@@ -109,7 +115,7 @@ export default function CreatePrograme({ speakers }) {
 
                     <div>
                         <label htmlFor="capacity" className="block text-sm font-medium text-gray-700">Capacity:</label>
-                        <input
+                        <Input
                             type="number"
                             id="capacity"
                             name="capacity"
@@ -122,7 +128,7 @@ export default function CreatePrograme({ speakers }) {
 
                     <div>
                         <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location:</label>
-                        <input
+                        <Input
                             type="text"
                             id="location"
                             name="location"
@@ -133,22 +139,21 @@ export default function CreatePrograme({ speakers }) {
                         {errors.location && <div className="text-red-500 text-sm">{errors.location}</div>}
                     </div>
 
-                    <div>
-                        <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date:</label>
-                        <input
-                            type="date"
-                            id="date"
-                            name="date"
-                            value={data.date}
-                            onChange={(e) => setData('date', e.target.value)}
+                    <div className="col-span-2">
+                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description:</label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            value={data.description}
+                            onChange={(e) => setData('description', e.target.value)}
                             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                        />
-                        {errors.date && <div className="text-red-500 text-sm">{errors.date}</div>}
+                        ></textarea>
+                        {errors.description && <div className="text-red-500 text-sm">{errors.description}</div>}
                     </div>
 
-                    <div>
+                    <div className="col-span-2">
                         <label className="block text-sm font-medium text-gray-700 mb-1">Speakers:</label>
-                        <div className="space-y-2">
+                        <div className="space-y-2 flex items-center flex-wrap gap-2">
                             {speakers.map((speaker) => (
                                 <div key={speaker.id} className="flex items-center space-x-2">
                                     <input
@@ -160,7 +165,7 @@ export default function CreatePrograme({ speakers }) {
                                             setData('speaker_ids', [...data.speaker_ids, e.target.value]);
 
                                         }}
-                                        className="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500"
+                                        className="rounded border-gray-300 accent-alpha"
                                     />
 
                                     <label htmlFor={`speaker-${speaker.id}`} className="text-sm text-gray-700">
@@ -175,7 +180,7 @@ export default function CreatePrograme({ speakers }) {
                     <button
                         type="submit"
                         disabled={processing}
-                        className="w-full bg-blue-500 text-white py-2 px-4 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        className="col-span-2 bg-alpha text-white py-2 px-4 rounded-md cursor-pointer "
                     >
                         {processing ? 'Processing...' : 'Create Program'}
                     </button>
