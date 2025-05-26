@@ -13,15 +13,19 @@ class InvitationMail extends Mailable
     public $name;
     public $email;
     public $password;
+    public $appStoreLink;
+    public $playStoreLink;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($name, $email, $password)
+    public function __construct($name, $email, $password , $appStoreLink , $playStoreLink)
     {
         $this->name = $name;
         $this->email = $email;
         $this->password = $password;
+        $this->appStoreLink = $appStoreLink;
+        $this->playStoreLink = $playStoreLink;
     }
 
     /**
@@ -35,6 +39,8 @@ class InvitationMail extends Mailable
                         'name' => $this->name,
                         'email' => $this->email,
                         'password' => $this->password,
+                        'appStoreLink' => $this->appStoreLink,
+                        'playStoreLink' => $this->playStoreLink,
                     ]);
     }
 }

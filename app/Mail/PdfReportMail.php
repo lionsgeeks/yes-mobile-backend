@@ -22,7 +22,7 @@ class PdfReportMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($name, $fileName , $role , $company  , $country ,$sponsors )
+    public function __construct($name, $fileName, $role, $company, $country, $sponsors)
     {
         //
         $this->name = $name;
@@ -35,8 +35,9 @@ class PdfReportMail extends Mailable
 
     public function build()
     {
-        
-        $pdf = Pdf::loadView('maizzlMails.pdfcontent', ['name' => $this->name , 'fileName' => $this->fileName , 'role' => $this->role , 'company' => $this->company  , 'country' => $this->country , 'sponsors' => $this->sponsors]);
+
+        $pdf = Pdf::loadView('maizzlMails.pdfcontent', ['name' => $this->name, 'fileName' => $this->fileName, 'role' => $this->role, 'company' => $this->company, 'country' => $this->country, 'sponsors' => $this->sponsors]);
+        // $pdf = Pdf::loadView('pdf.invoice.blade', ['name' => $this->name, 'fileName' => $this->fileName, 'role' => $this->role, 'company' => $this->company, 'country' => $this->country, 'sponsors' => $this->sponsors]);
 
         return $this->subject('Your Badge')
             ->view('maizzlMails.pdfemail', ['name' => $this->name])

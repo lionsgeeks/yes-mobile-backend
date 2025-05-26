@@ -52,6 +52,12 @@
         </p>
         <div role="separator" style="line-height: 24px">&zwj;</div>
         <p style="margin: 0; font-size: 16px; line-height: 24px; color: #475569">
+          install your app from the link below,
+          <br>
+          <a href="{{ $appStoreLink }}" target="_blank" rel="noopener noreferrer">APP STORE</a>
+          <a href="{{ $playStoreLink }} " target="_blank" rel="noopener noreferrer">PLAY STORE</a>
+        </p>
+        <p style="margin: 0; font-size: 16px; line-height: 24px; color: #475569">
           Thanks,
           <br>
           <span style="font-weight: 600">YES AFRICA</span>
