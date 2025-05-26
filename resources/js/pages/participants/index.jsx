@@ -13,6 +13,8 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
+import axios from "axios";
+
 const breadcrumbs = [
     {
         title: 'Participants',
@@ -32,7 +34,17 @@ export default function Participants() {
             p.description.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-
+    const resetpassword = (email) => {
+        if (confirm(`Are you sure you want to reset the password for ${email}?`)) {
+            axios.post('api/participant/resetPassword', { email })
+                .then(() => {
+                    alert('Password reset link sent to ' + email);
+                })
+                .catch(() => {
+                    alert('Failed to send password reset link.');
+                });
+        }
+    }
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -102,9 +114,9 @@ export default function Participants() {
                                             <MoreVertical className="w-5 h-5 text-gray-600 cursor-pointer" />
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent className="w-48">
-                                            <DropdownMenuItem onClick={() => alert(`Reset password for ${participant.name}`)}>
-                                                Reset Password
-                                            </DropdownMenuItem>
+                                            <DropdownMenuItem onClick={() => resetpassword(participant.email)}>
+                                                    Reset Password
+                                                </DropdownMenuItem>
 
                                             {/* The DeleteSpeaker trigger */}
                                             <DropdownMenuItem
