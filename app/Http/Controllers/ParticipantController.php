@@ -7,6 +7,7 @@ use App\Mail\SignInMail;
 use App\Models\CurrentUser;
 use App\Models\Participant;
 use App\Models\Programe;
+use App\Models\QrCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -162,22 +163,25 @@ class ParticipantController extends Controller
     public function storeAction(Request $request)
     {
         // Log::info('Request data:', $request->all());
-
         $validated = $request->validate([
             'currentParticipant' => 'required|exists:participants,id',
-            'related_participant_id' => 'required|exists:participants,id',
+            // 'related_participant_id' => 'required|exists:participants,id',
             'action' => 'required|in:connect,skip',
         ]);
-        $currentId = $validated['currentParticipant'];
-
-        $participant = Participant::find($currentId);
+        if ($request->badge_id) {
+            $participant_id = QrCode::where('badge_id', $request->badge_id)->first()->participant_id;
+            $connection = Participant::find($participant_id);
+        } 
+            $currentId = $validated['currentParticipant'];
+            $participant = Participant::find($currentId);
 
         if ($participant) {
-            $participant->connections()->attach($validated['related_participant_id'], [
+            $participant->connections()->attach($request->badge_id ? $connection :  $request->related_participant_id, [
                 'action' => $validated['action'],
             ]);
 
-            return response()->json(['message' => 'action has been saved successfully']);
+            return $this->sendMatches($request);
+            // return response()->json(['message' => 'action has been saved successfully']);
         }
 
         return response()->json(['error' => 'participant not found'], 404);
@@ -185,7 +189,12 @@ class ParticipantController extends Controller
 
     public function sendMatches(Request $request)
     {
-        $participant = Participant::find($request->auth);
+        // dd($request);
+        if ($request->currentParticipant) {
+            $participant = Participant::find($request->currentParticipant);
+        } else {
+            $participant = Participant::find($request->auth);
+        }
 
         // Log::info('Participant:', ['participant'=> $participant]);
         if (!$participant) {
@@ -196,7 +205,10 @@ class ParticipantController extends Controller
             ->withPivot('action')
             ->wherePivot('action', 'connect')
             ->get();
-
+        if ($request->badge_id) {
+            $participant_id = QrCode::where('badge_id', $request->badge_id)->first()->participant_id;
+            $connection = Participant::find($participant_id);
+        }
 
 
         $matches = $connectedParticipants->map(function ($connectedParticipant) {
@@ -212,7 +224,8 @@ class ParticipantController extends Controller
 
 
         return response()->json([
-            'matches' => $matches
+            'matches' => $matches,
+            'scanned' => $connection ?? null,
         ]);
     }
 }
