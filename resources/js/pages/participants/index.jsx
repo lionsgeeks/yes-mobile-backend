@@ -1,5 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
-import { Head, usePage } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
 import ParticipantStore from './components/participantStore';
 import { Badge } from "@/components/ui/badge"
 import { UserCircle, Mail, Building2 } from "lucide-react"
@@ -29,9 +29,9 @@ export default function Participants() {
 
     const filteredParticipants = participants.filter(
         (p) =>
-            p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            p.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            p.description.toLowerCase().includes(searchQuery.toLowerCase())
+            p?.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+            p?.email?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+            p?.description?.toLowerCase().includes(searchQuery?.toLowerCase())
     );
 
     const resetpassword = (email) => {
@@ -45,6 +45,8 @@ export default function Participants() {
                 });
         }
     }
+
+
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -115,8 +117,14 @@ export default function Participants() {
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent className="w-48">
                                             <DropdownMenuItem onClick={() => resetpassword(participant.email)}>
-                                                    Reset Password
-                                                </DropdownMenuItem>
+                                                Reset Password
+                                            </DropdownMenuItem>
+
+                                            <DropdownMenuItem
+                                                onClick={() => router.visit(`account/show/${participant.id}`)}
+                                            >
+                                                View Information
+                                            </DropdownMenuItem>
 
                                             {/* The DeleteSpeaker trigger */}
                                             <DropdownMenuItem
@@ -126,18 +134,16 @@ export default function Participants() {
                                                     setDialogOpen(true);
                                                 }}
                                             >
-                                                Delete Account
+                                                <DeleteSpeaker
+                                                    speaker={participant}
+                                                    trigger={<>Delete Partcipant</>}
+                                                    open={dialogOpen}
+                                                    setOpen={setDialogOpen}
+                                                />
                                             </DropdownMenuItem>
 
-                                            <DeleteSpeaker
-                                                id={participant.id}
-                                                trigger={<></>}
-                                                open={dialogOpen}
-                                                setOpen={setDialogOpen}
-                                            />
                                         </DropdownMenuContent>
                                     </DropdownMenu>
-
                                 </div>
 
                             </div>

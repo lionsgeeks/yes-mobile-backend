@@ -1,5 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
-import { Head, usePage } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import ParticipantStore from '../participants/components/participantStore';
 import DeleteSpeaker from '../speakers/components/deleteSpeaker';
@@ -52,13 +52,12 @@ export default function Ngo() {
                     onChange={((e) => { setSearchQuery(e.target.value) })}
                 />
 
-                <div className='grid grid-cols-3 gap-2'>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2'>
                     {
                         filteredNgos.map((participant, index) => (
                             <>
                                 <div
                                     key={index}
-                                    onClick={() => router.visit(`/funders/show/${participant.id}`)}
                                     className="border rounded-lg p-4 shadow-sm hover:shadow-md transition"
                                 >
                                     <div className="flex items-center gap-4 mb-4">
@@ -108,6 +107,14 @@ export default function Ngo() {
                                                     Reset Password
                                                 </DropdownMenuItem>
 
+
+
+                                                <DropdownMenuItem
+                                                    onClick={() => router.visit(`/account/show/${participant.id}`)}
+                                                >
+                                                    View Information
+                                                </DropdownMenuItem>
+
                                                 <DropdownMenuItem
                                                     className="text-red-600 cursor-pointer"
                                                     onSelect={e => {
@@ -115,15 +122,13 @@ export default function Ngo() {
                                                         setDialogOpen(true);
                                                     }}
                                                 >
-                                                    Delete Account
+                                                    <DeleteSpeaker
+                                                        speaker={participant}
+                                                        trigger={<>Delete NGO</>}
+                                                        open={dialogOpen}
+                                                        setOpen={setDialogOpen}
+                                                    />
                                                 </DropdownMenuItem>
-
-                                                <DeleteSpeaker
-                                                    id={participant.id}
-                                                    trigger={<></>}
-                                                    open={dialogOpen}
-                                                    setOpen={setDialogOpen}
-                                                />
                                             </DropdownMenuContent>
                                         </DropdownMenu>
 

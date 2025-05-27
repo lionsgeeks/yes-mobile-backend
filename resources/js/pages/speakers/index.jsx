@@ -1,19 +1,16 @@
-import { Card, CardFooter } from '@/components/ui/card';
-import { Button } from "@/components/ui/button";
+import { Card } from '@/components/ui/card';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import AppLayout from '@/layouts/app-layout';
-import { Head, usePage } from '@inertiajs/react';
-import { Edit, MoreHorizontal, Trash2 } from 'lucide-react';
+import { Head, router, usePage } from '@inertiajs/react';
+import { MoreVertical } from 'lucide-react';
 import CreateSpeaker from './components/createSpeaker';
 import DeleteSpeaker from './components/deleteSpeaker';
-import UpdateSpeaker from './components/updateSpeaker';
+import { useState } from 'react';
 
 const breadcrumbs = [
     {
@@ -25,6 +22,7 @@ const breadcrumbs = [
 
 const Speaker = () => {
     const { speakers } = usePage().props;
+    const [dialogOpen, setDialogOpen] = useState(false);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -36,33 +34,47 @@ const Speaker = () => {
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
                     {speakers.map((speaker) => (
                         <Card key={speaker.id} className="flex flex-col items-center gap-2 rounded-lg border p-4 relative">
-                            {/* <div className="flex self-end">
+                            <div className="flex self-end">
                                 <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                        <MoreHorizontal className="h-4 w-4" />
+                                    <DropdownMenuTrigger className="ml-auto">
+                                        <MoreVertical className="w-5 h-5 text-gray-600 cursor-pointer" />
                                     </DropdownMenuTrigger>
-                                    <DropdownMenuContent align="end">
-                                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem>
-                                            <Edit className="mr-2 h-4 w-4" />
-                                            <UpdateSpeaker speaker={speaker} />
+                                    <DropdownMenuContent className="w-48">
+                                        <DropdownMenuItem
+                                        // onClick={() => resetpassword(speaker.email)}
+                                        onClick={() => {alert('Reset Password functionality is not implemented yet.');}}
+                                        >
+                                            Reset Password
                                         </DropdownMenuItem>
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem className="">
-                                            <Trash2 className="mr-2 h-4 w-4" />
-                                            <DeleteSpeaker id={speaker.id} />
+
+                                        <DropdownMenuItem
+                                            onClick={() => router.visit(`account/show/${speaker.id}`)}
+                                        >
+                                            View Information
                                         </DropdownMenuItem>
+
+                                        {/* The DeleteSpeaker trigger */}
+                                        <DropdownMenuItem
+                                            className="text-red-600 cursor-pointer"
+                                            onSelect={e => {
+                                                e.preventDefault();
+                                                setDialogOpen(true);
+                                            }}
+                                        >
+                                            <DeleteSpeaker
+                                                speaker={speaker}
+                                                trigger={<>Delete Speaker</>}
+                                                open={dialogOpen}
+                                                setOpen={setDialogOpen}
+                                            />
+                                        </DropdownMenuItem>
+
                                     </DropdownMenuContent>
                                 </DropdownMenu>
-                            </div> */}
+                            </div>
                             <img src={`/storage/${speaker.image}`} alt={speaker.name} className="mb-4 h-24 w-24 rounded-full object-cover" />
                             <h3 className="text-lg font-semibold">{speaker.name}</h3>
                             <p className='text-muted-foreground'>{speaker.email}</p>
-
-                            <div className="absolute top-2 right-2 cursor-pointer">
-                                <DeleteSpeaker speaker={speaker} />
-                            </div>
                         </Card>
                     ))}
                 </div>

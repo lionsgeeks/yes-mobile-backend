@@ -6,11 +6,11 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
+    DialogClose,
 } from '@/components/ui/dialog';
 import { useForm } from '@inertiajs/react';
-import { Trash2 } from 'lucide-react';
 
-const DeleteSpeaker = ({ speaker }) => {
+const DeleteSpeaker = ({ speaker, trigger }) => {
     const { delete: destroy } = useForm();
 
     const handleDelete = () => {
@@ -19,19 +19,21 @@ const DeleteSpeaker = ({ speaker }) => {
 
     return (
         <Dialog >
-                <DialogTrigger className=" cursor-pointer">
-                <Trash2 size={20} color='#ff0000' />
-                </DialogTrigger>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Are you absolutely sure?</DialogTitle>
-                        <DialogDescription>This action cannot be undone. This will permanently delete the speaker account.</DialogDescription>
-                    </DialogHeader>
+            <DialogTrigger className=" cursor-pointer">
+                {trigger}
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Are you absolutely sure?</DialogTitle>
+                    <DialogDescription>This action cannot be undone. This will permanently delete the account.</DialogDescription>
+                </DialogHeader>
+                <DialogClose>
                     <Button onClick={handleDelete} className="cursor-pointer rounded bg-red-500 px-3 py-2 text-white">
-                    Delete
+                        Delete
                     </Button>
-                </DialogContent>
-            </Dialog>
+                </DialogClose>
+            </DialogContent>
+        </Dialog>
     );
 };
 

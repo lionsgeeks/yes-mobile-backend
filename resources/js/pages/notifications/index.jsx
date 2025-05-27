@@ -5,9 +5,8 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowUpDown, Calendar, Search, SendIcon } from "lucide-react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { useState } from "react";
 import ConfirmDelete from "../../components/confirm-delete";
 
@@ -73,8 +72,8 @@ export default function Notifications() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Notifications" />
 
-            <div className="p-6 grid grid-cols-3 gap-3">
-                <form onSubmit={handleNotif} className="flex flex-col justify-around gap-3 p-4 shadow-xl rounded-lg h-full">
+            <div className="p-6 flex flex-col lg:grid lg:grid-cols-3 gap-3">
+                <form onSubmit={handleNotif} className="flex flex-col justify-around gap-3 p-4 shadow-xl rounded-lg">
                     <div>
                         <h1 className="text-lg font-semibold">Send Notification</h1>
                         <p className="text-muted-foreground text-sm">Create a new notification to send to users</p>

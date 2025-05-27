@@ -60,7 +60,6 @@ export default function Funders() {
                             <>
                                 <div
                                     key={index}
-                                    onClick={() => router.visit(`/funders/show/${participant.id}`)}
                                     className="border rounded-lg p-4 shadow-sm hover:shadow-md transition"
                                 >
                                     <div className="flex items-center gap-4 mb-4">
@@ -111,26 +110,29 @@ export default function Funders() {
                                                 </DropdownMenuItem>
 
                                                 <DropdownMenuItem
+                                                    onClick={() => router.visit(`/account/show/${participant.id}`)}
+                                                >
+                                                    View Information
+                                                </DropdownMenuItem>
+
+                                                <DropdownMenuItem
                                                     className="text-red-600 cursor-pointer"
                                                     onSelect={e => {
                                                         e.preventDefault();
                                                         setDialogOpen(true);
                                                     }}
                                                 >
-                                                    Delete Account
+                                                    <DeleteSpeaker
+                                                        speaker={participant}
+                                                        trigger={<>Delete Funder</>}
+                                                        open={dialogOpen}
+                                                        setOpen={setDialogOpen}
+                                                    />
                                                 </DropdownMenuItem>
-
-                                                <DeleteSpeaker
-                                                    id={participant.id}
-                                                    trigger={<></>}
-                                                    open={dialogOpen}
-                                                    setOpen={setDialogOpen}
-                                                />
                                             </DropdownMenuContent>
                                         </DropdownMenu>
 
                                     </div>
-
                                 </div>
                             </>
                         ))
