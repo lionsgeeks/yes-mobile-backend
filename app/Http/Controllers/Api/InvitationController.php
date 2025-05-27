@@ -19,6 +19,8 @@ class InvitationController extends Controller
             ], 404);
         }
         $name = $participant->name;
+        $role = $participant->role;
+        $image = $participant->image;
         $name = str_replace(' ', '_', $name);
         // check the image if exists
         $imagePath = public_path("assets/posts/screenshot_$name.png");
@@ -29,7 +31,7 @@ class InvitationController extends Controller
             ]);
         }
         // dd(file_exists($imagePath));
-        Browsershot::url("https://app.youthempowermentsummit.africa/linkedinpost?name=$name")
+        Browsershot::url("http://app.youthempowermentsummit.africa/linkedinpost?name=$name&image=$image&role=$role")
             ->setNodeBinary('C:\Program Files\nodejs\node.exe')
             ->setNpmBinary('C:\Program Files\nodejs\npm.cmd')
             ->windowSize(1000, 700)

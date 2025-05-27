@@ -39,10 +39,14 @@
         <img src="https://youthempowermentsummit.africa/assets/yeslogo-CWn7tdd7.png" width="80" alt="yes Logo" style="max-width: 100%; vertical-align: middle; margin-top: 24px">
         <div role="separator" style="line-height: 24px">&zwj;</div>
         <h1 style="margin: 0 0 24px; font-size: 24px; line-height: 32px; font-weight: 600; color: #0f172a">
-          Hello {{ $name }} welcome to YES africa!
+          Hello {{ $participant->name }} welcome back to YES africa!
         </h1>
         <p style="margin: 0 0 24px; font-size: 16px; line-height: 24px; color: #475569">
-          We're happy to have you on board! This is your badge to acces to the event
+          We're happy to have you on board! This is your password in order to get back to your
+          account:
+        </p>
+        <p style="margin: 0 0 24px; font-size: 16px; line-height: 24px; color: #475569">
+          <strong>Password:</strong> <span style="color: #0f172a"> {{ $newPassword  }}</span>
         </p>
         <div role="separator" style="line-height: 24px">&zwj;</div>
         <p style="margin: 0; font-size: 16px; line-height: 24px; color: #475569">

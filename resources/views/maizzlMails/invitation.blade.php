@@ -64,7 +64,7 @@
         </p>
         <div role="separator" style="height: 1px; line-height: 1px; background-color: #cbd5e1; margin-top: 24px; margin-bottom: 24px">&zwj;</div>
         <p class="mso-break-all" style="margin: 0; font-size: 12px; line-height: 20px; color: #475569">
-          If you're having trouble acces to your app Contact us at youthempowermentsummit@gmail.com
+          If you're having trouble acces to your app Contact us at info@youthempowermentsummit.africa
           <br>
         </p>
       </div>

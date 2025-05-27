@@ -29,7 +29,7 @@ class ProgrameController extends Controller
     public function create()
     {
         //
-        $programes = Programe::with(['participants', 'participantes.qrCodes'])
+        $programes = Programe::with(['participants', 'participantes.qrCodes' , 'participantes'])
             ->orderBy('date', 'asc')
             ->orderBy('start_date', 'asc')
             ->get();

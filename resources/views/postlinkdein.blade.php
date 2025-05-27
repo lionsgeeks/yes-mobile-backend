@@ -19,35 +19,66 @@
         align-items: center;
         height: 100vh;
       }
-      .container img {
+      .img {
         width: 100%;
         max-width: 800px;
         height: auto;
       }
       .name {
         position: absolute;
-        left: 30%;
-        top: 38%;
-        color: black;
-        font-size: 2rem;
-        font-weight: bold;
+        left: 65%;
+        top: 58%;
+        color: #2952a3;
+        font-size: 1rem;
+        font-weight: bolder;
+        text-transform: capitalize
+      }
+      .role {
+        position: absolute;
+        left: 67%;
+        top: 61%;
+        color: #d4af37;
+        font-size: 1rem;
+        font-weight: 100;
+        text-transform: capitalize
+      }
+      #avatar {
+        position: absolute;
+        left: 65.5%;
+        top: 45%;
+        width: 95px;
+        height: 90px;
+        border-radius: 50%;
+        border: 2px solid white;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <img src={{ asset('assets/images/coursera-certificate-copy.jpg') }} alt="Certificate" />
+      <img class="img" src={{ asset('assets/images/EMAIL_COVER.png') }} alt="Certificate" />
+      <img id="avatar" class="avatar" src={{ asset('assets/images/avatar-generations_bssq.jpg') }} alt="profile" />
       <p class="name" id="username">User</p>
+      <p class="role" id="userrole">User</p>
     </div>
     <script>
-      // Get the URL parameters
-      const params = new URLSearchParams(window.location.search);
-      // Get the 'name' parameter
-      const name = params.get('name');
-      let realName = name.replace('_', ' ');
-      if (realName) {
-        document.getElementById('username').textContent = realName;
-      }
+        const params = new URLSearchParams(window.location.search);
+
+    const name = params.get('name');
+    const role = params.get('role');
+    const image = params.get('image');
+
+    if (name) {
+      const realName = name.replace('_', ' ');
+      document.getElementById('username').textContent = realName;
+    }
+    if (role) {
+      const realrole = role.replace('_', ' ');
+      document.getElementById('userrole').textContent = realrole;
+    }
+
+    if (image) {
+      document.getElementById('avatar').src = `/storage/${image}`;
+    }
     </script>
   </body>
 </html>
