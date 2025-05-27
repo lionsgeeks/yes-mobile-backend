@@ -21,7 +21,7 @@ const Programe = ({ programes, speakers }) => {
 
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Programes" />
-            <div className="p-3 lg:p-6">
+            <div className="p-2  lg:p-6">
 
                 <div className="flex justify-end py-3">
                     <CreatePrograme speakers={speakers} />
@@ -29,8 +29,8 @@ const Programe = ({ programes, speakers }) => {
 
                 <h2 className="text-2xl font-bold text-alpha mb-4 ">All Programs</h2>
                 <div className="mt-8 p-2 shadow rounded ">
-                    <Table>
-                        <TableHeader>
+                    <Table className="w-full">
+                        <TableHeader className="hidden sm:table-header-group">
                             <TableRow>
                                 <TableHead>Session Title</TableHead>
                                 <TableHead>Date</TableHead>
@@ -41,47 +41,72 @@ const Programe = ({ programes, speakers }) => {
                                 <TableHead>Actions</TableHead>
                             </TableRow>
                         </TableHeader>
+
                         <TableBody>
-                            {programes && programes.map((program, index) => (
-                                <TableRow key={index}>
-                                    <TableCell>
+                            {programes.map((program, index) => (
+                                <TableRow
+                                    key={index}
+                                    className="block sm:table-row border rounded sm:border-b mb-4 sm:mb-0 shadow-sm sm:shadow-none"
+                                >
+                                    <TableCell className="block sm:table-cell">
+                                        <span className="font-semibold sm:hidden">Session Title:</span>
                                         <h1>{program.name}</h1>
-                                        <p className='text-sm text-muted-foreground whitespace-pre-line break-words w-[250px]'>{program.description}</p>
+                                        <p className="text-sm text-muted-foreground whitespace-pre-line break-words">
+                                            {program.description}
+                                        </p>
                                     </TableCell>
 
-                                    <TableCell>{new Date(program.date).toDateString()}</TableCell>
-                                    <TableCell>{program.start_date} - {program.end_date}</TableCell>
-                                    <TableCell>{program.capacity}</TableCell>
-                                    <TableCell>{program.location}</TableCell>
-                                    <TableCell>
-                                        <div>
-                                            {program.participants.length > 0 ?
-                                                program.participants.map((speaker, index) => (
-                                                    <div key={index} className="flex items-center gap-2">
-                                                        <div className="text-sm">
-                                                            {speaker.name}
-                                                        </div>
-                                                    </div>
-                                                ))
-                                                :
-                                                <div className='text-xs text-muted-foreground'>No Speaker Assigned</div>
-                                            }
+                                    <TableCell className="block sm:table-cell">
+                                        <span className="font-semibold sm:hidden">Date:</span>
+                                        {new Date(program.date).toDateString()}
+                                    </TableCell>
+
+                                    <TableCell className="block sm:table-cell">
+                                        <span className="font-semibold sm:hidden">Time:</span>
+                                        {program.start_date} - {program.end_date}
+                                    </TableCell>
+
+                                    <TableCell className="block sm:table-cell">
+                                        <span className="font-semibold sm:hidden">Capacity:</span>
+                                        {program.capacity}
+                                    </TableCell>
+
+                                    <TableCell className="block sm:table-cell">
+                                        <span className="font-semibold sm:hidden">Location:</span>
+                                        {program.location}
+                                    </TableCell>
+
+                                    <TableCell className="block sm:table-cell">
+                                        <span className="font-semibold sm:hidden">Speakers:</span>
+                                        {program.participants.length > 0 ? (
+                                            <ul className="ml-2 list-disc">
+                                                {program.participants.map((speaker, i) => (
+                                                    <li key={i}>{speaker.name}</li>
+                                                ))}
+                                            </ul>
+                                        ) : (
+                                            <p className="text-xs text-muted-foreground">No Speaker Assigned</p>
+                                        )}
+                                    </TableCell>
+
+                                    <TableCell className="block sm:table-cell">
+                                        <span className="font-semibold sm:hidden">Actions:</span>
+                                        <div className="flex gap-2 mt-2 sm:mt-0">
+                                            <button
+                                                className="p-1 hover:bg-gray-100 rounded cursor-pointer"
+                                                onClick={() => router.visit(`/programe/show/${program.id}`)}
+                                            >
+                                                <Eye size={20} color="#295da6" />
+                                            </button>
+                                            <UpdatePrograme programe={program} speakers={speakers} />
+                                            <DeletePrograme id={program.id} />
                                         </div>
                                     </TableCell>
-
-                                    <TableCell className='flex gap-x-2 items-center '>
-                                        <button className='cursor-pointer' onClick={() => router.visit(`/programe/show/${program.id}`)}>
-                                            <Eye size={20} color='#295da6' />
-                                        </button>
-                                        <UpdatePrograme programe={program} speakers={speakers} />
-                                        <DeletePrograme id={program.id} />
-
-                                    </TableCell>
-
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
+
                 </div>
 
             </div>

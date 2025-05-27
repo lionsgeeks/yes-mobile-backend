@@ -70,12 +70,12 @@ export default function UpdatePrograme({ programe, speakers }) {
             <DialogTrigger className="cursor-pointer" asChild>
                 <Pen size={20} color="#00ff00" />
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="max-w-[90%] sm:max-w-[425px]">
                 <DialogHeader>
                     <DialogTitle>Update Program</DialogTitle>
                     <DialogDescription>Update the program details.</DialogDescription>
                 </DialogHeader>
-                <form onSubmit={handleSubmit} className="space-y-4 grid grid-cols-2 gap-2">
+                <form onSubmit={handleSubmit} className="space-y-1 sm:space-y-1 grid grid-cols-2 gap-2">
 
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>

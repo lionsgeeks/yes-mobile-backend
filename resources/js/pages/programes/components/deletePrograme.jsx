@@ -15,8 +15,8 @@ const DeletePrograme = ({ id }) => {
             <DialogTrigger className="cursor-pointer">
             <Trash2 size={20} color='#ff0000' />
             </DialogTrigger>
-            <DialogContent>
-                <DialogHeader>
+            <DialogContent className="max-w-[80%] sm:max-w-[425px]">
+                <DialogHeader className="text-center">
                     <DialogTitle>Are you absolutely sure?</DialogTitle>
                     <DialogDescription>This action cannot be undone. This will permanently delete the programe.</DialogDescription>
                 </DialogHeader>

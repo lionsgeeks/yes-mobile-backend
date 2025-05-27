@@ -11,6 +11,7 @@ import { MoreVertical } from 'lucide-react';
 import CreateSpeaker from './components/createSpeaker';
 import DeleteSpeaker from './components/deleteSpeaker';
 import { useState } from 'react';
+import axios from "axios";
 
 const breadcrumbs = [
     {
@@ -23,7 +24,17 @@ const breadcrumbs = [
 const Speaker = () => {
     const { speakers } = usePage().props;
     const [dialogOpen, setDialogOpen] = useState(false);
-
+    const resetpassword = (email) => {
+        if (confirm(`Are you sure you want to reset the password for ${email}?`)) {
+            axios.post('api/participant/resetPassword', { email })
+                .then(() => {
+                    alert('Password reset link sent to ' + email);
+                })
+                .catch(() => {
+                    alert('Failed to send password reset link.');
+                });
+        }
+    }
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title='Speakers' />
@@ -40,10 +51,7 @@ const Speaker = () => {
                                         <MoreVertical className="w-5 h-5 text-gray-600 cursor-pointer" />
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent className="w-48">
-                                        <DropdownMenuItem
-                                        // onClick={() => resetpassword(speaker.email)}
-                                        onClick={() => {alert('Reset Password functionality is not implemented yet.');}}
-                                        >
+                                        <DropdownMenuItem onClick={() => resetpassword(speaker.email)}>
                                             Reset Password
                                         </DropdownMenuItem>
 

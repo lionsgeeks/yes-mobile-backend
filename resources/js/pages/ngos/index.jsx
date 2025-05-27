@@ -5,6 +5,7 @@ import ParticipantStore from '../participants/components/participantStore';
 import DeleteSpeaker from '../speakers/components/deleteSpeaker';
 import { Building2, Mail, UserCircle } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
+import axios from "axios";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -33,6 +34,18 @@ export default function Ngo() {
             sponsor.description.toLowerCase().includes(searchQuery.toLowerCase()),
     )
 
+    const resetpassword = (email) => {
+        if (confirm(`Are you sure you want to reset the password for ${email}?`)) {
+            axios.post('api/participant/resetPassword', { email })
+                .then(() => {
+                    alert('Password reset link sent to ' + email);
+                })
+                .catch(() => {
+                    alert('Failed to send password reset link.');
+                });
+        }
+    }
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="NGO" />
@@ -57,7 +70,7 @@ export default function Ngo() {
                         filteredNgos.map((participant, index) => (
                             <div key={index}>
                                 <div
-                                    
+
                                     className="border rounded-lg p-4 shadow-sm hover:shadow-md transition"
                                 >
                                     <div className="flex items-center gap-4 mb-4">
@@ -103,7 +116,7 @@ export default function Ngo() {
                                                 <MoreVertical className="w-5 h-5 text-gray-600 cursor-pointer" />
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent className="w-48">
-                                                <DropdownMenuItem onClick={() => alert(`Reset password for ${participant.name}`)}>
+                                                <DropdownMenuItem onClick={() => resetpassword(participant.email)}>
                                                     Reset Password
                                                 </DropdownMenuItem>
 

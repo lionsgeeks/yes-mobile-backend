@@ -53,12 +53,12 @@ export default function CreatePrograme({ speakers }) {
             <DialogTrigger asChild>
                 <Button className="cursor-pointer">+ ADD Programe</Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="max-w-[90%] sm:max-w-[425px]">
                 <DialogHeader>
                     <DialogTitle>Adding a Program</DialogTitle>
                     <DialogDescription>Create a new program for the application.</DialogDescription>
                 </DialogHeader>
-                <form onSubmit={handleSubmit} className="space-y-4 grid grid-cols-2 gap-2">
+                <form onSubmit={handleSubmit} className="space-y-1 sm:space-y-4 grid grid-cols-2 gap-2">
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>
                         <Input
