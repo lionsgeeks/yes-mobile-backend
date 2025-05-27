@@ -39,7 +39,12 @@ export default function Funders() {
             <Head title="Funders" />
 
             <div className='p-6 '>
-                <div className='flex justify-end'>
+                <div className='flex flex-col-reverse gap-3 lg:flex-row lg:items-center lg:justify-between'>
+                    <input type="search" name="search" id="search"
+                        className='rounded border-2 mb-3 w-full lg:w-[20vw] p-2'
+                        placeholder='Search by name, email or description'
+                        onChange={((e) => { setSearchQuery(e.target.value) })}
+                    />
                     <ParticipantStore
                         title='Funder'
                         role='funder'
@@ -47,19 +52,14 @@ export default function Funders() {
                     />
                 </div>
 
-                <input type="search" name="search" id="search"
-                    className='rounded border-2 mb-3 w-[20vw] p-2'
-                    placeholder='Search by name, email or description'
-                    onChange={((e) => { setSearchQuery(e.target.value) })}
-                />
 
 
-                <div className='grid grid-cols-3 gap-2'>
+                <div className='grid grid-cols-1 lg:grid-cols-3 gap-2'>
                     {
                         filteredSponsors.map((participant, index) => (
-                            <>
+                            <div key={index}>
                                 <div
-                                    key={index}
+                                    
                                     className="border rounded-lg p-4 shadow-sm hover:shadow-md transition"
                                 >
                                     <div className="flex items-center gap-4 mb-4">
@@ -134,7 +134,7 @@ export default function Funders() {
 
                                     </div>
                                 </div>
-                            </>
+                            </div>
                         ))
                     }
                 </div>

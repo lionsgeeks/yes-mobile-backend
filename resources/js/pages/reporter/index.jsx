@@ -50,8 +50,9 @@ const ReporterPage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title='Bug Reports' />
-            <div className="p-6 ">
-                <div className='flex items-center justify-end'>
+            <div className="p-6 w- bg--500 max-w-[100vw] ">
+                <div className='flex w-full items-center justify-between'>
+                    <h1 className="mb-4 text-2xl font-bold">Bug Reports</h1>
                     <button
                         className="mb-4 bg-red-500 text-white px-4 py-2 rounded text-sm"
                         onClick={() => {
@@ -63,16 +64,15 @@ const ReporterPage = () => {
                         DELETE ALL REPORTS
                     </button>
                 </div>
-                <h1 className="mb-4 text-2xl font-bold">Bug Reports</h1>
-                <div className='shadow-md rounded p-2'>
-                    <Table className="w-full overflow-hidden ">
+                <div className='shadow-md rounded p-2 w-full overflow-hidden max-w-[100%]'>
+                    <Table className="w-full  bg--500">
                         <TableHeader>
                             <TableRow>
                                 <TableHead>ID</TableHead>
                                 <TableHead>Error Name</TableHead>
                                 <TableHead>Reported By</TableHead>
-                                <TableHead>Time</TableHead>
-                                <TableHead>Device System</TableHead>
+                                <TableHead className=''>Time</TableHead>
+                                <TableHead >Device System</TableHead>
                                 <TableHead>Screen Name</TableHead>
                                 <TableHead>Delete</TableHead>
                             </TableRow>
@@ -80,11 +80,11 @@ const ReporterPage = () => {
                         <TableBody>
                             {reports.map((report, idx) => (
                                 <TableRow key={idx} className="h-[7vh]">
-                                    <TableCell className='whitespace-pre-line break-words max-w-[500px]'>{report.id}</TableCell>
-                                    <TableCell className='whitespace-pre-line break-words max-w-[500px]'>{report.name}</TableCell>
+                                    <TableCell className='whitespace-pre-line break-words max-w-[250px] lg:max-w-[500px]'>{report.id}</TableCell>
+                                    <TableCell className='whitespace-pre-line break-words max-w-[250px] lg:max-w-[500px]'>{report.name}</TableCell>
                                     <TableCell>{report.participant.name}</TableCell>
-                                    <TableCell>{new Date(report.time).toLocaleString()}</TableCell>
-                                    <TableCell className="capitalize">{report.operator_system}</TableCell>
+                                    <TableCell className=''>{new Date(report.time).toLocaleString()}</TableCell>
+                                    <TableCell className="capitalize ">{report.operator_system}</TableCell>
                                     <TableCell className="lowercase">/{report.screen_name}</TableCell>
                                     <TableCell className="flex items-center justify-center">
                                         <button
