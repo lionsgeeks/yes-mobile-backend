@@ -57,18 +57,42 @@ export default function Sponsors() {
                                         </Avatar>
                                         <div>
                                             <h3 className="text-lg font-semibold">{sponsor.name}</h3>
-                                            <Badge
-                                                variant="outline"
-                                                className={`mt-1
+                                            <div className='flex items-center gap-2'>
+
+                                                {
+                                                    sponsor.type && (
+                                                        <Badge
+                                                            variant="outline"
+                                                            className={`mt-1
                                                 ${sponsor.type === "media"
-                                                        ? "border-alpha/50 bg-alpha/10 text-alpha hover:bg-alpha/20"
-                                                        : sponsor.type === "technology"
-                                                            ? "border-beta/50 bg-beta/10 text-beta hover:bg-beta/20"
-                                                            : "border-green-500/30 bg-muted/30 text-green-500 hover:bg-muted/50"}
+                                                                    ? "border-alpha/50 bg-alpha/10 text-alpha hover:bg-alpha/20"
+                                                                    : sponsor.type === "technology"
+                                                                        ? "border-beta/50 bg-beta/10 text-beta hover:bg-beta/20"
+                                                                        : "border-green-500/30 bg-muted/30 text-green-500 hover:bg-muted/50"}
                                                 `}
-                                            >
-                                                <span className='capitalize'>{sponsor.type}</span>
-                                            </Badge>
+                                                        >
+                                                            <span className='capitalize'>{sponsor.type}</span>
+                                                        </Badge>
+                                                    )
+                                                }
+
+                                                {
+                                                    sponsor.rank && (
+                                                        <Badge
+                                                            variant="outline"
+                                                            className={`mt-1
+                                                            ${sponsor.rank === "major"
+                                                                    ? "border-alpha/50 bg-alpha/10 text-alpha hover:bg-alpha/20"
+                                                                    : sponsor.rank === "valued"
+                                                                        ? "border-beta/50 bg-beta/10 text-beta hover:bg-beta/20"
+                                                                        : "border-green-500/30 bg-muted/30 text-green-500 hover:bg-muted/50"}
+                                                `}
+                                                        >
+                                                            <span className='capitalize'>{sponsor.rank}</span>
+                                                        </Badge>
+                                                    )
+                                                }
+                                            </div>
                                         </div>
                                     </div>
 

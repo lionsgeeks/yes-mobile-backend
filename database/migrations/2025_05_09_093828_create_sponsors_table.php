@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('website')->nullable();
             $table->text('description')->nullable();
             $table->string('type')->nullable();
-            // $table->string('edition')->default(date('Y'));
             $table->timestamps();
         });
     }

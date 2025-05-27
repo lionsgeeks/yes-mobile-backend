@@ -49,7 +49,7 @@ class SponsorController extends Controller
             'website' => $request->website,
             'type' => $request->type,
             'description' => $request->description,
-            // 'edition' => $request->edition ?? date('Y'),
+            'rank' => $request->rank ?? 'supporter',
             'image' => $fileName ?? 'images/sponsors/default.png',
         ]);
     }
@@ -72,13 +72,14 @@ class SponsorController extends Controller
             }
             $fileName = $file->store('images/sponsors', 'public');
         }
+        // dd($request->rank);
 
         $sponsor->update([
             'name' => $request->name,
             'website' => $request->website,
             'type' => $request->type,
             'description' => $request->description,
-            // 'edition' => $request->edition ?? $sponsor->edition,
+            'rank' => $request->rank,
             'image' => $fileName ?? $sponsor->image,
         ]);
     }

@@ -22,13 +22,12 @@ export default function SponsorStore({ sponsor }) {
         website: sponsor ? sponsor.website : '',
         description: sponsor ? sponsor.description : '',
         type: sponsor ? sponsor.type : '',
-        // edition: sponsor ? sponsor.edition : '',
+        rank: sponsor ? sponsor.rank : '',
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (sponsor) {
-            // put(route('sponsors.update', sponsor.id))
             post(route('sponsors.update', {
                 _method: 'put',
                 data: data,
@@ -42,7 +41,7 @@ export default function SponsorStore({ sponsor }) {
                     website: '',
                     description: '',
                     type: '',
-                    // edition: '',
+                    rank: '',
                 }),
             });
 
@@ -125,24 +124,24 @@ export default function SponsorStore({ sponsor }) {
                         </div>
 
 
-                        {/* <div className="col-span-2">
-                            <Label htmlFor="edition" className="text-right">
-                                Edition (year):
+                        <div className="flex flex-col items-start gap-2 col-span-2">
+                            <Label htmlFor="rank" className="text-right">
+                                Rank
                             </Label>
 
-                            <Input
-                                onChange={(e) => { setData('edition', e.target.value) }}
-                                className="p-2 w-full border"
-                                type="text"
-                                name="edition"
-                                pattern="\d{4}"
-                                title="Enter a 4-digit year"
-                                minLength="4"
-                                maxLength="4"
-                                value={data.edition}
-                                placeholder={new Date().getFullYear()}
-                            />
-                        </div> */}
+                            <Select value={data.rank} onValueChange={(value) => setData('rank', value)}>
+                                <SelectTrigger className="w-full p-2 rounded-lg border">
+                                    <SelectValue placeholder="Select a Rank" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="major">Major</SelectItem>
+                                    <SelectItem value="valued">Valued</SelectItem>
+                                    <SelectItem value="supporter">Supporter</SelectItem>
+                                </SelectContent>
+                            </Select>
+
+                        </div>
+
 
                         <div className="flex flex-col items-start gap-2 col-span-2">
                             <Label htmlFor="description" className="text-right">
