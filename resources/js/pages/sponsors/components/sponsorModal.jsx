@@ -134,9 +134,9 @@ export default function SponsorStore({ sponsor }) {
                                     <SelectValue placeholder="Select a Rank" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="major">Major</SelectItem>
-                                    <SelectItem value="valued">Valued</SelectItem>
-                                    <SelectItem value="supporter">Supporter</SelectItem>
+                                    <SelectItem value="sponsors">Sponsors</SelectItem>
+                                    <SelectItem value="un agencies">Un Agencies</SelectItem>
+                                    <SelectItem value="technical partners">Technical Partners</SelectItem>
                                 </SelectContent>
                             </Select>
 
