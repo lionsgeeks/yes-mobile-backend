@@ -31,7 +31,7 @@ class InvitationController extends Controller
             ]);
         }
         // dd(file_exists($imagePath));
-        Browsershot::url("http://app.youthempowermentsummit.africa/linkedinpost?name=$name&image=$image&role=$role")
+        Browsershot::url("https://app.youthempowermentsummit.africa/linkedinpost?name=$name&image=$image&role=$role")
             ->setNodeBinary('C:\Program Files\nodejs\node.exe')
             ->setNpmBinary('C:\Program Files\nodejs\npm.cmd')
             ->windowSize(1000, 700)
