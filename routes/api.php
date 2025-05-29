@@ -15,6 +15,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ParticipantController as ControllersParticipantController;
 use App\Http\Controllers\ProgrameController;
 use App\Http\Controllers\QrCodeController;
+use App\Models\ParticipantProgram;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -35,6 +36,7 @@ Route::get('/qrcodes/{qrCode}', [QrCodeController::class, 'show']);
 Route::get('/qrcodes/show/{qrCode}', [ParticipantController::class, 'show']);
 Route::get('/programe/create', [ProgrameController::class, 'create'])->name('programe.create');
 Route::get('/programe/{programe}', [ProgrameController::class, 'show'])->name('programe.show');
+// Route::get('/MyPrograme/{programe}', [ProgrameController::class, 'MyPrograme'])->name('programe.MyPrograme');
 // Route::post('/enrolled', [ProgrameController::class, 'enrolled'])->name('programe.enrolled');
 
 
@@ -49,6 +51,7 @@ Route::delete('/participant/{participant}', [ParticipantController::class, 'dest
 Route::post('participant/resetPassword', [ParticipantController::class, 'resetPassword']);
 Route::post('participant/pushToken/{participant}', [NotificationController::class, 'update']);
 Route::get('getNotifications', [NotificationController::class, 'sendNotifications']);
+Route::get('/MyPrograme/{participant}', [ParticipantController::class, 'MyPrograme']);
 
 
 Route::get('sponsors', [SponsorController::class, 'index']);

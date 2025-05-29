@@ -15,6 +15,7 @@ class Programe extends Model
         'capacity',
         'location',
         'date',
+        "category_id",
     ];
     public function participants()
     {

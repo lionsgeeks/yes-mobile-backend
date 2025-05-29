@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorie;
 use App\Models\Participant;
 use App\Models\Programe;
 use App\Models\Resarvation;
@@ -20,6 +21,7 @@ class ProgrameController extends Controller
         return Inertia::render('programes/index', [
             'programes' => Programe::all()->load('participants'),
             "speakers" => Participant::where("role", "speaker")->get(),
+            'categories' => Categorie::all(),
         ]);
     }
 
@@ -29,16 +31,24 @@ class ProgrameController extends Controller
     public function create()
     {
         //
-        $programes = Programe::with(['participants', 'participantes.qrCodes' , 'participantes'])
+        $programes = Programe::with(['participants', 'participantes.qrCodes', 'participantes'])
             ->orderBy('date', 'asc')
             ->orderBy('start_date', 'asc')
             ->get();
 
+
+            foreach ($programes as $programe) {
+                $category = Categorie::find($programe->category_id);
+            }
+
         return response()->json([
             'message' => 'Programe fetched successfully',
             'programes' => $programes,
+            // "categorie"=>$category,
+            'categorie' => Categorie::all(),
         ]);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -55,6 +65,7 @@ class ProgrameController extends Controller
             'capacity' => 'required|integer',
             'location' => 'required|string|max:255',
             'date' => 'required|date',
+            'category_id' => 'required',
 
         ]);
         $programe =   Programe::create([
@@ -65,9 +76,10 @@ class ProgrameController extends Controller
             'capacity' => $request->capacity,
             'location' => $request->location,
             'date' => $request->date,
+            'category_id' => $request->category_id,
 
         ]);
-
+        // dd($programe);
 
         $programe->participants()->attach($request->speaker_ids);
 
@@ -99,6 +111,35 @@ class ProgrameController extends Controller
         //     'programe' => $programe,
         // ]);
     }
+
+
+     public function MyPrograme(Programe $programe)
+    {
+        //
+        $reservations = Resarvation::where('programe_id', $programe->id)->first();
+
+        if (!$reservations) {
+            return response()->json([
+                'message' => 'No reservations found for this programe.',
+            ], 404);
+        }
+        $programes = Programe::where('id', $reservations->programe_id)->with(['participants', 'participantes.qrCodes', 'participantes'])
+            ->orderBy('date', 'asc')
+            ->orderBy('start_date', 'asc')
+            ->get();
+
+
+
+
+        return response()->json([
+            'message' => 'Programe fetched successfully',
+            'programes' => $programes,
+            // "categorie"=>$category,
+            'categorie' => Categorie::all(),
+        ]);
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.

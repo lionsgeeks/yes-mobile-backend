@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Mail\PdfReportMail;
 use App\Mail\ResetPasswordMail;
+use App\Models\Categorie;
 use App\Models\Participant;
 use App\Models\Programe;
 use App\Models\QrCode;
+use App\Models\Resarvation;
 use App\Models\Social;
 use App\Models\Sponsor;
 use Illuminate\Http\Request;
@@ -315,7 +317,34 @@ class ParticipantController extends Controller
             'message' => 'Password Updated Successfully. Please Check Your Email'
         ]);
     }
-    public function checkParticipantQr(Request $request)
+
+
+         public function MyPrograme(string $participant_id)
+    {
+        //
+        $reservations = Resarvation::where('participant_id', $participant_id)->first();
+
+        if (!$reservations) {
+            return response()->json([
+                'message' => 'No reservations found for this programe.',
+            ], 404);
+        }
+        $programes = Programe::where('id', $reservations->programe_id)->with(['participants', 'participantes.qrCodes', 'participantes'])
+            ->orderBy('date', 'asc')
+            ->orderBy('start_date', 'asc')
+            ->get();
+
+
+
+
+        return response()->json([
+            'message' => 'Programe fetched successfully',
+            'programes' => $programes,
+            // "categorie"=>$category,
+            'categorie' => Categorie::all(),
+        ]);
+    }
+     public function checkParticipantQr(Request $request)
     {
         $request->validate([
             'badge_id' => 'required',

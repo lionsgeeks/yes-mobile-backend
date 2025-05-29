@@ -2,6 +2,7 @@ import React from 'react';
 import { Head, useForm } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
 import CreatePrograme from './components/createPrograme';
+import CreateCategorie from './components/createCategorie';
 import { router } from '@inertiajs/react';
 import DeletePrograme from './components/deletePrograme';
 import UpdatePrograme from './components/updatePrograme';
@@ -14,7 +15,7 @@ const breadcrumbs = [
         href: '/programe',
     },
 ];
-const Programe = ({ programes, speakers }) => {
+const Programe = ({ programes, speakers , categories }) => {
 
 
     return (
@@ -23,8 +24,9 @@ const Programe = ({ programes, speakers }) => {
             <Head title="Programes" />
             <div className="p-2  lg:p-6">
 
-                <div className="flex justify-end py-3">
-                    <CreatePrograme speakers={speakers} />
+                <div className="flex justify-end gap-x-4 py-3">
+                    <CreatePrograme speakers={speakers}  categories={categories} />
+                    <CreateCategorie />
                 </div>
 
                 <h2 className="text-2xl font-bold text-alpha mb-4 ">All Programs</h2>
@@ -106,6 +108,9 @@ const Programe = ({ programes, speakers }) => {
                             ))}
                         </TableBody>
                     </Table>
+
+
+                    
 
                 </div>
 

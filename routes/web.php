@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\NotificationController;
@@ -49,6 +50,7 @@ Route::get('/clearSubscribers', [NotificationController::class, 'clearSubscriber
 Route::get('/qrcodes/create', [QrCodeController::class, 'create'])->name('qrcodes.create');
 Route::post('/qrcodes', [QrCodeController::class, 'store'])->name('qrcodes.store');
 Route::resource('programe', ProgrameController::class);
+Route::resource('Categorie', CategorieController::class);
 
 Route::resource('programe', ProgrameController::class);
 Route::get('/programe/show/{programe}', [ProgrameController::class, 'showw']);

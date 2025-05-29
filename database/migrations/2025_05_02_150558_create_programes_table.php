@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string("capacity");
             $table->string("location");
             $table->string("date");
+            $table->foreignId("category_id")->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

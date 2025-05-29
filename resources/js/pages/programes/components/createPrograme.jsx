@@ -13,7 +13,9 @@ import {
 import { useState } from 'react';
 
 
-export default function CreatePrograme({ speakers }) {
+export default function CreatePrograme({ speakers , categories }) {
+    console.log(categories);
+
     const { data, setData, post, processing, errors } = useForm({
         name: '',
         description: '',
@@ -22,6 +24,7 @@ export default function CreatePrograme({ speakers }) {
         capacity: '',
         location: '',
         date: '',
+        category_id: '',
         speaker_ids: [],// Array for multiple speakers
     });
 
@@ -42,6 +45,7 @@ export default function CreatePrograme({ speakers }) {
                     location: '',
                     date: '',
                     speaker_ids: [],
+                    category_id: '',
                 });
                 setOpen(false);
             }
@@ -176,6 +180,24 @@ export default function CreatePrograme({ speakers }) {
                         </div>
                         {errors.speaker_ids && <div className="text-red-500 text-sm">{errors.speaker_ids}</div>}
                     </div>
+
+                    <div className="col-span-2">
+                        <label htmlFor="category_id" className="block text-sm font-medium text-gray-700 mb-1">Category:</label>
+                        <select
+                            id="category_id"
+                            name="category_id"
+                            value={data.category_id}
+                            onChange={(e) => setData('category_id', e.target.value)}
+                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                        >
+                            <option value="">Select a category</option>
+                            {categories.map((categorie) => (
+                                <option key={categorie.id} value={categorie.id}>{categorie.name}</option>
+                            ))}
+                        </select>
+                        {errors.category_id && <div className="text-red-500 text-sm">{errors.category_id}</div>}
+                    </div>
+
 
                     <button
                         type="submit"
