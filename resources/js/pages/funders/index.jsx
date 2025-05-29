@@ -31,9 +31,9 @@ export default function Funders() {
 
     const filteredSponsors = funders.filter(
         (sponsor) =>
-            sponsor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            sponsor.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            sponsor.description.toLowerCase().includes(searchQuery.toLowerCase()),
+            sponsor.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+            sponsor.email?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+            sponsor.description?.toLowerCase().includes(searchQuery?.toLowerCase()),
     )
 
     const resetpassword = (email) => {

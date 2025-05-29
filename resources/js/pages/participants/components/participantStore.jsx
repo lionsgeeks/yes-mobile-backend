@@ -11,55 +11,70 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@headlessui/react"
 import { useForm } from "@inertiajs/react"
+import { Pen } from "lucide-react"
 
-export default function ParticipantStore({ title = 'Participant', role = 'visitor', endPoint = 'participants.store' }) {
+export default function ParticipantStore({ title = 'Participant', role = 'visitor', endPoint = 'participants.store', participant = null }) {
 
-    const { data, setData, post } = useForm({
-        name: '',
-        email: '',
-        company: '',
-        image: '',
-        location: '',
-        description: '',
-        country: '',
-        city: '',
-        role: role
+    const { data, setData, post, put } = useForm({
+        name: participant ? participant.name : '',
+        email: participant ? participant.email : '',
+        company: participant ? participant.company : '',
+        image: participant ? participant.image : '',
+        location: participant ? participant.location : '',
+        description: participant ? participant.description : '',
+        country: participant ? participant.country : '',
+        city: participant ? participant.city : '',
+        role: role,
+        website: '',
+        linkedin: '',
+        youtube: '',
+        instagram: '',
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route(endPoint), {
-            onSuccess: () => setData({
-                name: '',
-                email: '',
-                company: '',
-                image: '',
-                location: '',
-                description: '',
-                country: '',
-                city: '',
-                role: role
-            }),
-        });
+        if (participant) {
+            // update participant
+            put(route(endPoint, participant));
+        } else {
+            // create one
+            post(route(endPoint), {
+                onSuccess: () => setData({
+                    name: '',
+                    email: '',
+                    company: '',
+                    image: '',
+                    location: '',
+                    description: '',
+                    country: '',
+                    city: '',
+                    role: role,
+                    website: '',
+                    linkedin: '',
+                    youtube: '',
+                    instagram: '',
+                }),
+            });
+        }
     }
 
 
 
     return (
-        <Dialog>
+        <Dialog >
             <DialogTrigger asChild>
-                <Button className="cursor-pointer">+ Add {title}</Button>
+                <button className={`cursor-pointer  ${participant ? 'text-alpha' : 'text-white bg-alpha px-2 py-1 rounded'}`}>{participant ? <Pen size={18} /> : `Add a ${title}`}</button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="">
                 <DialogHeader>
-                    <DialogTitle>Adding a {title}</DialogTitle>
+                    <DialogTitle>{participant ? 'e' : `Adding a ${title}`}</DialogTitle>
 
                     <DialogDescription>
                         Create a new {title} account for the application.
                     </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleSubmit}>
-                    <div className={`grid grid-cols-2 gap-4 py-4`}>
+                    <div className={`grid grid-cols-3 gap-4 py-4`}>
                         <div className="flex flex-col items-start gap-2">
                             <Label htmlFor="name" className="text-right">
                                 Name <span className="text-red-600 text-sm">*</span>
@@ -119,7 +134,7 @@ export default function ParticipantStore({ title = 'Participant', role = 'visito
                                             onChange={(e) => { setData('city', e.target.value) }}
                                         />
                                     </div>
-                                    <div className="flex flex-col items-start gap-2 col-span-2">
+                                    <div className="flex flex-col items-start gap-2 col-span-3">
                                         <Label htmlFor="location" className="text-right">
                                             Adress
                                         </Label>
@@ -134,7 +149,7 @@ export default function ParticipantStore({ title = 'Participant', role = 'visito
 
 
 
-                        <div className="flex flex-col items-start gap-2 col-span-2">
+                        <div className="flex flex-col items-start gap-2 col-span-3">
                             <Label htmlFor="description" className="text-right">
                                 Bio
                             </Label>
@@ -144,6 +159,45 @@ export default function ParticipantStore({ title = 'Participant', role = 'visito
                                 placeholder="Short description if available"
                                 value={data.description}
                             />
+                        </div>
+
+                        <div className="grid grid-cols-2 col-span-3 gap-2">
+                            <div>
+                                <Label htmlFor="website" className="text-right">
+                                    Website
+                                </Label>
+                                <Input id="website" name="website" type="url" placeholder="www.website.com"
+                                    value={data.website}
+                                    onChange={(e) => { setData('website', e.target.value) }}
+                                />
+                            </div>
+                            <div>
+                                <Label htmlFor="linkedin" className="text-right">
+                                    LinkedIn
+                                </Label>
+                                <Input id="linkedin" name="linkedin" type="url" placeholder="www.inkedin.com/u/username"
+                                    value={data.linkedin}
+                                    onChange={(e) => { setData('linkedin', e.target.value) }}
+                                />
+                            </div>
+                            <div>
+                                <Label htmlFor="youtube" className="text-right">
+                                    Youtube
+                                </Label>
+                                <Input id="youtube" name="youtube" type="url" placeholder="www.youtube.com"
+                                    value={data.youtube}
+                                    onChange={(e) => { setData('youtube', e.target.value) }}
+                                />
+                            </div>
+                            <div>
+                                <Label htmlFor="instagram" className="text-right">
+                                    Instagram
+                                </Label>
+                                <Input id="instagram" name="instagram" type="url" placeholder="www.instagram.com"
+                                    value={data.instagram}
+                                    onChange={(e) => { setData('instagram', e.target.value) }}
+                                />
+                            </div>
                         </div>
                     </div>
 

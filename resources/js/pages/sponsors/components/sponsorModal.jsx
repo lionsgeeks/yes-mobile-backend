@@ -6,6 +6,7 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
+    DialogClose,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -157,7 +158,9 @@ export default function SponsorStore({ sponsor }) {
                     </div>
 
                     <div className="flex justify-end">
-                        <Button type="submit">Save changes</Button>
+                        <DialogClose>
+                            <Button type="submit">Save changes</Button>
+                        </DialogClose>
                     </div>
                 </form>
 
