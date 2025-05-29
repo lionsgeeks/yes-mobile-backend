@@ -64,7 +64,12 @@ class ParticipantController extends Controller
         // Mail::to($request->email)->send(new SignInMail($participant, $password));
 
 
-        $participant->social()->create();
+        $participant->social()->create([
+            'website' => $request->website,
+            'linkedin' => $request->linkedin,
+            'youtube' => $request->youtube,
+            'instagram' => $request->instagram,
+        ]);
 
         $ably = new AblyRest(env('ABLY_KEY'));
         $channel = $ably->channel("public_participants");
@@ -76,7 +81,6 @@ class ParticipantController extends Controller
 
 
     //*show create speaker
-
     public function showCreateSpeaker()
     {
         return Inertia::render('speakers/index', [
@@ -84,13 +88,15 @@ class ParticipantController extends Controller
             'programs' => Programe::all(),
         ]);
     }
-    /**
-     * Display the specified resource.
-     */
-    public function show(Participant $participant)
+
+    public function moderatorIndex()
     {
-        //
+        return Inertia::render('moderators/index', [
+            'moderators' => Participant::where('role', 'moderator')->with('programs')->get(),
+            'programs' => Programe::all(),
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -105,7 +111,23 @@ class ParticipantController extends Controller
      */
     public function update(Request $request, Participant $participant)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email',
+        ]);
+
+        $participant->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            // 'role' => $request->role ?? $role, // make it dynamic for other participant types
+            'company' => $request->company,
+            'country' => $request->country,
+            'city' => $request->city,
+            'location' => $request->location,
+            'description' => $request->description,
+        ]);
+
+        // TODO if email is modified then send an email ?
     }
 
     /**
@@ -172,15 +194,15 @@ class ParticipantController extends Controller
         if ($request->badge_id) {
             $participant_id = QrCode::where('badge_id', $request->badge_id)->first()->participant_id;
             $connection = Participant::find($participant_id);
-        } 
-            $currentId = $validated['currentParticipant'];
-            $participant = Participant::find($currentId);
+        }
+        $currentId = $validated['currentParticipant'];
+        $participant = Participant::find($currentId);
         // if the connection already exist, no need to store it again
         // dd($participant->connections()->where('related_participant_id', $request->badge_id ? $connection->id :  $request->related_participant_id)->exists());
         if (!$participant->connections()->where('related_participant_id', $request->badge_id ? $connection->id :  $request->related_participant_id)->exists()) {
             // return response()->json(['message' => 'Connection already exists'], 200);
-        // }
-        // if ($participant) {
+            // }
+            // if ($participant) {
             $participant->connections()->attach($request->badge_id ? $connection :  $request->related_participant_id, [
                 'action' => $validated['action'],
             ]);

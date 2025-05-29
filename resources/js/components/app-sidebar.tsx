@@ -3,7 +3,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import {  Coins, HandCoins, LayoutGrid, Users, MicVocal, Building2, Bug, MessageCircle, Calendar } from 'lucide-react';
+import { Coins, HandCoins, LayoutGrid, Users, MicVocal, Building2, Bug, MessageCircle, Calendar, Presentation } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -21,6 +21,19 @@ const accountNavItems: NavItem[] = [
         icon: Users,
     },
     {
+        title: 'Speakers',
+        url: '/speakers',
+        icon: MicVocal,
+    },
+    {
+        title: 'Moderators',
+        url: '/moderators',
+        icon: Presentation,
+    },
+]
+
+const exhibitorNavItems: NavItem[] = [
+    {
         title: 'Funders',
         url: '/funders',
         icon: Coins,
@@ -29,11 +42,6 @@ const accountNavItems: NavItem[] = [
         title: 'NGOs',
         url: 'ngos',
         icon: Building2,
-    },
-    {
-        title: 'Speakers',
-        url: '/speakers',
-        icon: MicVocal,
     },
 ]
 
@@ -78,6 +86,7 @@ export function AppSidebar() {
             <SidebarContent className='bg-alpha text-white'>
                 <NavMain items={mainNavItems} />
                 <NavMain items={accountNavItems} title='Accounts' />
+                <NavMain items={exhibitorNavItems} title='Exhibitors' />
                 <NavMain items={miscNavItems} title='Others' />
             </SidebarContent>
 

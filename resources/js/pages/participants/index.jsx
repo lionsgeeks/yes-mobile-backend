@@ -73,6 +73,12 @@ export default function Participants() {
                                 key={participant.id}
                                 className="border rounded-lg p-4 shadow-sm hover:shadow-md transition"
                             >
+                                <div className='flex items-center justify-end'>
+                                    <ParticipantStore
+                                        participant={participant}
+                                        endPoint='participants.update'
+                                    />
+                                </div>
                                 <div className="flex items-center gap-4 mb-4">
                                     <img
                                         src={'storage/' + participant.image}
