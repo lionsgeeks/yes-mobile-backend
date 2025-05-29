@@ -176,20 +176,12 @@ class ParticipantController extends Controller
             $currentId = $validated['currentParticipant'];
             $participant = Participant::find($currentId);
         // if the connection already exist, no need to store it again
-        // dd($participant->connections()->where('related_participant_id', $request->badge_id ? $connection->id :  $request->related_participant_id)->exists());
         if (!$participant->connections()->where('related_participant_id', $request->badge_id ? $connection->id :  $request->related_participant_id)->exists()) {
-            // return response()->json(['message' => 'Connection already exists'], 200);
-        // }
-        // if ($participant) {
             $participant->connections()->attach($request->badge_id ? $connection :  $request->related_participant_id, [
                 'action' => $validated['action'],
             ]);
-
-            // return response()->json(['message' => 'action has been saved successfully']);
         }
         return $this->sendMatches($request);
-
-        // return response()->json(['error' => 'participant not found'], 404);
     }
 
     public function sendMatches(Request $request)

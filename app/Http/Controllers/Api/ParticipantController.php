@@ -315,4 +315,20 @@ class ParticipantController extends Controller
             'message' => 'Password Updated Successfully. Please Check Your Email'
         ]);
     }
+    public function checkParticipantQr(Request $request)
+    {
+        $request->validate([
+            'badge_id' => 'required',
+        ]);
+        $checkBadge = QrCode::where('badge_id', $request->badge_id)->exists();
+        if ($checkBadge) {
+            return response()->json([
+                'isEnrolled' => true,
+            ]);
+        } else {
+            return response()->json([
+                'isEnrolled' => false,
+            ]);
+        }
+    }
 }
