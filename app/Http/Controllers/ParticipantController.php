@@ -277,6 +277,7 @@ class ParticipantController extends Controller
 
     public function export(string $role)
     {
-        return Excel::download(new ParticipantsExport($role), 'participants.xlsx');
+        $fileName = $role == 'visitor' ? 'participants' : $role;
+        return Excel::download(new ParticipantsExport($role), $fileName . '.xlsx');
     }
 }
