@@ -20,6 +20,7 @@ class ProgrameController extends Controller
         // dd(Participant::where("role" , "speaker")->get());
         return Inertia::render('programes/index', [
             'programes' => Programe::all()->load('participants'),
+            "moderators" => Participant::where("role", "moderator")->get(),
             "speakers" => Participant::where("role", "speaker")->get(),
             'categories' => Categorie::all(),
         ]);
@@ -82,6 +83,7 @@ class ProgrameController extends Controller
         // dd($programe);
 
         $programe->participants()->attach($request->speaker_ids);
+        $programe->participants()->attach($request->moderator_ids);
 
         return back()->with('success', 'Programe created successfully.');
     }

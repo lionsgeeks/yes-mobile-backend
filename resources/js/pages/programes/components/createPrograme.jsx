@@ -13,7 +13,7 @@ import {
 import { useState } from 'react';
 
 
-export default function CreatePrograme({ speakers , categories }) {
+export default function CreatePrograme({ speakers , categories , moderators }) {
     console.log(categories);
 
     const { data, setData, post, processing, errors } = useForm({
@@ -26,6 +26,7 @@ export default function CreatePrograme({ speakers , categories }) {
         date: '',
         category_id: '',
         speaker_ids: [],// Array for multiple speakers
+        moderator_ids: [],// Array for multiple speakers
     });
 
     const [open, setOpen] = useState(false);
@@ -45,6 +46,7 @@ export default function CreatePrograme({ speakers , categories }) {
                     location: '',
                     date: '',
                     speaker_ids: [],
+                    moderator_ids: [],
                     category_id: '',
                 });
                 setOpen(false);
@@ -155,6 +157,31 @@ export default function CreatePrograme({ speakers , categories }) {
                         {errors.description && <div className="text-red-500 text-sm">{errors.description}</div>}
                     </div>
 
+                    <div className="col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">moderators:</label>
+                        <div className="space-y-2 flex items-center flex-wrap gap-2">
+                            {moderators.map((moderator) => (
+                                <div key={moderator.id} className="flex items-center space-x-2">
+                                    <input
+                                        type="checkbox"
+                                        id={`moderator-${moderator.id}`}
+                                        value={moderator.id}
+                                        onChange={(e) => {
+
+                                            setData('moderator_ids', [...data.moderator_ids, e.target.value]);
+
+                                        }}
+                                        className="rounded border-gray-300 accent-alpha"
+                                    />
+
+                                    <label htmlFor={`moderator-${moderator.id}`} className="text-sm text-gray-700">
+                                        {moderator.name}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
+                        {errors.moderator_ids && <div className="text-red-500 text-sm">{errors.moderator_ids}</div>}
+                    </div>
                     <div className="col-span-2">
                         <label className="block text-sm font-medium text-gray-700 mb-1">Speakers:</label>
                         <div className="space-y-2 flex items-center flex-wrap gap-2">

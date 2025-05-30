@@ -15,7 +15,7 @@ const breadcrumbs = [
         href: '/programe',
     },
 ];
-const Programe = ({ programes, speakers , categories }) => {
+const Programe = ({ programes, speakers , categories ,moderators }) => {
 
 
     return (
@@ -25,7 +25,7 @@ const Programe = ({ programes, speakers , categories }) => {
             <div className="p-2  lg:p-6">
 
                 <div className="flex justify-end gap-x-4 py-3">
-                    <CreatePrograme speakers={speakers}  categories={categories} />
+                    <CreatePrograme speakers={speakers}  categories={categories} moderators={moderators} />
                     <CreateCategorie />
                 </div>
 
@@ -110,7 +110,7 @@ const Programe = ({ programes, speakers , categories }) => {
                     </Table>
 
 
-                    
+
 
                 </div>
 
