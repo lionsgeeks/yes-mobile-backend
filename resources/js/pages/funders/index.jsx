@@ -101,23 +101,63 @@ export default function Funders() {
                                             </p> */}
                                         </div>
                                     </div>
-                                    <div className="mb-3">
-                                        <h4 className="text-sm font-medium text-gray-700 flex items-center gap-2 mb-1">
-                                            <Building2 className="w-4 h-4 text-gray-500" /> Interests
-                                        </h4>
-                                        <div className="flex flex-wrap gap-2">
-                                        {/* TODO: remove interesets and add socials */}
-                                            {participant.interesets?.length > 0 ? (
-                                                participant.interesets.map((int, idx) => (
-                                                    <Badge key={idx} variant="secondary" className="capitalize">
-                                                        {int.name}
-                                                    </Badge>
-                                                ))
-                                            ) : (
-                                                <p className="text-sm text-gray-500">No Interests Selected</p>
-                                            )}
-                                        </div>
-                                    </div>
+
+                                    {
+                                        (participant.social?.linkedin || participant.social?.youtube || participant.social?.website || participant.social?.instagram) ?
+                                            <div className="mb-5">
+                                                <h4 className="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-3">
+                                                    <Building2 className="w-4 h-4 text-alpha" />
+                                                    Socials
+                                                </h4>
+                                                <div className="flex flex-wrap gap-3">
+                                                    {participant.social?.website && (
+                                                        <a
+                                                            href={participant.social?.website}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="text-alpha hover:text-blue-700 font-medium transition-all duration-200"
+                                                        >
+                                                            Website
+                                                        </a>
+                                                    )}
+                                                    {participant.social?.linkedin && (
+                                                        <a
+                                                            href={participant.social?.linkedin}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="text-blue-500 hover:text-blue-700 font-medium transition-all duration-200"
+                                                        >
+                                                            LinkedIn
+                                                        </a>
+                                                    )}
+                                                    {participant.social?.youtube && (
+                                                        <a
+                                                            href={participant.social?.youtube}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="text-red-600 hover:text-red-800 font-medium transition-all duration-200"
+                                                        >
+                                                            YouTube
+                                                        </a>
+                                                    )}
+                                                    {participant.social?.instagram && (
+                                                        <a
+                                                            href={participant.social?.instagram}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="text-pink-500 hover:text-pink-700 font-medium transition-all duration-200"
+                                                        >
+                                                            Instagram
+                                                        </a>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            :
+                                            <>
+                                                {/* <p className='my-3 text-sm text-muted-foreground'>No Socials Provided</p> */}
+                                            </>
+                                    }
+
                                     <div className="mb-4 flex items-center gap-2">
                                         <h4 className="text-sm font-medium text-gray-700 flex items-center gap-2">
                                             <Building2 className="w-4 h-4 text-gray-500" /> Role

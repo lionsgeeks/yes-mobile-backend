@@ -72,7 +72,7 @@ export default function ParticipantStore({ title = 'Participant', role = 'visito
     return (
         <Dialog >
             <DialogTrigger asChild>
-                <button className={`cursor-pointer  ${participant ? 'text-alpha' : 'text-white bg-alpha px-2 py-1 rounded'}`}>{participant ? <Pen size={18} /> : `Add a ${title}`}</button>
+                <button className={`cursor-pointer  ${participant ? 'text-alpha' : 'text-white bg-alpha px-2 py-1 rounded'}`}>{participant ? <Pen size={18} /> : `Add ${title}`}</button>
             </DialogTrigger>
             <DialogContent className="">
                 <DialogHeader>
@@ -197,7 +197,7 @@ export default function ParticipantStore({ title = 'Participant', role = 'visito
                                 <Label htmlFor="linkedin" className="text-right">
                                     LinkedIn
                                 </Label>
-                                <Input id="linkedin" name="linkedin" type="url" placeholder="www.inkedin.com/u/username"
+                                <Input id="linkedin" name="linkedin" type="url" placeholder="www.linkedin.com/u/username"
                                     value={data.linkedin}
                                     onChange={(e) => { setData('linkedin', e.target.value) }}
                                 />

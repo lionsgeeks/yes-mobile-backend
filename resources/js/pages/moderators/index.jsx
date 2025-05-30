@@ -39,7 +39,12 @@ const Moderator = () => {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title='Moderators' />
             <div className="p-3 lg:p-6">
-                <div className="flex justify-end py-3">
+                <div className="flex justify-end py-3 gap-3">
+                    <a href="participant/export/moderator"
+                        className='bg-beta text-white px-4 py-1 rounded'
+                    >
+                        Export Moderators
+                    </a>
                     <ParticipantStore
                         title='Moderator'
                         role='moderator'

@@ -40,7 +40,12 @@ const Speaker = () => {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title='Speakers' />
             <div className="p-3 lg:p-6">
-                <div className="flex justify-end py-3">
+                <div className="flex justify-end py-3 gap-3">
+                    <a href="participant/export/speaker"
+                        className='bg-beta text-white px-4 py-1 rounded'
+                    >
+                        Export Speakers
+                    </a>
                     <ParticipantStore
                         title='Speaker'
                         role='speaker'

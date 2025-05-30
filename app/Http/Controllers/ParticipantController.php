@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Ably\AblyRest;
+use App\Exports\ParticipantsExport;
 use App\Mail\SignInMail;
 use App\Models\CurrentUser;
 use App\Models\Participant;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ParticipantController extends Controller
 {
@@ -270,5 +272,11 @@ class ParticipantController extends Controller
             'matches' => $matches,
             'scanned' => $connection ?? null,
         ]);
+    }
+
+
+    public function export(string $role)
+    {
+        return Excel::download(new ParticipantsExport($role), 'participants.xlsx');
     }
 }

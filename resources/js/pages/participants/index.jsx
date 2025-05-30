@@ -61,7 +61,14 @@ export default function Participants() {
                         className="border rounded px-2 w-[20vw] h-10"
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
-                    <ParticipantStore />
+                    <div className='flex items-center gap-3'>
+                        <a href="participant/export/visitor"
+                        className='bg-beta text-white px-4 py-1 rounded'
+                        >
+                            Export Participants
+                        </a>
+                        <ParticipantStore />
+                    </div>
                 </div>
 
                 {filteredParticipants.length === 0 ? (
