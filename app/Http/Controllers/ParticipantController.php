@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Ably\AblyRest;
 use App\Exports\ParticipantsExport;
 use App\Mail\InvitationMail;
+use App\Imports\ParticipantsImport;
 use App\Mail\SignInMail;
 use App\Models\CurrentUser;
 use App\Models\General;
@@ -282,5 +283,15 @@ class ParticipantController extends Controller
     {
         $fileName = $role == 'visitor' ? 'participants' : $role;
         return Excel::download(new ParticipantsExport($role), $fileName . '.xlsx');
+    }
+    public function import(Request $request) 
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xls,xlsx|max:5240',
+            'role' => 'required'
+        ]);
+        $role = $request->role;
+        Excel::import(new ParticipantsImport($role), $request->file('file'));
+        return back()->with('success', 'Imported Successfuly!');
     }
 }

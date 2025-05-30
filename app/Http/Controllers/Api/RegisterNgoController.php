@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\Participant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class RegisterNgoController extends Controller
 {
@@ -21,7 +22,7 @@ class RegisterNgoController extends Controller
                 'email' => 'required|email|unique:users,email',
                 'role' => 'required|string',
             ]);
-            $password = str()->random(10);
+            $password =  Str::random(8);
             // dd($password);
             $participant = Participant::create([
                 'name' => $validatedData['name'],

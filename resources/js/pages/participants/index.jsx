@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
 import axios from "axios";
+import ImportExcelDialog from './components/importDialog';
 
 const breadcrumbs = [
     {
@@ -68,6 +69,7 @@ export default function Participants() {
                             Export Participants
                         </a>
                         <ParticipantStore />
+                        <ImportExcelDialog role={'visitor'}/>
                     </div>
                 </div>
 
