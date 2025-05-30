@@ -10,7 +10,7 @@ class NgoController extends Controller
 {
     public function index()
     {
-        $ngos = Participant::where('role', 'ngo')->get();
+        $ngos = Participant::where('role', 'ngo')->with('social')->get();
         return Inertia::render('ngos/index', [
             'ngos' => $ngos,
         ]);

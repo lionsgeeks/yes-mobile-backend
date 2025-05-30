@@ -6,6 +6,7 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
+    DialogClose,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -25,17 +26,25 @@ export default function ParticipantStore({ title = 'Participant', role = 'visito
         country: participant ? participant.country : '',
         city: participant ? participant.city : '',
         role: role,
-        website: '',
-        linkedin: '',
-        youtube: '',
-        instagram: '',
+        website: participant ? participant.social?.website : '',
+        linkedin: participant ? participant.social?.linkedin : '',
+        youtube: participant ? participant.social?.youtube : '',
+        instagram: participant ? participant.social?.instagram : '',
     });
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (participant) {
             // update participant
-            put(route(endPoint, participant));
+            // put(route(endPoint, participant));
+            post(
+                route(endPoint, {
+                    _method: 'put',
+                    data: data,
+                    participant: participant.id,
+                }),
+            );
         } else {
             // create one
             post(route(endPoint), {
@@ -67,41 +76,54 @@ export default function ParticipantStore({ title = 'Participant', role = 'visito
             </DialogTrigger>
             <DialogContent className="">
                 <DialogHeader>
-                    <DialogTitle>{participant ? 'e' : `Adding a ${title}`}</DialogTitle>
+                    <DialogTitle>{participant ? 'Updating' : `Adding`} {title}</DialogTitle>
 
-                    <DialogDescription>
-                        Create a new {title} account for the application.
-                    </DialogDescription>
+                    {
+                        !participant && (
+                            <DialogDescription>
+                                Create a new {title} account for the application.
+                            </DialogDescription>
+                        )
+                    }
                 </DialogHeader>
                 <form onSubmit={handleSubmit}>
                     <div className={`grid grid-cols-3 gap-4 py-4`}>
-                        <div className="flex flex-col items-start gap-2">
-                            <Label htmlFor="name" className="text-right">
-                                Name <span className="text-red-600 text-sm">*</span>
-                            </Label>
-                            <Input id="name" name="name" placeholder="Full Name"
-                                required
-                                value={data.name}
-                                onChange={(e) => { setData('name', e.target.value) }}
-                            />
-                        </div>
-                        <div className="flex flex-col items-start gap-2">
-                            <Label htmlFor="email" className="text-right">
-                                Email <span className="text-red-600 text-sm">*</span>
-                            </Label>
-                            <Input id="email" name="email" placeholder="name@example.com"
-                                required type="email"
-                                value={data.email}
-                                onChange={(e) => { setData('email', e.target.value) }}
-                            />
-                        </div>
-                        <div className="flex flex-col items-start gap-2">
-                            <Label htmlFor="image" className="text-right">
-                                Image
-                            </Label>
-                            <Input id="image" name="image" type="file" accept="image/*"
-                                onChange={(e) => { setData('image', e.target.files[0]) }}
-                            />
+                        <div className="col-span-3 flex items-center justify-between gap-4">
+                            <div className="flex flex-col items-start gap-2">
+                                <Label htmlFor="name" className="text-right">
+                                    Name <span className="text-red-600 text-sm">*</span>
+                                </Label>
+                                <Input id="name" name="name" placeholder="Full Name"
+                                    required
+                                    value={data.name}
+                                    onChange={(e) => { setData('name', e.target.value) }}
+                                />
+                            </div>
+
+                            {
+                                (role != 'funder' && role != 'ngo') && (
+                                    <div className="flex flex-col items-start gap-2">
+                                        <Label htmlFor="email" className="text-right">
+                                            Email <span className="text-red-600 text-sm">*</span>
+                                        </Label>
+                                        <Input id="email" name="email" placeholder="name@example.com"
+                                            required type="email"
+                                            value={data.email}
+                                            onChange={(e) => { setData('email', e.target.value) }}
+                                        />
+                                    </div>
+                                )
+                            }
+
+
+                            <div className="flex flex-col items-start gap-2">
+                                <Label htmlFor="image" className="text-right">
+                                    Image
+                                </Label>
+                                <Input id="image" name="image" type="file" accept="image/*"
+                                    onChange={(e) => { setData('image', e.target.files[0]) }}
+                                />
+                            </div>
                         </div>
 
                         {
@@ -201,8 +223,11 @@ export default function ParticipantStore({ title = 'Participant', role = 'visito
                         </div>
                     </div>
 
+
                     <div className="flex justify-end">
-                        <Button type="submit">Save changes</Button>
+                        <DialogClose>
+                            <Button type="submit">Save changes</Button>
+                        </DialogClose>
                     </div>
                 </form>
 

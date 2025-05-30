@@ -12,6 +12,7 @@ import CreateSpeaker from './components/createSpeaker';
 import DeleteSpeaker from './components/deleteSpeaker';
 import { useState } from 'react';
 import axios from "axios";
+import ParticipantStore from '../participants/components/participantStore';
 
 const breadcrumbs = [
     {
@@ -40,12 +41,21 @@ const Speaker = () => {
             <Head title='Speakers' />
             <div className="p-3 lg:p-6">
                 <div className="flex justify-end py-3">
-                    <CreateSpeaker />
+                    <ParticipantStore
+                        title='Speaker'
+                        role='speaker'
+                        endPoint='funders.store'
+                    />
                 </div>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
                     {speakers.map((speaker) => (
                         <Card key={speaker.id} className="flex flex-col items-center gap-2 rounded-lg border p-4 relative">
                             <div className="flex self-end">
+                                <ParticipantStore
+                                    participant={speaker}
+                                    endPoint='participants.update'
+                                    role='speaker'
+                                />
                                 <DropdownMenu>
                                     <DropdownMenuTrigger className="ml-auto">
                                         <MoreVertical className="w-5 h-5 text-gray-600 cursor-pointer" />

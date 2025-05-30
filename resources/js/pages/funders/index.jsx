@@ -72,10 +72,18 @@ export default function Funders() {
                     {
                         filteredSponsors.map((participant, index) => (
                             <div key={index}>
+
                                 <div
 
                                     className="border rounded-lg p-4 shadow-sm hover:shadow-md transition"
                                 >
+                                    <div className='flex items-center justify-end'>
+                                        <ParticipantStore
+                                            participant={participant}
+                                            endPoint='participants.update'
+                                            role='funder'
+                                        />
+                                    </div>
                                     <div className="flex items-center gap-4 mb-4">
                                         <img
                                             src={'storage/' + participant.image}
@@ -87,10 +95,10 @@ export default function Funders() {
                                                 <UserCircle className="w-4 h-4 text-gray-500" />
                                                 {participant.name}
                                             </h3>
-                                            <p className="text-sm text-gray-600 flex items-center gap-2">
+                                            {/* <p className="text-sm text-gray-600 flex items-center gap-2">
                                                 <Mail className="w-4 h-4 text-gray-500" />
                                                 {participant.email}
-                                            </p>
+                                            </p> */}
                                         </div>
                                     </div>
                                     <div className="mb-3">
@@ -98,6 +106,7 @@ export default function Funders() {
                                             <Building2 className="w-4 h-4 text-gray-500" /> Interests
                                         </h4>
                                         <div className="flex flex-wrap gap-2">
+                                        {/* TODO: remove interesets and add socials */}
                                             {participant.interesets?.length > 0 ? (
                                                 participant.interesets.map((int, idx) => (
                                                     <Badge key={idx} variant="secondary" className="capitalize">

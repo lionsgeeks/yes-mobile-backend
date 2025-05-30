@@ -49,7 +49,12 @@ const Moderator = () => {
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
                     {moderators.map((mod, index) => (
                         <Card key={index} className="flex flex-col items-center gap-2 rounded-lg border p-4 relative">
-                            <div className="flex self-end">
+                            <div className="flex self-end gap-2">
+                                <ParticipantStore
+                                    participant={mod}
+                                    endPoint='participants.update'
+                                    role='funder'
+                                />
                                 <DropdownMenu>
                                     <DropdownMenuTrigger className="ml-auto">
                                         <MoreVertical className="w-5 h-5 text-gray-600 cursor-pointer" />

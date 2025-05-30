@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 
@@ -23,7 +24,7 @@ class ParticipantController extends Controller
      */
     public function index()
     {
-        $participants = Participant::where('role', 'visitor')->with('interesets')->get();
+        $participants = Participant::where('role', 'visitor')->with('social')->with('interesets')->get();
         return Inertia::render('participants/index', [
             'participants' => $participants,
         ]);
@@ -36,22 +37,26 @@ class ParticipantController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'email' => 'required|email',
         ]);
+
 
         $file = $request->file('image');
         if ($file) {
             $fileName = $file->store('images/participants', 'public');
         }
 
-        // TODO: uncomment code bellow for random password + email
-        // $password = Str::random(8);
+        // funder || ngo 'dont' have account so no need for random password or an email
+        $password = ($role == 'funder' || $role == 'ngo') ? 'lionsgeek' : Str::random(8);
+
+        $email = ($role == 'funder' || $role == 'ngo')
+            ? strtolower($role) . Str::random(10) . '@example.com'
+            : $request->email;
+
 
         $participant = Participant::create([
             'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make('lionsgeek'),
-            // 'password' => Hash::make($password),
+            'email' => $email,
+            'password' => Hash::make($password),
             'role' => $request->role ?? $role,
             'company' => $request->company,
             'country' => $request->country,
@@ -84,7 +89,7 @@ class ParticipantController extends Controller
     public function showCreateSpeaker()
     {
         return Inertia::render('speakers/index', [
-            'speakers' => Participant::where('role', 'speaker')->with('programs')->get(),
+            'speakers' => Participant::where('role', 'speaker')->with('social')->with('programs')->get(),
             'programs' => Programe::all(),
         ]);
     }
@@ -92,7 +97,7 @@ class ParticipantController extends Controller
     public function moderatorIndex()
     {
         return Inertia::render('moderators/index', [
-            'moderators' => Participant::where('role', 'moderator')->with('programs')->get(),
+            'moderators' => Participant::where('role', 'moderator')->with('social')->with('programs')->get(),
             'programs' => Programe::all(),
         ]);
     }
@@ -116,15 +121,31 @@ class ParticipantController extends Controller
             'email' => 'required|email',
         ]);
 
+
+        $file = $request->file('image');
+        if ($file) {
+            $fileName = $file->store('images/participants', 'public');
+            if ($participant->image !== 'images/participants/avatar.png') {
+                Storage::disk('public')->delete($participant->image);
+            }
+        }
+
         $participant->update([
             'name' => $request->name,
             'email' => $request->email,
-            // 'role' => $request->role ?? $role, // make it dynamic for other participant types
             'company' => $request->company,
             'country' => $request->country,
             'city' => $request->city,
             'location' => $request->location,
             'description' => $request->description,
+            'image' => $file ? $fileName : $participant->image,
+        ]);
+
+        $participant->social()->update([
+            'website' => $request->website,
+            'linkedin' => $request->linkedin,
+            'youtube' => $request->youtube,
+            'instagram' => $request->instagram,
         ]);
 
         // TODO if email is modified then send an email ?

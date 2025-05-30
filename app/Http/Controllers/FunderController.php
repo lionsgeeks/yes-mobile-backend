@@ -13,7 +13,7 @@ class FunderController extends Controller
      */
     public function index()
     {
-        $funders = Participant::where('role', 'funder')->get();
+        $funders = Participant::where('role', 'funder')->with('social')->get();
         return Inertia::render('funders/index', [
             'funders' => $funders,
         ]);
@@ -33,7 +33,7 @@ class FunderController extends Controller
      */
     public function show(string $id)
     {
-        
+
         $funder = Participant::where('id', $id)->first();
 
         return Inertia::render('funders/show', [

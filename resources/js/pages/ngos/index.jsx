@@ -29,9 +29,9 @@ export default function Ngo() {
 
     const filteredNgos = ngos.filter(
         (sponsor) =>
-            sponsor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            sponsor.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            sponsor.description.toLowerCase().includes(searchQuery.toLowerCase()),
+            sponsor.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+            sponsor.email?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+            sponsor.description?.toLowerCase().includes(searchQuery?.toLowerCase()),
     )
 
     const resetpassword = (email) => {
@@ -73,6 +73,16 @@ export default function Ngo() {
 
                                     className="border rounded-lg p-4 shadow-sm hover:shadow-md transition"
                                 >
+
+                                    <div className='flex items-center justify-end'>
+                                        <ParticipantStore
+                                            participant={participant}
+                                            endPoint='participants.update'
+                                            role='ngo'
+                                        />
+                                        {console.log('this i sparticipant',participant)}
+                                    </div>
+
                                     <div className="flex items-center gap-4 mb-4">
                                         <img
                                             src={'storage/' + participant.image}
@@ -84,10 +94,10 @@ export default function Ngo() {
                                                 <UserCircle className="w-4 h-4 text-gray-500" />
                                                 {participant.name}
                                             </h3>
-                                            <p className="text-sm text-gray-600 flex items-center gap-2">
+                                            {/* <p className="text-sm text-gray-600 flex items-center gap-2">
                                                 <Mail className="w-4 h-4 text-gray-500" />
                                                 {participant.email}
-                                            </p>
+                                            </p> */}
                                         </div>
                                     </div>
                                     <div className="mb-3">
