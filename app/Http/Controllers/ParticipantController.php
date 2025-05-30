@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Ably\AblyRest;
 use App\Exports\ParticipantsExport;
+use App\Mail\InvitationMail;
 use App\Mail\SignInMail;
 use App\Models\CurrentUser;
+use App\Models\General;
 use App\Models\Participant;
 use App\Models\Programe;
 use App\Models\QrCode;
@@ -68,7 +70,8 @@ class ParticipantController extends Controller
             'image' => $file ? $fileName : 'images/participants/avatar.png'
         ]);
 
-        // Mail::to($request->email)->send(new SignInMail($participant, $password));
+        $link = General::all()->first();
+        Mail::to($request->email)->send(new InvitationMail($participant->name, $participant->email, $password, $link->appstore, $link->playstore));
 
 
         $participant->social()->create([
