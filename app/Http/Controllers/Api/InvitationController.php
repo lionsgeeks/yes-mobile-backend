@@ -23,11 +23,11 @@ class InvitationController extends Controller
         $image = $participant->image;
         $name = str_replace(' ', '_', $name);
         // check the image if exists
-        $imagePath = public_path("assets/posts/screenshot_$name.png");
+        $imagePath = public_path("storage/posts/screenshot_$name.png");
         if (file_exists($imagePath)) {
             return response()->json([
                 'message' => 'Screenshot already exists!',
-                'image_path' => asset("assets/posts/screenshot_$name.png")
+                'image_path' => asset("storage/posts/screenshot_$name.png")
             ]);
         }
         // dd(file_exists($imagePath));
@@ -37,10 +37,10 @@ class InvitationController extends Controller
             ->windowSize(1000, 700)
             ->timeout(60)
             ->waitUntilNetworkIdle()
-            ->save(public_path("assets/posts/screenshot_$name.png"));
+            ->save(public_path("storage/posts/screenshot_$name.png"));
         return response()->json([
             'message' => 'Screenshot saved!',
-            'image_path' => asset("assets/posts/screenshot_$name.png")
+            'image_path' => asset("storage/posts/screenshot_$name.png")
         ]);
     }
 }
