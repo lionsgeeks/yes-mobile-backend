@@ -20,7 +20,7 @@ Route::get('/linkedinpost', function () {
 });
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
-        $participants = Participant::select('id', 'name','role', 'updated_at')->orderBy('updated_at', 'desc')->get();
+        $participants = Participant::select('id', 'name','role', 'updated_at', 'created_at')->orderBy('updated_at', 'desc')->get();
         $programCount = Programe::count();
         return Inertia::render('dashboard',  [
             'participants' => $participants,

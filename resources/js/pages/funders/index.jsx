@@ -3,8 +3,7 @@ import { Head, router, usePage } from '@inertiajs/react';
 import ParticipantStore from '../participants/components/participantStore';
 import { useState } from 'react';
 import DeleteSpeaker from '../speakers/components/deleteSpeaker';
-import { Building2, Mail, UserCircle } from 'lucide-react';
-import { Badge } from "@/components/ui/badge";
+import { Instagram, Linkedin, LinkIcon, UserCircle, Youtube } from 'lucide-react';
 import axios from "axios";
 
 import {
@@ -77,12 +76,45 @@ export default function Funders() {
 
                                     className="border rounded-lg p-4 shadow-sm hover:shadow-md transition"
                                 >
-                                    <div className='flex items-center justify-end'>
-                                        <ParticipantStore
-                                            participant={participant}
-                                            endPoint='participants.update'
-                                            role='funder'
-                                        />
+                                    <div className='flex justify-end'>
+                                        <div className='flex justify-end gap-2'>
+                                            <ParticipantStore
+                                                participant={participant}
+                                                endPoint='participants.update'
+                                                role='funder'
+                                            />
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger className="ml-auto">
+                                                    <MoreVertical className="w-5 h-5 text-gray-600 cursor-pointer" />
+                                                </DropdownMenuTrigger>
+                                                <DropdownMenuContent className="w-48">
+                                                    <DropdownMenuItem onClick={() => resetpassword(participant.email)}>
+                                                        Reset Password
+                                                    </DropdownMenuItem>
+
+                                                    <DropdownMenuItem
+                                                        onClick={() => router.visit(`/account/show/${participant.id}`)}
+                                                    >
+                                                        View Information
+                                                    </DropdownMenuItem>
+
+                                                    <DropdownMenuItem
+                                                        className="text-red-600 cursor-pointer"
+                                                        onSelect={e => {
+                                                            e.preventDefault();
+                                                            setDialogOpen(true);
+                                                        }}
+                                                    >
+                                                        <DeleteSpeaker
+                                                            speaker={participant}
+                                                            trigger={<>Delete Funder</>}
+                                                            open={dialogOpen}
+                                                            setOpen={setDialogOpen}
+                                                        />
+                                                    </DropdownMenuItem>
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
+                                        </div>
                                     </div>
                                     <div className="flex items-center gap-4 mb-4">
                                         <img
@@ -95,18 +127,13 @@ export default function Funders() {
                                                 <UserCircle className="w-4 h-4 text-gray-500" />
                                                 {participant.name}
                                             </h3>
-                                            {/* <p className="text-sm text-gray-600 flex items-center gap-2">
-                                                <Mail className="w-4 h-4 text-gray-500" />
-                                                {participant.email}
-                                            </p> */}
                                         </div>
                                     </div>
 
                                     {
                                         (participant.social?.linkedin || participant.social?.youtube || participant.social?.website || participant.social?.instagram) ?
                                             <div className="mb-5">
-                                                <h4 className="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-3">
-                                                    <Building2 className="w-4 h-4 text-alpha" />
+                                                <h4 className=" font-semibold text-gray-800 flex items-center gap-2 mb-3">
                                                     Socials
                                                 </h4>
                                                 <div className="flex flex-wrap gap-3">
@@ -117,7 +144,7 @@ export default function Funders() {
                                                             rel="noopener noreferrer"
                                                             className="text-alpha hover:text-blue-700 font-medium transition-all duration-200"
                                                         >
-                                                            Website
+                                                            <LinkIcon size={20} />
                                                         </a>
                                                     )}
                                                     {participant.social?.linkedin && (
@@ -127,7 +154,7 @@ export default function Funders() {
                                                             rel="noopener noreferrer"
                                                             className="text-blue-500 hover:text-blue-700 font-medium transition-all duration-200"
                                                         >
-                                                            LinkedIn
+                                                            <Linkedin size={20} />
                                                         </a>
                                                     )}
                                                     {participant.social?.youtube && (
@@ -137,7 +164,7 @@ export default function Funders() {
                                                             rel="noopener noreferrer"
                                                             className="text-red-600 hover:text-red-800 font-medium transition-all duration-200"
                                                         >
-                                                            YouTube
+                                                            <Youtube size={20} />
                                                         </a>
                                                     )}
                                                     {participant.social?.instagram && (
@@ -147,55 +174,14 @@ export default function Funders() {
                                                             rel="noopener noreferrer"
                                                             className="text-pink-500 hover:text-pink-700 font-medium transition-all duration-200"
                                                         >
-                                                            Instagram
+                                                            <Instagram size={20} />
                                                         </a>
                                                     )}
                                                 </div>
                                             </div>
                                             :
-                                            <>
-                                                {/* <p className='my-3 text-sm text-muted-foreground'>No Socials Provided</p> */}
-                                            </>
+                                            null
                                     }
-
-                                    <div className="mb-4 flex items-center gap-2">
-                                        <h4 className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                                            <Building2 className="w-4 h-4 text-gray-500" /> Role
-                                        </h4>
-                                        <Badge className="capitalize">{participant.role}</Badge>
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger className="ml-auto">
-                                                <MoreVertical className="w-5 h-5 text-gray-600 cursor-pointer" />
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent className="w-48">
-                                                <DropdownMenuItem onClick={() => resetpassword(participant.email)}>
-                                                    Reset Password
-                                                </DropdownMenuItem>
-
-                                                <DropdownMenuItem
-                                                    onClick={() => router.visit(`/account/show/${participant.id}`)}
-                                                >
-                                                    View Information
-                                                </DropdownMenuItem>
-
-                                                <DropdownMenuItem
-                                                    className="text-red-600 cursor-pointer"
-                                                    onSelect={e => {
-                                                        e.preventDefault();
-                                                        setDialogOpen(true);
-                                                    }}
-                                                >
-                                                    <DeleteSpeaker
-                                                        speaker={participant}
-                                                        trigger={<>Delete Funder</>}
-                                                        open={dialogOpen}
-                                                        setOpen={setDialogOpen}
-                                                    />
-                                                </DropdownMenuItem>
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
-
-                                    </div>
                                 </div>
                             </div>
                         ))

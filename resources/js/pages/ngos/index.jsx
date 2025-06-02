@@ -1,9 +1,8 @@
-import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import AppLayout from '@/layouts/app-layout';
 import { Head, router, usePage } from '@inertiajs/react';
 import axios from 'axios';
-import { Building2, MoreVertical, UserCircle } from 'lucide-react';
+import { Instagram, Linkedin, LinkIcon, MoreVertical, UserCircle, Youtube } from 'lucide-react';
 import { useState } from 'react';
 import ParticipantStore from '../participants/components/participantStore';
 import DeleteSpeaker from '../speakers/components/deleteSpeaker';
@@ -59,7 +58,7 @@ export default function Ngo() {
                     />
                     <div className='flex gap-3'>
                         <ParticipantStore title="Ngo" role="ngo" endPoint="ngos.store" />
-                        <ImportExcelDialog role={'ngo'}/>
+                        <ImportExcelDialog role={'ngo'} />
                     </div>
                 </div>
 
@@ -67,9 +66,37 @@ export default function Ngo() {
                     {filteredNgos.map((participant, index) => (
                         <div key={index}>
                             <div className="rounded-lg border p-4 shadow-sm transition hover:shadow-md">
-                                <div className="flex items-center justify-end">
-                                    <ParticipantStore participant={participant} endPoint="participants.update" role="ngo" />
-                                    {console.log('this i sparticipant', participant)}
+                                <div className="flex justify-end">
+                                    <div className='flex items-center gap-2'>
+                                        <ParticipantStore participant={participant} endPoint="participants.update" role="ngo" />
+                                        <DropdownMenu>
+                                            <DropdownMenuTrigger className="ml-auto">
+                                                <MoreVertical className="h-5 w-5 cursor-pointer text-gray-600" />
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent className="w-48">
+                                                <DropdownMenuItem onClick={() => resetpassword(participant.email)}>Reset Password</DropdownMenuItem>
+
+                                                <DropdownMenuItem onClick={() => router.visit(`/account/show/${participant.id}`)}>
+                                                    View Information
+                                                </DropdownMenuItem>
+
+                                                <DropdownMenuItem
+                                                    className="cursor-pointer text-red-600"
+                                                    onSelect={(e) => {
+                                                        e.preventDefault();
+                                                        setDialogOpen(true);
+                                                    }}
+                                                >
+                                                    <DeleteSpeaker
+                                                        speaker={participant}
+                                                        trigger={<>Delete NGO</>}
+                                                        open={dialogOpen}
+                                                        setOpen={setDialogOpen}
+                                                    />
+                                                </DropdownMenuItem>
+                                            </DropdownMenuContent>
+                                        </DropdownMenu>
+                                    </div>
                                 </div>
 
                                 <div className="mb-4 flex items-center gap-4">
@@ -83,102 +110,63 @@ export default function Ngo() {
                                             <UserCircle className="h-4 w-4 text-gray-500" />
                                             {participant.name}
                                         </h3>
-                                        {/* <p className="text-sm text-gray-600 flex items-center gap-2">
-                                                <Mail className="w-4 h-4 text-gray-500" />
-                                                {participant.email}
-                                            </p> */}
                                     </div>
                                 </div>
                                 <div className="mb-3">
-                                    {participant.social?.linkedin ||
-                                    participant.social?.youtube ||
-                                    participant.social?.website ||
-                                    participant.social?.instagram ? (
-                                        <div className="mb-5">
-                                            <h4 className="mb-3 flex items-center gap-2 text-lg font-semibold text-gray-800">
-                                                <Building2 className="text-alpha h-4 w-4" />
-                                                Socials
-                                            </h4>
-                                            <div className="flex flex-wrap gap-3">
-                                                {participant.social?.website && (
-                                                    <a
-                                                        href={participant.social?.website}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="text-alpha font-medium transition-all duration-200 hover:text-blue-700"
-                                                    >
-                                                        Website
-                                                    </a>
-                                                )}
-                                                {participant.social?.linkedin && (
-                                                    <a
-                                                        href={participant.social?.linkedin}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="font-medium text-blue-500 transition-all duration-200 hover:text-blue-700"
-                                                    >
-                                                        LinkedIn
-                                                    </a>
-                                                )}
-                                                {participant.social?.youtube && (
-                                                    <a
-                                                        href={participant.social?.youtube}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="font-medium text-red-600 transition-all duration-200 hover:text-red-800"
-                                                    >
-                                                        YouTube
-                                                    </a>
-                                                )}
-                                                {participant.social?.instagram && (
-                                                    <a
-                                                        href={participant.social?.instagram}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="font-medium text-pink-500 transition-all duration-200 hover:text-pink-700"
-                                                    >
-                                                        Instagram
-                                                    </a>
-                                                )}
+                                    {
+                                        (participant.social?.linkedin || participant.social?.youtube || participant.social?.website || participant.social?.instagram) ?
+                                            <div className="mb-5">
+                                                <h4 className=" font-semibold text-gray-800 flex items-center gap-2 mb-3">
+                                                    Socials
+                                                </h4>
+                                                <div className="flex flex-wrap gap-3">
+                                                    {participant.social?.website && (
+                                                        <a
+                                                            href={participant.social?.website}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="text-alpha hover:text-blue-700 font-medium transition-all duration-200"
+                                                        >
+                                                            <LinkIcon size={20} />
+                                                        </a>
+                                                    )}
+                                                    {participant.social?.linkedin && (
+                                                        <a
+                                                            href={participant.social?.linkedin}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="text-blue-500 hover:text-blue-700 font-medium transition-all duration-200"
+                                                        >
+                                                            <Linkedin size={20} />
+                                                        </a>
+                                                    )}
+                                                    {participant.social?.youtube && (
+                                                        <a
+                                                            href={participant.social?.youtube}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="text-red-600 hover:text-red-800 font-medium transition-all duration-200"
+                                                        >
+                                                            <Youtube size={20} />
+                                                        </a>
+                                                    )}
+                                                    {participant.social?.instagram && (
+                                                        <a
+                                                            href={participant.social?.instagram}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="text-pink-500 hover:text-pink-700 font-medium transition-all duration-200"
+                                                        >
+                                                            <Instagram size={20} />
+                                                        </a>
+                                                    )}
+                                                </div>
                                             </div>
-                                        </div>
-                                    ) : (
-                                        <>{/* <p className='my-3 text-sm text-muted-foreground'>No Socials Provided</p> */}</>
-                                    )}
+                                            :
+                                            null
+                                    }
                                 </div>
-                                <div className="mb-4 flex items-center gap-2">
-                                    <h4 className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                                        <Building2 className="h-4 w-4 text-gray-500" /> Role
-                                    </h4>
-                                    <Badge className="capitalize">{participant.role}</Badge>
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger className="ml-auto">
-                                            <MoreVertical className="h-5 w-5 cursor-pointer text-gray-600" />
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent className="w-48">
-                                            <DropdownMenuItem onClick={() => resetpassword(participant.email)}>Reset Password</DropdownMenuItem>
 
-                                            <DropdownMenuItem onClick={() => router.visit(`/account/show/${participant.id}`)}>
-                                                View Information
-                                            </DropdownMenuItem>
-
-                                            <DropdownMenuItem
-                                                className="cursor-pointer text-red-600"
-                                                onSelect={(e) => {
-                                                    e.preventDefault();
-                                                    setDialogOpen(true);
-                                                }}
-                                            >
-                                                <DeleteSpeaker
-                                                    speaker={participant}
-                                                    trigger={<>Delete NGO</>}
-                                                    open={dialogOpen}
-                                                    setOpen={setDialogOpen}
-                                                />
-                                            </DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
-                                </div>
                             </div>
                         </div>
                     ))}
