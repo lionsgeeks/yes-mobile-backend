@@ -13,8 +13,8 @@ import {
 import { useState } from 'react';
 
 
-export default function CreatePrograme({ speakers , categories , moderators }) {
-    console.log(categories);
+export default function CreatePrograme({ speakers, categories, moderators }) {
+    // console.log(categories);
 
     const { data, setData, post, processing, errors } = useForm({
         name: '',
@@ -157,6 +157,10 @@ export default function CreatePrograme({ speakers , categories , moderators }) {
                         {errors.description && <div className="text-red-500 text-sm">{errors.description}</div>}
                     </div>
 
+
+                    {
+                        moderators.length > 0 &&
+
                     <div className="col-span-2">
                         <label className="block text-sm font-medium text-gray-700 mb-1">moderators:</label>
                         <div className="space-y-2 flex items-center flex-wrap gap-2">
@@ -182,6 +186,11 @@ export default function CreatePrograme({ speakers , categories , moderators }) {
                         </div>
                         {errors.moderator_ids && <div className="text-red-500 text-sm">{errors.moderator_ids}</div>}
                     </div>
+
+                    }
+                    {
+                        speakers.length > 0 &&
+
                     <div className="col-span-2">
                         <label className="block text-sm font-medium text-gray-700 mb-1">Speakers:</label>
                         <div className="space-y-2 flex items-center flex-wrap gap-2">
@@ -207,6 +216,10 @@ export default function CreatePrograme({ speakers , categories , moderators }) {
                         </div>
                         {errors.speaker_ids && <div className="text-red-500 text-sm">{errors.speaker_ids}</div>}
                     </div>
+                    }
+
+                    {
+                        categories.length > 0 &&
 
                     <div className="col-span-2">
                         <label htmlFor="category_id" className="block text-sm font-medium text-gray-700 mb-1">Category:</label>
@@ -224,6 +237,8 @@ export default function CreatePrograme({ speakers , categories , moderators }) {
                         </select>
                         {errors.category_id && <div className="text-red-500 text-sm">{errors.category_id}</div>}
                     </div>
+                    }
+
 
 
                     <button

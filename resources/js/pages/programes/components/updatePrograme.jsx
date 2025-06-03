@@ -1,5 +1,5 @@
 import { useForm } from "@inertiajs/react";
-import {Input} from  '@/components/ui/input';
+import { Input } from '@/components/ui/input';
 import {
     Dialog,
     DialogContent,
@@ -11,7 +11,7 @@ import {
 import { useState, useEffect } from 'react';
 import { Pen } from "lucide-react";
 
-export default function UpdatePrograme({ programe, speakers }) {
+export default function UpdatePrograme({ programe, speakers, moderators, categories }) {
     const { data, setData, put, processing, errors, reset } = useForm({
         name: programe?.name || '',
         description: programe?.description || '',
@@ -20,8 +20,12 @@ export default function UpdatePrograme({ programe, speakers }) {
         capacity: programe?.capacity || '',
         location: programe?.location || '',
         date: programe?.date || '',
+        category_id: programe?.category_id || '',
         speaker_ids: programe?.participants?.map(p => p.id) || [],
+        moderator_ids: programe?.participants?.map(p => p.id) || [],
     });
+const currentCategory = categories.find(category => category.id === programe.category_id);
+    // console.log(currentCategory);
 
     const [open, setOpen] = useState(false);
 
@@ -37,6 +41,7 @@ export default function UpdatePrograme({ programe, speakers }) {
                 location: programe.location || '',
                 date: programe.date || '',
                 speaker_ids: programe.participants?.map(p => p.id) || [],
+                moderator_ids: programe.participants?.map(p => p.id) || [],
             });
         }
         if (!open) {
@@ -63,6 +68,17 @@ export default function UpdatePrograme({ programe, speakers }) {
         }
     };
 
+    const handlemoderatorChange = (e) => {
+        const value = parseInt(e.target.value);
+        if (e.target.checked) {
+            if (!data.moderator_ids.includes(value)) {
+                setData('moderator_ids', [...data.moderator_ids, value]);
+            }
+        } else {
+            setData('moderator_ids', data.moderator_ids.filter(id => id !== value));
+        }
+    };
+
     // console.log(programe.participants[0]);
 
     return (
@@ -75,7 +91,7 @@ export default function UpdatePrograme({ programe, speakers }) {
                     <DialogTitle>Update Program</DialogTitle>
                     <DialogDescription>Update the program details.</DialogDescription>
                 </DialogHeader>
-                <form onSubmit={handleSubmit} className="space-y-1 sm:space-y-1 grid grid-cols-2 gap-2">
+                <form onSubmit={handleSubmit} className="space-y-1 sm:space-y-1c grid grid-cols-2 gap-2">
 
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>
@@ -184,6 +200,46 @@ export default function UpdatePrograme({ programe, speakers }) {
                             ))}
                         </div>
                         {errors.speaker_ids && <div className="text-red-500 text-sm">{errors.speaker_ids}</div>}
+                    </div>
+                    <div className="col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">moderators:</label>
+                        <div className="space-y-2 flex items-center flex-wrap gap-2">
+                            {moderators.map((moderator) => (
+                                <div key={moderator.id} className="flex items-center space-x-2">
+                                    <input
+                                        type="checkbox"
+                                        id={`moderator-${moderator.id}`}
+                                        value={moderator.id}
+                                        checked={data.moderator_ids.includes(moderator.id) || data.moderator_ids.includes(String(moderator.id))}
+                                        onChange={handlemoderatorChange}
+                                        className="rounded border-gray-300 accent-alpha "
+                                    />
+                                    <label htmlFor={`moderator-${moderator.id}`} className="text-sm text-gray-700">
+                                        {moderator.name}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
+                        {errors.moderator_ids && <div className="text-red-500 text-sm">{errors.moderator_ids}</div>}
+                    </div>
+                    <div className="col-span-2">
+                        <label htmlFor="category_id" className="block text-sm font-medium text-gray-700 mb-1">Category:</label>
+                        <select
+                            id="category_id"
+                            name="category_id"
+                            value={data.category_id}
+                            onChange={(e) => setData('category_id', e.target.value)}
+                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                        >
+                            l
+                            <option value="">{currentCategory.name}</option>
+                            {categories.map((categorie) => (
+
+
+                            <option key={categorie.id} value={categorie.id}>{categorie.name}</option>
+                            ))}
+                        </select>
+                        {errors.category_id && <div className="text-red-500 text-sm">{errors.category_id}</div>}
                     </div>
                     <button
                         type="submit"

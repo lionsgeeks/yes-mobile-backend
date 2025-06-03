@@ -38,9 +38,9 @@ class ProgrameController extends Controller
             ->get();
 
 
-            foreach ($programes as $programe) {
-                $category = Categorie::find($programe->category_id);
-            }
+        foreach ($programes as $programe) {
+            $category = Categorie::find($programe->category_id);
+        }
 
         return response()->json([
             'message' => 'Programe fetched successfully',
@@ -66,7 +66,6 @@ class ProgrameController extends Controller
             'capacity' => 'required|integer',
             'location' => 'required|string|max:255',
             'date' => 'required|date',
-            'category_id' => 'required',
 
         ]);
         $programe =   Programe::create([
@@ -115,7 +114,7 @@ class ProgrameController extends Controller
     }
 
 
-     public function MyPrograme(Programe $programe)
+    public function MyPrograme(Programe $programe)
     {
         //
         $reservations = Resarvation::where('programe_id', $programe->id)->first();
@@ -157,16 +156,9 @@ class ProgrameController extends Controller
     public function update(Request $request, Programe $programe)
     {
         //
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'start_date' => 'required',
-            'end_date' => 'required',
-            'capacity' => 'required|integer',
-            'location' => 'required|string|max:255',
-            'date' => 'required|date',
+        // dd($request->all());
+        // dd($programe->participants);
 
-        ]);
         $programe->update([
             'name' => $request->name,
             'description' => $request->description,
@@ -175,6 +167,7 @@ class ProgrameController extends Controller
             'capacity' => $request->capacity,
             'location' => $request->location,
             'date' => $request->date,
+            'category_id' => $request->category_id,
 
         ]);
 
@@ -185,7 +178,10 @@ class ProgrameController extends Controller
 
         $programe->participants()->attach($request->speaker_ids);
 
-
+        if ($request->has('moderator_ids')) {
+            $programe->participants()->detach();
+        }
+        $programe->participants()->attach($request->moderator_ids);
 
         return back()->with('success', 'Programe updated successfully.');
     }
