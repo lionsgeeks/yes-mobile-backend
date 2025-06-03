@@ -25,7 +25,7 @@ export default function Dashboard() {
     const getLastWeek = (type) => {
         const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 3600 * 1000);
         const lastSevenDaysVisitors = participants.filter(p => {
-            const createdAt = new Date(p.created_at.replace(' ', 'T'));
+            const createdAt = new Date(p?.created_at?.replace(' ', 'T'));
             return p.role === type && createdAt >= sevenDaysAgo;
         }).length;
 

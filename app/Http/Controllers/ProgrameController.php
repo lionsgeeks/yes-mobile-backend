@@ -159,7 +159,7 @@ class ProgrameController extends Controller
         //
         $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            'description' => 'required|string',
             'start_date' => 'required',
             'end_date' => 'required',
             'capacity' => 'required|integer',
