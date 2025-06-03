@@ -30,10 +30,20 @@ class CategorieController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required',
+            'description' => 'required',
+            'location' => 'required',
+            'start_date' => 'nullable',
+            'end_date' => 'nullable',
+            'date' => 'nullable',
         ]);
         Categorie::create([
             'name' => $request->name,
+            'description' => $request->description,
+            'location' => $request->location,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'date' => $request->date,
         ]);
         return redirect()->back()->with('success', 'Category created successfully!');
     }

@@ -9,6 +9,10 @@ class Categorie extends Model
     //
     protected $fillable = [
         'name',
-        
+        'description',
+        'location',
+        'start_date',
+        'end_date',
+        'date',
     ];
 }
