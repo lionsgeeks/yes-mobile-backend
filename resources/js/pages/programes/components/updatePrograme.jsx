@@ -232,7 +232,7 @@ const currentCategory = categories.find(category => category.id === programe.cat
                             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                         >
                             l
-                            <option value="">{currentCategory.name}</option>
+                            <option value="">{currentCategory?.name}</option>
                             {categories.map((categorie) => (
 
 

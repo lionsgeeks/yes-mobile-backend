@@ -52,37 +52,37 @@ const Programe = ({ programes, speakers , categories ,moderators }) => {
                                 >
                                     <TableCell className="block sm:table-cell">
                                         <span className="font-semibold sm:hidden">Session Title:</span>
-                                        <h1>{program.name}</h1>
+                                        <h1>{program?.name}</h1>
                                         <p className="text-sm text-muted-foreground whitespace-pre-line break-words">
-                                            {program.description}
+                                            {program?.description}
                                         </p>
                                     </TableCell>
 
                                     <TableCell className="block sm:table-cell">
                                         <span className="font-semibold sm:hidden">Date:</span>
-                                        {new Date(program.date).toDateString()}
+                                        {new Date(program?.date).toDateString()}
                                     </TableCell>
 
                                     <TableCell className="block sm:table-cell">
                                         <span className="font-semibold sm:hidden">Time:</span>
-                                        {program.start_date} - {program.end_date}
+                                        {program?.start_date} - {program?.end_date}
                                     </TableCell>
 
                                     <TableCell className="block sm:table-cell">
                                         <span className="font-semibold sm:hidden">Capacity:</span>
-                                        {program.capacity}
+                                        {program?.capacity}
                                     </TableCell>
 
                                     <TableCell className="block sm:table-cell">
                                         <span className="font-semibold sm:hidden">Location:</span>
-                                        {program.location}
+                                        {program?.location}
                                     </TableCell>
 
                                     <TableCell className="block sm:table-cell">
                                         <span className="font-semibold sm:hidden">Speakers:</span>
-                                        {program.participants.length > 0 ? (
+                                        {program?.participants.length > 0 ? (
                                             <ul className="ml-2 list-disc">
-                                                {program.participants.map((speaker, i) => (
+                                                {program?.participants.map((speaker, i) => (
                                                     <li key={i}>{speaker.name}</li>
                                                 ))}
                                             </ul>
@@ -96,12 +96,12 @@ const Programe = ({ programes, speakers , categories ,moderators }) => {
                                         <div className="flex gap-2 mt-2 sm:mt-0">
                                             <button
                                                 className="p-1 hover:bg-gray-100 rounded cursor-pointer"
-                                                onClick={() => router.visit(`/programe/show/${program.id}`)}
+                                                onClick={() => router.visit(`/programe/show/${program?.id}`)}
                                             >
                                                 <Eye size={20} color="#295da6" />
                                             </button>
                                             <UpdatePrograme programe={program} speakers={speakers} categories={categories} moderators={moderators} />
-                                            <DeletePrograme id={program.id} />
+                                            <DeletePrograme id={program?.id} />
                                         </div>
                                     </TableCell>
                                 </TableRow>
