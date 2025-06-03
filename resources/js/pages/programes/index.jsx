@@ -100,7 +100,7 @@ const Programe = ({ programes, speakers , categories ,moderators }) => {
                                             >
                                                 <Eye size={20} color="#295da6" />
                                             </button>
-                                            <UpdatePrograme programe={program} speakers={speakers} />
+                                            <UpdatePrograme programe={program} speakers={speakers} categories={categories} moderators={moderators} />
                                             <DeletePrograme id={program.id} />
                                         </div>
                                     </TableCell>
