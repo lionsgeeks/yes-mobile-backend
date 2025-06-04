@@ -8,6 +8,7 @@ import DeletePrograme from './components/deletePrograme';
 import UpdatePrograme from './components/updatePrograme';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Eye } from 'lucide-react';
+import { Button } from '@headlessui/react';
 
 const breadcrumbs = [
     {
@@ -15,7 +16,7 @@ const breadcrumbs = [
         href: '/programe',
     },
 ];
-const Programe = ({ programes, speakers , categories ,moderators }) => {
+const Programe = ({ programes, speakers, categories, moderators }) => {
 
 
     return (
@@ -25,8 +26,9 @@ const Programe = ({ programes, speakers , categories ,moderators }) => {
             <div className="p-2  lg:p-6">
 
                 <div className="flex justify-end gap-x-4 py-3">
-                    <CreatePrograme speakers={speakers}  categories={categories} moderators={moderators} />
-                    <CreateCategorie />
+                    <CreatePrograme speakers={speakers} categories={categories} moderators={moderators} />
+                    <button  class="bg-blue-900 text-white font-medium py-1 px-4 rounded-lg hover:bg-blue-800 transition duration-200" onClick={() => router.visit('/categories')}   className="cursor-pointer"> Categorie</button>
+
                 </div>
 
                 <h2 className="text-2xl font-bold text-alpha mb-4 ">All Programs</h2>

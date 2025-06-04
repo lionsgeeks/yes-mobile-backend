@@ -25,6 +25,17 @@ class ProgrameController extends Controller
             'categories' => Categorie::all(),
         ]);
     }
+    public function index2()
+    {
+        //
+        // dd(Participant::where("role" , "speaker")->get());
+        return Inertia::render('programes/category', [
+            'programes' => Programe::all()->load('participants'),
+            "moderators" => Participant::where("role", "moderator")->get(),
+            "speakers" => Participant::where("role", "speaker")->get(),
+            'categories' => Categorie::all(),
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.

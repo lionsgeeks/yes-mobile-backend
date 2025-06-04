@@ -54,6 +54,9 @@ Route::resource('Categorie', CategorieController::class);
 
 Route::resource('programe', ProgrameController::class);
 Route::get('/programe/show/{programe}', [ProgrameController::class, 'showw']);
+Route::get('/categories', [ProgrameController::class, 'index2']);
+Route::delete('/categories/destroy/{categorie}', [CategorieController::class, 'destroy'])->name('categorie.destroy');
+Route::put('/categories/update/{categorie}', [CategorieController::class, 'update'])->name('Categorie.update');
 
 
 

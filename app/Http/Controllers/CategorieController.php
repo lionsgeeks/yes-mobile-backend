@@ -69,7 +69,16 @@ class CategorieController extends Controller
      */
     public function update(Request $request, Categorie $categorie)
     {
-        //
+      //
+        $categorie->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'location' => $request->location,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'date' => $request->date,
+        ]);
+        return redirect()->back()->with('success', 'Category updated successfully!');
     }
 
     /**
@@ -78,5 +87,7 @@ class CategorieController extends Controller
     public function destroy(Categorie $categorie)
     {
         //
+        $categorie->delete();
+        return back()->with('success', 'Category deleted successfully!');
     }
 }
