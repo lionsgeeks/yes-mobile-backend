@@ -45,7 +45,7 @@ class CategorieController extends Controller
             'end_date' => $request->end_date,
             'date' => $request->date,
         ]);
-        return redirect()->back()->with('success', 'Category created successfully!');
+        return redirect('/programe')->with('success', 'Category created successfully!');
     }
 
     /**

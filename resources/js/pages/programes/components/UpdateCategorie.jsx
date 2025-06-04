@@ -24,17 +24,7 @@ export default function UpdateCategorie({ category }) {
 
     const [open, setOpen] = useState(false);
 
-    // Optional: refresh form when category changes
-    useEffect(() => {
-        setData({
-            name: category.name || '',
-            description: category.description || '',
-            location: category.location || '',
-            start_date: category.start_date || '',
-            end_date: category.end_date || '',
-            date: category.date || '',
-        });
-    }, [category]);
+
 
     const handleUpdate = (e) => {
         e.preventDefault();
