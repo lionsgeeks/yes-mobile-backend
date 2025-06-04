@@ -152,7 +152,7 @@ class ParticipantController extends Controller
             'image' => $file ? $fileName : $participant->image,
         ]);
 
-        $participant->social()->update([
+        $participant->social()->updateOrCreate([
             'website' => $request->website,
             'linkedin' => $request->linkedin,
             'youtube' => $request->youtube,
