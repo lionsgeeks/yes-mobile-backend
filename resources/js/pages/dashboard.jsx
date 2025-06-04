@@ -125,7 +125,7 @@ export default function Dashboard() {
                                         <ChevronRight className="ml-auto h-5 w-5 text-muted-foreground" />
                                     </div>
                                 </a>
-                                <a href="/moderator">
+                                <a href="/moderators">
                                     <div className="flex items-center gap-3 rounded-lg border p-3 text-sm transition-colors hover:bg-accent">
                                         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-alpha/10">
                                             <Presentation className="h-5 w-5 text-alpha" />

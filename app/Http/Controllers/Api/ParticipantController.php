@@ -195,7 +195,7 @@ class ParticipantController extends Controller
         // return the $participant that has the access token equivalent to the one provided
         $participant = Participant::whereHas('tokens', function ($query) use ($request) {
             $query->where('token', $request->token);
-        })->first();
+        })->with('interesets')->with('social')->first();
 
         if (! $participant) {
             return response()->json([
