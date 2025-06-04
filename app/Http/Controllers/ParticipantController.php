@@ -72,7 +72,7 @@ class ParticipantController extends Controller
         ]);
 
         $link = General::all()->first();
-        Mail::to($request->email)->send(new InvitationMail($participant->name, $participant->email, $password, $link->appstore, $link->playstore));
+
 
 
         $participant->social()->create([
@@ -81,6 +81,11 @@ class ParticipantController extends Controller
             'youtube' => $request->youtube,
             'instagram' => $request->instagram,
         ]);
+
+        if ($role == 'visitor' || $role == 'speaker' || $role == 'moderator') {
+
+            Mail::to($request->email)->send(new InvitationMail($participant->name, $participant->email, $password, $link->appstore, $link->playstore));
+        }
 
         $ably = new AblyRest(env('ABLY_KEY'));
         $channel = $ably->channel("public_participants");
@@ -284,7 +289,7 @@ class ParticipantController extends Controller
         $fileName = $role == 'visitor' ? 'participants' : $role;
         return Excel::download(new ParticipantsExport($role), $fileName . '.xlsx');
     }
-    public function import(Request $request) 
+    public function import(Request $request)
     {
         $request->validate([
             'file' => 'required|file|mimes:xls,xlsx|max:5240',
