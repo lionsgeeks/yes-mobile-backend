@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Api\ParticipantController;
 use App\Models\Categorie;
 use App\Models\Participant;
 use App\Models\Programe;
@@ -242,11 +241,9 @@ class ProgrameController extends Controller
         ]);
         $programe->save();
 
-        // return response()->json([
-        //     'message' => 'Programe enrolled successfully',
-        // ]);
-        $getMyProgramme = new ParticipantController();
-        return $getMyProgramme->MyPrograme($request->participant_id);
+        return response()->json([
+            'message' => 'Programe enrolled successfully',
+        ]);
     }
 
 
