@@ -87,9 +87,12 @@ class ProgrameController extends Controller
             'capacity' => $request->capacity,
             'location' => $request->location,
             'date' => $request->date,
-            'category_id' => $request->category_id,
 
         ]);
+        if ($request->category_id) {
+            $programe->category_id = $request->category_id;
+            $programe->save();
+        };
         // dd($programe);
 
         $programe->participants()->attach($request->speaker_ids);

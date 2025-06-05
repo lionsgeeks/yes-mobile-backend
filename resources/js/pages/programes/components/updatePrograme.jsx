@@ -24,8 +24,8 @@ export default function UpdatePrograme({ programe, speakers, moderators, categor
         speaker_ids: programe?.participants?.map(p => p.id) || [],
         moderator_ids: programe?.participants?.map(p => p.id) || [],
     });
-const currentCategory = categories.find(category => category.id === programe.category_id);
-    // console.log(currentCategory);
+    const currentCategory = categories.find(category => category.id === programe.category_id);
+    console.log(currentCategory);
 
     const [open, setOpen] = useState(false);
 
@@ -231,13 +231,22 @@ const currentCategory = categories.find(category => category.id === programe.cat
                             onChange={(e) => setData('category_id', e.target.value)}
                             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                         >
-                            l
-                            <option value="">{currentCategory?.name}</option>
-                            {categories.map((categorie) => (
+                            {
+                                currentCategory ?
+                                    (<option value={currentCategory?.id}>{currentCategory?.name}</option>
+                                    ) : (
 
+                                        <option value="">Select category</option>
+                                    )
+                            }
+                            {categories
+                                .filter((categorie) => categorie.id !== currentCategory?.id)
+                                .map((categorie) => (
+                                    <option key={categorie.id} value={categorie.id}>
+                                        {categorie.name}
+                                    </option>
+                                ))}
 
-                            <option key={categorie.id} value={categorie.id}>{categorie.name}</option>
-                            ))}
                         </select>
                         {errors.category_id && <div className="text-red-500 text-sm">{errors.category_id}</div>}
                     </div>
