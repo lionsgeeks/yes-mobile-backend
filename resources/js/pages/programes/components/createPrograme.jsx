@@ -161,82 +161,100 @@ export default function CreatePrograme({ speakers, categories, moderators }) {
                     {
                         moderators.length > 0 &&
 
-                    <div className="col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">moderators:</label>
-                        <div className="space-y-2 flex items-center flex-wrap gap-2">
-                            {moderators.map((moderator) => (
-                                <div key={moderator.id} className="flex items-center space-x-2">
-                                    <input
-                                        type="checkbox"
-                                        id={`moderator-${moderator.id}`}
-                                        value={moderator.id}
-                                        onChange={(e) => {
+                        <div className="col-span-2">
+                            <label className="block text-sm font-medium text-gray-700 mb-1">moderators:</label>
+                            <div className="space-y-2 flex items-center flex-wrap gap-2">
+                                {moderators.map((moderator) => (
+                                    <div key={moderator.id} className="flex items-center space-x-2">
+                                        <input
+                                            type="checkbox"
+                                            id={`moderator-${moderator.id}`}
+                                            value={moderator.id}
+                                            onChange={(e) => {
+                                                const id = parseInt(e.target.value);
+                                                if (e.target.checked) {
+                                                    if (!data.moderator_ids.includes(id)) {
+                                                        setData('moderator_ids', [...data.moderator_ids, id]);
+                                                    }
+                                                } else {
+                                                    setData(
+                                                        'moderator_ids',
+                                                        data.moderator_ids.filter((mid) => mid !== id)
+                                                    );
+                                                }
+                                            }}
 
-                                            setData('moderator_ids', [...data.moderator_ids, e.target.value]);
+                                            className="rounded border-gray-300 accent-alpha"
+                                        />
 
-                                        }}
-                                        className="rounded border-gray-300 accent-alpha"
-                                    />
-
-                                    <label htmlFor={`moderator-${moderator.id}`} className="text-sm text-gray-700">
-                                        {moderator.name}
-                                    </label>
-                                </div>
-                            ))}
+                                        <label htmlFor={`moderator-${moderator.id}`} className="text-sm text-gray-700">
+                                            {moderator.name}
+                                        </label>
+                                    </div>
+                                ))}
+                            </div>
+                            {errors.moderator_ids && <div className="text-red-500 text-sm">{errors.moderator_ids}</div>}
                         </div>
-                        {errors.moderator_ids && <div className="text-red-500 text-sm">{errors.moderator_ids}</div>}
-                    </div>
 
                     }
                     {
                         speakers.length > 0 &&
 
-                    <div className="col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Speakers:</label>
-                        <div className="space-y-2 flex items-center flex-wrap gap-2">
-                            {speakers.map((speaker) => (
-                                <div key={speaker.id} className="flex items-center space-x-2">
-                                    <input
-                                        type="checkbox"
-                                        id={`speaker-${speaker.id}`}
-                                        value={speaker.id}
-                                        onChange={(e) => {
+                        <div className="col-span-2">
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Speakers:</label>
+                            <div className="space-y-2 flex items-center flex-wrap gap-2">
+                                {speakers.map((speaker) => (
+                                    <div key={speaker.id} className="flex items-center space-x-2">
+                                        <input
+                                            type="checkbox"
+                                            id={`speaker-${speaker.id}`}
+                                            value={speaker.id}
+                                            onChange={(e) => {
+                                                const id = parseInt(e.target.value);
+                                                if (e.target.checked) {
+                                                    if (!data.speaker_ids.includes(id)) {
+                                                        setData('speaker_ids', [...data.speaker_ids, id]);
+                                                    }
+                                                } else {
+                                                    setData(
+                                                        'speaker_ids',
+                                                        data.speaker_ids.filter((sid) => sid !== id)
+                                                    );
+                                                }
+                                            }}
 
-                                            setData('speaker_ids', [...data.speaker_ids, e.target.value]);
+                                            className="rounded border-gray-300 accent-alpha"
+                                        />
 
-                                        }}
-                                        className="rounded border-gray-300 accent-alpha"
-                                    />
-
-                                    <label htmlFor={`speaker-${speaker.id}`} className="text-sm text-gray-700">
-                                        {speaker.name}
-                                    </label>
-                                </div>
-                            ))}
+                                        <label htmlFor={`speaker-${speaker.id}`} className="text-sm text-gray-700">
+                                            {speaker.name}
+                                        </label>
+                                    </div>
+                                ))}
+                            </div>
+                            {errors.speaker_ids && <div className="text-red-500 text-sm">{errors.speaker_ids}</div>}
                         </div>
-                        {errors.speaker_ids && <div className="text-red-500 text-sm">{errors.speaker_ids}</div>}
-                    </div>
                     }
 
                     {
                         categories.length > 0 &&
 
-                    <div className="col-span-2">
-                        <label htmlFor="category_id" className="block text-sm font-medium text-gray-700 mb-1">Category:</label>
-                        <select
-                            id="category_id"
-                            name="category_id"
-                            value={data.category_id}
-                            onChange={(e) => setData('category_id', e.target.value)}
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                        >
-                            <option value="">Select a category</option>
-                            {categories.map((categorie) => (
-                                <option key={categorie.id} value={categorie.id}>{categorie.name}</option>
-                            ))}
-                        </select>
-                        {errors.category_id && <div className="text-red-500 text-sm">{errors.category_id}</div>}
-                    </div>
+                        <div className="col-span-2">
+                            <label htmlFor="category_id" className="block text-sm font-medium text-gray-700 mb-1">Category:</label>
+                            <select
+                                id="category_id"
+                                name="category_id"
+                                value={data.category_id}
+                                onChange={(e) => setData('category_id', e.target.value)}
+                                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                            >
+                                <option value="">Select a category</option>
+                                {categories.map((categorie) => (
+                                    <option key={categorie.id} value={categorie.id}>{categorie.name}</option>
+                                ))}
+                            </select>
+                            {errors.category_id && <div className="text-red-500 text-sm">{errors.category_id}</div>}
+                        </div>
                     }
 
 
