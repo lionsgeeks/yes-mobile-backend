@@ -85,11 +85,11 @@ class InvitationController extends Controller
         }
 
         // 1. Load the event background image (should match your blade template background)
-        $backgroundPath = public_path('assets/images/EMAIL_COVER.png');
+        $backgroundPath = public_path('assets/images/badge_yesafrica_affiche.jpg');
         if (!file_exists($backgroundPath)) {
             return response()->json(['message' => 'Background image not found'], 500);
         }
-        $background = imagecreatefrompng($backgroundPath);
+        $background = imagecreatefromjpeg($backgroundPath);
 
         // 2. Load the user avatar
         $avatarPath = public_path('storage/' . $image);
