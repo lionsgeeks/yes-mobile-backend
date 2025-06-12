@@ -71,7 +71,7 @@ class InvitationController extends Controller
         $name = $participant->name;
         $role = $participant->role;
         $image = $participant->image;
-        $nameForFile = str_replace(' ', '_', $name);
+        $nameForFile = str_replace(' ', '_', $name) . '_' . $participant->id;
 
         // Output file path
         $imagePath = public_path("storage/posts/screenshot_$nameForFile.png");
@@ -103,7 +103,7 @@ class InvitationController extends Controller
         }
 
         // 3. Resize/crop avatar to 100x100px (object-cover effect)
-        $avatarSize = 100;
+        $avatarSize = 130;
         $srcWidth = imagesx($avatar);
         $srcHeight = imagesy($avatar);
 
@@ -140,11 +140,11 @@ class InvitationController extends Controller
         // Make avatar rounded
         $avatarRounded = $this->makeRoundedAvatar($avatarResized, $avatarSize);
 
-        // 4. Place avatar on background (left: 80.5%, top: 44%)
+        // 4. Place avatar on background (left: 75%, top: 33%)
         $bgWidth = imagesx($background);
         $bgHeight = imagesy($background);
-        $avatarX = intval($bgWidth * 0.805);
-        $avatarY = intval($bgHeight * 0.44);
+        $avatarX = intval($bgWidth * 0.73);
+        $avatarY = intval($bgHeight * 0.28);
         imagecopy($background, $avatarRounded, $avatarX, $avatarY, 0, 0, $avatarSize, $avatarSize);
 
         // 5. Add name and role text
@@ -153,11 +153,10 @@ class InvitationController extends Controller
             return response()->json(['message' => 'Font file not found'], 500);
         }
 
-        // Name (left: 78%, top: 73%)
         $nameColor = imagecolorallocate($background, 41, 82, 163); 
 
         // Set your max width for the name area (in pixels)
-        $maxNameWidth = intval($bgWidth * 0.18);
+        $maxNameWidth = intval($bgWidth * 0.22);
 
         // Wrap the name
         $nameLines = $this->wrapText(14, 0, $fontPath, $name, $maxNameWidth);
@@ -171,12 +170,12 @@ class InvitationController extends Controller
         foreach ($nameLines as $i => $line) {
             $box = imagettfbbox(14, 0, $fontPath, $line);
             $textWidth = $box[2] - $box[0];
-            $centerX = intval($bgWidth * 0.765) + intval(($maxNameWidth - $textWidth) / 2);
+            $centerX = intval($bgWidth * 0.70) + intval(($maxNameWidth - $textWidth) / 2);
             imagettftext($background, 14, 0, $centerX, $startY + $i * $lineHeight, $nameColor, $fontPath, $line);
         }
 
         // Role (left: 83%, top: 68%)
-        $roleX = intval($bgWidth * 0.83);
+        $roleX = intval($bgWidth * 0.78);
         $roleY = intval($bgHeight * 0.65);
         $roleColor = imagecolorallocate($background, 212, 175, 55);
         imagettftext($background, 14, 0, $roleX, $roleY, $roleColor, $fontPath, ucfirst($role));
