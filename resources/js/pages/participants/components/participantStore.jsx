@@ -188,7 +188,7 @@ export default function ParticipantStore({ title = 'Participant', role = 'visito
                                 <Label htmlFor="website" className="text-right">
                                     Website
                                 </Label>
-                                <Input id="website" name="website" type="url" placeholder="www.website.com"
+                                <Input id="website" name="web" type="url" placeholder="https://www.website.com"
                                     value={data.website}
                                     onChange={(e) => { setData('website', e.target.value) }}
                                 />
@@ -197,7 +197,7 @@ export default function ParticipantStore({ title = 'Participant', role = 'visito
                                 <Label htmlFor="linkedin" className="text-right">
                                     LinkedIn
                                 </Label>
-                                <Input id="linkedin" name="linkedin" type="url" placeholder="www.linkedin.com/u/username"
+                                <Input id="linkedin" name="linkedin" type="url" placeholder="https://www.linkedin.com/u/username"
                                     value={data.linkedin}
                                     onChange={(e) => { setData('linkedin', e.target.value) }}
                                 />
@@ -206,7 +206,7 @@ export default function ParticipantStore({ title = 'Participant', role = 'visito
                                 <Label htmlFor="youtube" className="text-right">
                                     Youtube
                                 </Label>
-                                <Input id="youtube" name="youtube" type="url" placeholder="www.youtube.com"
+                                <Input id="youtube" name="youtube" type="url" placeholder="https://www.youtube.com"
                                     value={data.youtube}
                                     onChange={(e) => { setData('youtube', e.target.value) }}
                                 />
@@ -215,7 +215,7 @@ export default function ParticipantStore({ title = 'Participant', role = 'visito
                                 <Label htmlFor="instagram" className="text-right">
                                     Instagram
                                 </Label>
-                                <Input id="instagram" name="instagram" type="url" placeholder="www.instagram.com"
+                                <Input id="instagram" name="instagram" type="url" placeholder="https://www.instagram.com"
                                     value={data.instagram}
                                     onChange={(e) => { setData('instagram', e.target.value) }}
                                 />
@@ -225,9 +225,9 @@ export default function ParticipantStore({ title = 'Participant', role = 'visito
 
 
                     <div className="flex justify-end">
-                        <DialogClose>
+                        {/* <DialogClose> */}
                             <Button type="submit">Save changes</Button>
-                        </DialogClose>
+                        {/* </DialogClose> */}
                     </div>
                 </form>
 
