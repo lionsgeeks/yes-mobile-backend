@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
+use Laravel\Sanctum\PersonalAccessToken;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ParticipantController extends Controller
@@ -141,6 +142,22 @@ class ParticipantController extends Controller
             }
         }
 
+        $token = PersonalAccessToken::where('name', $participant->email)->first();
+        if ($token) {
+            $token->update([
+                'name' => $request->email ?? $participant->email,
+            ]);
+        }
+
+
+        if ($request->email != $participant->email) {
+            $link = General::all()->first();
+            $password = ($participant->role == 'funder' || $participant->role == 'ngo') ? 'lionsgeek' : Str::random(8);
+            if ($participant->role == 'visitor' || $participant->role == 'speaker' || $participant->role == 'moderator') {
+                Mail::to($request->email)->send(new InvitationMail($participant->name, $participant->email, $password, $link->appstore, $link->playstore));
+            }
+        }
+
         $participant->update([
             'name' => $request->name,
             'email' => $request->email,
@@ -158,8 +175,6 @@ class ParticipantController extends Controller
             'youtube' => $request->youtube,
             'instagram' => $request->instagram,
         ]);
-
-        // TODO if email is modified then send an email ?
     }
 
     /**

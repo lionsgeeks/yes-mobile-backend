@@ -97,7 +97,7 @@ const Speaker = () => {
                             </div>
                             <img src={`/storage/${speaker.image}`} alt={speaker.name} className="mb-4 h-24 w-24 rounded-full object-cover" />
                             <h3 className="text-lg font-semibold">{speaker.name}</h3>
-                            <p className='text-muted-foreground'>{speaker.email}</p>
+                            <p className='text-muted-foreground lowercase'>{speaker.email}</p>
                         </Card>
                     ))}
                 </div>

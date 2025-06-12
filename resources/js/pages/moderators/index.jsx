@@ -96,7 +96,7 @@ const Moderator = () => {
                             </div>
                             <img src={`/storage/${mod.image}`} alt={mod.name} className="mb-4 h-24 w-24 rounded-full object-cover" />
                             <h3 className="text-lg font-semibold">{mod.name}</h3>
-                            <p className='text-muted-foreground'>{mod.email}</p>
+                            <p className='text-muted-foreground lowercase'>{mod.email}</p>
                         </Card>
                     ))}
                 </div>

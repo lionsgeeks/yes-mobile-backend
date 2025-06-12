@@ -54,6 +54,10 @@ class NotificationController extends Controller
         //? to check : what happens if there're too many in one channel
         $expo->send($message)->toChannel('default')->push();
 
+        // $expo->send($message)->to([
+        //     'EXPOpeoazpeoa[ezieoxiajoezixa]'
+        // ])->push();
+
         Notification::create([
             'title' => $request->title,
             'body' => $request->body,

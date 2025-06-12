@@ -99,7 +99,7 @@ export default function Participants() {
                                             <UserCircle className="w-4 h-4 text-gray-500" />
                                             {participant.name}
                                         </h3>
-                                        <p className="text-sm text-gray-600 flex items-center gap-2">
+                                        <p className="text-sm text-gray-600 flex items-center gap-2 lowercase">
                                             <Mail className="w-4 h-4 text-gray-500" />
                                             {participant.email}
                                         </p>
