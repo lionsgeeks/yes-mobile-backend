@@ -59,7 +59,7 @@ export default function CreatePrograme({ speakers, categories, moderators }) {
             <DialogTrigger asChild>
                 <Button className="cursor-pointer">+ ADD Programe</Button>
             </DialogTrigger>
-            <DialogContent className="max-w-[90%] sm:max-w-[425px]">
+            <DialogContent className="max-w-[90%]  h-[90%] overflow-y-auto scroll sm:max-w-[425px]">
                 <DialogHeader>
                     <DialogTitle>Adding a Program</DialogTitle>
                     <DialogDescription>Create a new program for the application.</DialogDescription>
@@ -162,7 +162,7 @@ export default function CreatePrograme({ speakers, categories, moderators }) {
                         moderators.length > 0 &&
 
                         <div className="col-span-2">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">moderators:</label>
+                            <label className="block text-lg font-bold text-gray-700 mb-5">moderators:</label>
                             <div className="space-y-2 flex items-center flex-wrap gap-2">
                                 {moderators.map((moderator) => (
                                     <div key={moderator.id} className="flex items-center space-x-2">
@@ -201,10 +201,10 @@ export default function CreatePrograme({ speakers, categories, moderators }) {
                         speakers.length > 0 &&
 
                         <div className="col-span-2">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Speakers:</label>
-                            <div className="space-y-2 flex items-center flex-wrap gap-2">
+                            <label className="block text-lg  mb-5 font-bold text-gray-700 ">Speakers:</label>
+                            <div className="space-y-2 flex items-center  w-full flex-wrap gap-2">
                                 {speakers.map((speaker) => (
-                                    <div key={speaker.id} className="flex items-center space-x-2">
+                                    <div key={speaker.id} className="flex items-center w-full space-x-2">
                                         <input
                                             type="checkbox"
                                             id={`speaker-${speaker.id}`}

@@ -97,7 +97,7 @@ export default function UpdatePrograme({ programe, speakers, moderators, categor
             <DialogTrigger className="cursor-pointer" asChild>
                 <Pen size={20} color="#00ff00" />
             </DialogTrigger>
-            <DialogContent className="max-w-[90%] sm:max-w-[425px]">
+            <DialogContent className="max-w-[90%] h-[90%] overflow-y-auto sm:max-w-[425px]">
                 <DialogHeader>
                     <DialogTitle>Update Program</DialogTitle>
                     <DialogDescription>Update the program details.</DialogDescription>
@@ -192,28 +192,7 @@ export default function UpdatePrograme({ programe, speakers, moderators, categor
                     </div>
 
                     <div className="col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Speakers:</label>
-                        <div className="space-y-2 flex items-center gap-2 flex-wrap">
-                            {speakers.map((speaker) => (
-                                <div key={speaker.id} className="flex items-center space-x-2">
-                                    <input
-                                        type="checkbox"
-                                        id={`speaker-${speaker.id}`}
-                                        value={speaker.id}
-                                        checked={data.speaker_ids.includes(speaker.id) || data.speaker_ids.includes(String(speaker.id))}
-                                        onChange={handleSpeakerChange}
-                                        className="rounded border-gray-300 accent-alpha "
-                                    />
-                                    <label htmlFor={`speaker-${speaker.id}`} className="text-sm text-gray-700">
-                                        {speaker.name}
-                                    </label>
-                                </div>
-                            ))}
-                        </div>
-                        {errors.speaker_ids && <div className="text-red-500 text-sm">{errors.speaker_ids}</div>}
-                    </div>
-                    <div className="col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">moderators:</label>
+                        <label className="block text-lg font-bold text-gray-700 mb-5">moderators:</label>
                         <div className="space-y-2 flex items-center flex-wrap gap-2">
                             {moderators.map((moderator) => (
                                 <div key={moderator.id} className="flex items-center space-x-2">
@@ -233,6 +212,29 @@ export default function UpdatePrograme({ programe, speakers, moderators, categor
                         </div>
                         {errors.moderator_ids && <div className="text-red-500 text-sm">{errors.moderator_ids}</div>}
                     </div>
+
+                    <div className="col-span-2">
+                        <label className="block text-lg font-bold text-gray-700 mb-5">Speakers:</label>
+                        <div className="space-y-2 flex items-center gap-2 flex-wrap w-full">
+                            {speakers.map((speaker) => (
+                                <div key={speaker.id} className="flex items-center w-full space-x-2">
+                                    <input
+                                        type="checkbox"
+                                        id={`speaker-${speaker.id}`}
+                                        value={speaker.id}
+                                        checked={data.speaker_ids.includes(speaker.id) || data.speaker_ids.includes(String(speaker.id))}
+                                        onChange={handleSpeakerChange}
+                                        className="rounded border-gray-300 accent-alpha "
+                                    />
+                                    <label htmlFor={`speaker-${speaker.id}`} className="text-sm text-gray-700">
+                                        {speaker.name}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
+                        {errors.speaker_ids && <div className="text-red-500 text-sm">{errors.speaker_ids}</div>}
+                    </div>
+                    
                     <div className="col-span-2">
                         <label htmlFor="category_id" className="block text-sm font-medium text-gray-700 mb-1">Category:</label>
                         <select
