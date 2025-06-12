@@ -21,8 +21,14 @@ export default function UpdatePrograme({ programe, speakers, moderators, categor
         location: programe?.location || '',
         date: programe?.date || '',
         category_id: programe?.category_id || '',
-        speaker_ids: programe?.participants?.map(p => p.id) || [],
-        moderator_ids: programe?.participants?.map(p => p.id) || [],
+        speaker_ids: programe?.participants
+            ?.filter(p => p?.role === 'speaker')
+            .map(p => p.id) || [],
+
+        moderator_ids: programe?.participants
+            ?.filter(p => p?.role === 'moderator')
+            .map(p => p.id) || [],
+
     });
     const currentCategory = categories.find(category => category.id === programe.category_id);
     console.log(currentCategory);
@@ -40,8 +46,13 @@ export default function UpdatePrograme({ programe, speakers, moderators, categor
                 capacity: programe.capacity || '',
                 location: programe.location || '',
                 date: programe.date || '',
-                speaker_ids: programe.participants?.map(p => p.id) || [],
-                moderator_ids: programe.participants?.map(p => p.id) || [],
+                speaker_ids: programe?.participants
+                    ?.filter(p => p?.role === 'speaker')
+                    .map(p => p.id) || [],
+
+                moderator_ids: programe?.participants
+                    ?.filter(p => p?.role === 'moderator')
+                    .map(p => p.id) || [],
             });
         }
         if (!open) {

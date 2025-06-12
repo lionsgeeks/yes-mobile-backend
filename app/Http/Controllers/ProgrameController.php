@@ -192,17 +192,17 @@ class ProgrameController extends Controller
 
         ]);
 
+        $programe->participants()->detach();
 
-        if ($request->has('speaker_ids')) {
-            $programe->participants()->detach();
+
+        if (!empty($request->speaker_ids)) {
+            $programe->participants()->syncWithoutDetaching($request->speaker_ids);
         }
 
-        $programe->participants()->attach($request->speaker_ids);
-
-        if ($request->has('moderator_ids')) {
-            $programe->participants()->detach();
+        if (!empty($request->moderator_ids)) {
+            $programe->participants()->syncWithoutDetaching($request->moderator_ids);
         }
-        $programe->participants()->attach($request->moderator_ids);
+
 
         return back()->with('success', 'Programe updated successfully.');
     }
