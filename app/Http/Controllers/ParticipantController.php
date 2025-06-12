@@ -52,12 +52,11 @@ class ParticipantController extends Controller
         }
 
         // funder || ngo 'dont' have account so no need for random password or an email
-        $password = ($role == 'funder' || $role == 'ngo') ? 'lionsgeek' : Str::random(8);
+        $password = ($role == 'funder' || $role == 'ngo' || $role == 'speaker') ? 'lionsgeek' : Str::random(8);
 
-        $email = ($role == 'funder' || $role == 'ngo')
+        $email = ($role == 'funder' || $role == 'ngo' || $role == 'speaker')
             ? strtolower($role) . Str::random(10) . '@example.com'
             : $request->email;
-
 
         $participant = Participant::create([
             'name' => $request->name,
@@ -83,7 +82,7 @@ class ParticipantController extends Controller
             'instagram' => $request->instagram,
         ]);
 
-        if ($role == 'visitor' || $role == 'speaker' || $role == 'moderator') {
+        if ($role == 'visitor' || $role == 'moderator') {
 
             Mail::to($request->email)->send(new InvitationMail($participant->name, $participant->email, $password, $link->appstore, $link->playstore));
         }
@@ -152,8 +151,8 @@ class ParticipantController extends Controller
 
         if ($request->email != $participant->email) {
             $link = General::all()->first();
-            $password = ($participant->role == 'funder' || $participant->role == 'ngo') ? 'lionsgeek' : Str::random(8);
-            if ($participant->role == 'visitor' || $participant->role == 'speaker' || $participant->role == 'moderator') {
+            $password = ($participant->role == 'funder' || $participant->role == 'ngo' || $participant->role == 'speaker') ? 'lionsgeek' : Str::random(8);
+            if ($participant->role == 'visitor' || $participant->role == 'moderator') {
                 Mail::to($request->email)->send(new InvitationMail($participant->name, $participant->email, $password, $link->appstore, $link->playstore));
             }
         }

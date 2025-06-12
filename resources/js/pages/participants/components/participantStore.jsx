@@ -101,7 +101,7 @@ export default function ParticipantStore({ title = 'Participant', role = 'visito
                             </div>
 
                             {
-                                (role != 'funder' && role != 'ngo') && (
+                                (role != 'funder' && role != 'ngo' && role != 'speaker') && (
                                     <div className="flex flex-col items-start gap-2">
                                         <Label htmlFor="email" className="text-right">
                                             Email <span className="text-red-600 text-sm">*</span>

@@ -21,11 +21,6 @@ const accountNavItems: NavItem[] = [
         icon: Users,
     },
     {
-        title: 'Speakers',
-        url: '/speakers',
-        icon: MicVocal,
-    },
-    {
         title: 'Moderators',
         url: '/moderators',
         icon: Presentation,
@@ -33,6 +28,11 @@ const accountNavItems: NavItem[] = [
 ]
 
 const exhibitorNavItems: NavItem[] = [
+    {
+        title: 'Speakers',
+        url: '/speakers',
+        icon: MicVocal,
+    },
     {
         title: 'Funders',
         url: '/funders',
