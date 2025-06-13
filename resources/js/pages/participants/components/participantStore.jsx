@@ -13,10 +13,11 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@headlessui/react"
 import { useForm } from "@inertiajs/react"
 import { Pen } from "lucide-react"
+import { useState } from "react"
 
 export default function ParticipantStore({ title = 'Participant', role = 'visitor', endPoint = 'participants.store', participant = null }) {
 
-    const { data, setData, post, put } = useForm({
+    const { data, setData, post} = useForm({
         name: participant ? participant.name : '',
         email: participant ? participant.email : '',
         company: participant ? participant.company : '',
@@ -32,6 +33,7 @@ export default function ParticipantStore({ title = 'Participant', role = 'visito
         instagram: participant ? participant.social?.instagram : '',
     });
 
+    const [open, setOpen] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -43,34 +45,42 @@ export default function ParticipantStore({ title = 'Participant', role = 'visito
                     _method: 'put',
                     data: data,
                     participant: participant.id,
-                }),
+                }), {
+                onSuccess: () => {
+                    setOpen(false)
+                }
+            }
             );
         } else {
             // create one
             post(route(endPoint), {
-                onSuccess: () => setData({
-                    name: '',
-                    email: '',
-                    company: '',
-                    image: '',
-                    location: '',
-                    description: '',
-                    country: '',
-                    city: '',
-                    role: role,
-                    website: '',
-                    linkedin: '',
-                    youtube: '',
-                    instagram: '',
-                }),
+                onSuccess: () => {
+                    setData({
+                        name: '',
+                        email: '',
+                        company: '',
+                        image: '',
+                        location: '',
+                        description: '',
+                        country: '',
+                        city: '',
+                        role: role,
+                        website: '',
+                        linkedin: '',
+                        youtube: '',
+                        instagram: '',
+                    });
+                    setOpen(false);
+                },
             });
         }
+
     }
 
 
 
     return (
-        <Dialog >
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <button className={`cursor-pointer  ${participant ? 'text-alpha' : 'text-white bg-alpha px-2 py-1 rounded'}`}>{participant ? <Pen size={18} /> : `Add ${title}`}</button>
             </DialogTrigger>
@@ -225,9 +235,7 @@ export default function ParticipantStore({ title = 'Participant', role = 'visito
 
 
                     <div className="flex justify-end">
-                        {/* <DialogClose> */}
-                            <Button type="submit">Save changes</Button>
-                        {/* </DialogClose> */}
+                        <Button type="submit">Save changes</Button>
                     </div>
                 </form>
 
