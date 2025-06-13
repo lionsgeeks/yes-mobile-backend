@@ -39,7 +39,7 @@
         <img src="https://youthempowermentsummit.africa/assets/yeslogo-CWn7tdd7.png" width="80" alt="yes Logo" style="max-width: 100%; vertical-align: middle; margin-top: 24px">
         <div role="separator" style="line-height: 24px">&zwj;</div>
         <h1 style="margin: 0 0 24px; font-size: 24px; line-height: 32px; font-weight: 600; color: #0f172a">
-          Hello {{ $name }} welcome to YES africa!
+          Hello {{ $name }} welcome to YES AFRICA mobile app !
         </h1>
         <p style="margin: 0 0 24px; font-size: 16px; line-height: 24px; color: #475569">
           We're happy to have you on board! This is your email address and your password in order to activate your
@@ -50,12 +50,11 @@
           <br>
           <strong>Password:</strong> <span style="color: #0f172a"> {{ $password }}</span>
         </p>
-        <div role="separator" style="line-height: 24px">&zwj;</div>
         <p style="margin: 0; font-size: 16px; line-height: 24px; color: #475569">
           install your app from the link below,
           <br>
-          <a href="{{ $appStoreLink }}" target="_blank" rel="noopener noreferrer">APP STORE</a>
-          <a href="{{ $playStoreLink }} " target="_blank" rel="noopener noreferrer">PLAY STORE</a>
+          <a href="{{ $appStoreLink }}" target="_blank" rel="noopener noreferrer"><img src="https://app.youthempowermentsummit.africa/assets/images/App_Store_(iOS)-Badge-Logo.wine.png" alt style="max-width: 100%; vertical-align: middle; width: 4.8vw"></a>
+          <a href="{{ $playStoreLink }} " target="_blank" rel="noopener noreferrer"><img src="https://app.youthempowermentsummit.africa/assets/images/Google_Play-Badge-Logo.wine.png" alt style="max-width: 100%; vertical-align: middle; width: 5vw"></a>
         </p>
         <p style="margin: 0; font-size: 16px; line-height: 24px; color: #475569">
           Thanks,
