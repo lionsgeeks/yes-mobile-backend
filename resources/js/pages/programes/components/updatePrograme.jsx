@@ -234,7 +234,7 @@ export default function UpdatePrograme({ programe, speakers, moderators, categor
                         </div>
                         {errors.speaker_ids && <div className="text-red-500 text-sm">{errors.speaker_ids}</div>}
                     </div>
-                    
+
                     <div className="col-span-2">
                         <label htmlFor="category_id" className="block text-sm font-medium text-gray-700 mb-1">Category:</label>
                         <select
@@ -245,15 +245,16 @@ export default function UpdatePrograme({ programe, speakers, moderators, categor
                             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                         >
                             {
-                                currentCategory ?
-                                    (<option value={currentCategory?.id}>{currentCategory?.name}</option>
-                                    ) : (
-
-                                        <option value="">Select category</option>
+                                currentCategory &&
+                                    (
+                                        <option value={currentCategory?.id}>{currentCategory?.name}</option>
                                     )
                             }
+                            <option value="" disabled >Select category</option>
+                            <option value="">No Category</option>
                             {categories
                                 .filter((categorie) => categorie.id !== currentCategory?.id)
+
                                 .map((categorie) => (
                                     <option key={categorie.id} value={categorie.id}>
                                         {categorie.name}
