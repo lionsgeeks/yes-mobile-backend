@@ -27,12 +27,12 @@ class ParticipantsImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         // dd($row);
-        $password = Hash::make(Str::random(8));
+        $password = Str::random(8);
         $participant = new Participant([
             'name' => $row['name'],
             'email' => $row['email'],
             'role' => $this->role,
-            'password' => $password
+            'password' => Hash::make($password),
         ]);
         $link = General::all()->first();
         if ($this->role == 'visitor' || $this->role == 'moderator') {
