@@ -27,7 +27,7 @@ const Programe = ({ programes, speakers, categories, moderators }) => {
 
                 <div className="flex justify-end gap-x-4 py-3">
                     <CreatePrograme speakers={speakers} categories={categories} moderators={moderators} />
-                    <button  class="bg-blue-900 text-white font-medium py-1 px-4 rounded-lg hover:bg-blue-800 transition duration-200" onClick={() => router.visit('/categories')}   className="cursor-pointer"> Categorie</button>
+                    <button  onClick={() => router.visit('/categories')}   className="bg-blue-900 text-white font-medium py-1 px-4 rounded-lg hover:bg-blue-800 transition duration-200 cursor-pointer"> Categorie</button>
 
                 </div>
 
@@ -40,7 +40,7 @@ const Programe = ({ programes, speakers, categories, moderators }) => {
                                 <TableHead>Date</TableHead>
                                 <TableHead>Time</TableHead>
                                 <TableHead>Capacity</TableHead>
-                                <TableHead>Location</TableHead>
+                                {/* <TableHead>Location</TableHead> */}
                                 <TableHead>Speakers</TableHead>
                                 <TableHead>Actions</TableHead>
                             </TableRow>
@@ -75,10 +75,10 @@ const Programe = ({ programes, speakers, categories, moderators }) => {
                                         {program?.capacity}
                                     </TableCell>
 
-                                    <TableCell className="block sm:table-cell">
+                                    {/* <TableCell className="block sm:table-cell">
                                         <span className="font-semibold sm:hidden">Location:</span>
                                         {program?.location}
-                                    </TableCell>
+                                    </TableCell> */}
 
                                     <TableCell className="block sm:table-cell">
                                         <span className="font-semibold sm:hidden">Speakers:</span>
