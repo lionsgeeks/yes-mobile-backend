@@ -53,8 +53,8 @@
         <p style="margin: 0; font-size: 16px; line-height: 24px; color: #475569">
           install your app from the link below,
           <br>
-          <a href="{{ $appStoreLink }}" target="_blank" rel="noopener noreferrer"><img src="https://app.youthempowermentsummit.africa/assets/images/App_Store_(iOS)-Badge-Logo.wine.png" alt style="max-width: 100%; vertical-align: middle; width: 4.8vw"></a>
-          <a href="{{ $playStoreLink }} " target="_blank" rel="noopener noreferrer"><img src="https://app.youthempowermentsummit.africa/assets/images/Google_Play-Badge-Logo.wine.png" alt style="max-width: 100%; vertical-align: middle; width: 5vw"></a>
+          <a href="{{ $appStoreLink }}" target="_blank" rel="noopener noreferrer"><img src="https://app.youthempowermentsummit.africa/assets/images/App_Store_(iOS)-Badge-Logo.wine.png" alt style="max-width: 100%; vertical-align: middle; width: 25vw"></a>
+          <a href="{{ $playStoreLink }} " target="_blank" rel="noopener noreferrer"><img src="https://app.youthempowermentsummit.africa/assets/images/Google_Play-Badge-Logo.wine.png" alt style="max-width: 100%; vertical-align: middle; width: 25vw"></a>
         </p>
         <p style="margin: 0; font-size: 16px; line-height: 24px; color: #475569">
           If you're using Android and facing issues downloading from the Play Store, <br>
